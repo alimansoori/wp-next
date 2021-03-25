@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node server/index",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "npm run build && vercel"
   },
   "dependencies": {
     "bootstrap": "^4.6.0",
