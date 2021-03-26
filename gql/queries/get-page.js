@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import PostTypeSeoFrg from '../fragments/post-type-seo-fragment'
 
 const GET_PAGE = gql`
   query GET_PAGE($id: ID!) {
@@ -24,19 +25,11 @@ const GET_PAGE = gql`
       status
       uri
       seo {
-        title
-        canonical
-        metaKeywords
-        metaDesc
-        focuskw
-        schema {
-          articleType
-          pageType
-          raw
-        }
+        ...PostTypeSeoFrg
       }
     }
   }
+  ${PostTypeSeoFrg.fragments.PostTypeSeoFrg}
 `;
 
 export default GET_PAGE;

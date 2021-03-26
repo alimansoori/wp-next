@@ -30,9 +30,12 @@ class Page extends React.Component {
   }
 
   render() {
-    const { pageData, children } = this.props
+    const { pageData } = this.props
     return (
-      <BasePage className={pageData.slug}>
+      <BasePage
+        className={pageData.slug}
+        seo={pageData.seo}
+      >
         <h1>{pageData.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
       </BasePage>
