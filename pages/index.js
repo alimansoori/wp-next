@@ -22,6 +22,12 @@ class Home extends React.Component {
             Shop
             </a>
         </Link>
+
+        <Link as={`/sample-page`} href={`/[page]`}>
+          <a>
+            Sample Page
+            </a>
+        </Link>
       </div>
     )
   }
