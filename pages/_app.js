@@ -1,7 +1,21 @@
 import React from 'react'
+import Router from 'next/router'
+import BaseLayout from '../components/layouts/BaseLayout'
+import ProgressBar from "@badrap/bar-of-progress"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/main.scss'
-import BaseLayout from '../components/layouts/BaseLayout'
+
+const progress = new ProgressBar({
+  size: 4,
+  color: "#38a169",
+  className: "bar-of-progress",
+  delay: 100,
+});
+
+Router.events.on("routeChangeStart", progress.start);
+Router.events.on("routeChangeComplete", progress.finish);
+Router.events.on("routeChangeError", progress.finish);
+
 
 class App extends React.Component {
 
@@ -17,6 +31,7 @@ class App extends React.Component {
 
   render() {
     const { Component, pageProps } = this.props
+    
     return (
       <BaseLayout>
         <Component {...pageProps} />

@@ -18,6 +18,7 @@ class Home extends React.Component {
     try {
       const result = await client.query({
         query: GET_HOME_PAGE,
+        partialRefetch:true
       });
       homePageData = result.data.homepage
     } catch (e) {
@@ -43,7 +44,7 @@ class Home extends React.Component {
           </a>
         </Link>
         <hr />
-        <Link as={`/sample-page`} href={`/[page]`}>
+        <Link as={`/sample-page`} href={`/[page]`} refetch={true} >
           <a>
             {`Sample Page`}
           </a>
