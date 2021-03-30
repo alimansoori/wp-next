@@ -1,0 +1,16 @@
+.landing-header__light-mode {
+  display: flex;
+  margin: 0 15px;
+  box-shadow: $mainBoxShadowDark;
+  border-radius: 40px;
+  .landing-header__light-mode__icon {
+    width: 20px;
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .landing-header__light-mode {
+    margin: 0 5px !important;
+  }
+}

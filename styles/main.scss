@@ -24,7 +24,14 @@ h1 {
 
 // Components
 @import './index';
-@import '../components/search/search.scss';
+@import '../components/landingHeader/landingHeader';
+@import '../components/search/search';
+@import '../components/register/register';
+@import '../components/credit/credit';
+@import '../components/signUpModal/signUpModal';
+@import '../components/cart/cart';
+@import '../components/lightMode/lightMode';
+
 
 // Pages
 @import '../pages/landing.scss';

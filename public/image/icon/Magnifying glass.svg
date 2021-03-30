@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="33.719" height="35.067" viewBox="0 0 33.719 35.067">
+  <g id="Magnifying_glass" data-name="Magnifying glass" transform="translate(0 0)">
+    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(0 12.342) rotate(-30)" fill="none" stroke="#fff" stroke-width="5">
+      <circle cx="12.342" cy="12.342" r="12.342" stroke="none"/>
+      <circle cx="12.342" cy="12.342" r="9.842" fill="none"/>
+    </g>
+    <line id="Line_1" data-name="Line 1" y2="10.579" transform="translate(21.87 24.656) rotate(-30)" fill="none" stroke="#fff" stroke-width="5"/>
+  </g>
+</svg>

@@ -5,6 +5,7 @@ import BasePage from '../components/BasePage'
 import GET_HOME_PAGE from '../gql/queries/get-home-page';
 import client from '../components/ApolloClient'
 import Search from '../components/search/Search'
+import Landingheader from '../components/landingHeader/LandingHeader';
 
 const Home = (props) => {
 
@@ -35,7 +36,7 @@ const Home = (props) => {
       <div className={`landing`}>
         {/* <LandingLoading /> */}
         <div className={`landing-hero`}>
-          {/* <LandingHeader /> */}
+          <Landingheader />
           <div className={`landing-hero__logo`}>
             <img
               className={`landing-hero__logo__img`}
@@ -92,7 +93,7 @@ const Home = (props) => {
         </div>
         <div ref={divRef} className={`return-to-top-wrap`}>
           <button onClick={functionToTopHandler} className={`return-to-top`}>
-            <img src={`/image/icon/Polygon 1.png`} alt="arrow" />
+            <img src={`/image/icon/Polygon 1.svg`} alt="arrow" />
           </button>
         </div>
       </div>

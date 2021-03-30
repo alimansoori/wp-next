@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26.764" height="22.411" viewBox="0 0 26.764 22.411">
+  <g id="Basket" transform="translate(0 1.363)">
+    <g id="Path_1" data-name="Path 1" transform="translate(0 6.529)" fill="none">
+      <path d="M0,0H20.239L16,14.362H3.814Z" stroke="none"/>
+      <path d="M 6.501259803771973 5.000004768371582 L 7.659783363342285 9.362184524536133 L 12.26031017303467 9.362184524536133 L 13.54885673522949 5.000004768371582 L 12.32183361053467 5.000004768371582 L 6.501259803771973 5.000004768371582 M 3.814697265625e-06 4.76837158203125e-06 L 12.32183361053467 4.76837158203125e-06 L 20.23938369750977 4.76837158203125e-06 L 15.99693393707275 14.36218452453613 L 3.814363479614258 14.36218452453613 L 3.814697265625e-06 4.76837158203125e-06 Z" stroke="none" fill="#fff"/>
+    </g>
+    <path id="Path_2" data-name="Path 2" d="M-3.444,21.97,2.862,1.663" transform="translate(17.499 -1.663)" fill="none" stroke="#fff" stroke-width="5"/>
+    <line id="Line_2" data-name="Line 2" x2="8.174" y2="2.335" transform="translate(17.904 1.041)" fill="none" stroke="#fff" stroke-width="5"/>
+  </g>
+</svg>

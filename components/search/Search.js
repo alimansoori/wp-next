@@ -16,7 +16,7 @@ function Search() {
                             <button className={`search-bar__box__icon`}>
                                 <img
                                     className={`search-bar__box__icon__img`}
-                                    src={`/image/icon/Magnifying glass.png`}
+                                    src={`/image/icon/Magnifying glass.svg`}
                                     alt="search"
                                 />
                             </button>
