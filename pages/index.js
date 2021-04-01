@@ -25,6 +25,7 @@ const Home = (props) => {
   useEffect(() => {
     functionToBotHandler();
     functionToTopHandler();
+    console.log(homePageData);
   }, []);
 
   return (
@@ -97,17 +98,6 @@ const Home = (props) => {
           </button>
         </div>
       </div>
-      {/* <Link as={`/shop/slllluuuug`} href={`/shop/[[...slugs]]`}>
-          <a>
-            {`Shop`}
-          </a>
-        </Link>
-        <hr />
-        <Link as={`/sample-page`} href={`/[page]`} refetch={true} >
-          <a>
-            {`Sample Page`}
-          </a>
-        </Link> */}
     </BasePage>
   )
 }
@@ -118,7 +108,8 @@ export const getServerSideProps = async (context) => {
   try {
     const result = await client.query({
       query: GET_HOME_PAGE,
-      partialRefetch: true
+      partialRefetch: true,
+      refetch: true
     });
     homePageData = result.data.homepage
   } catch (e) {

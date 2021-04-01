@@ -4,8 +4,8 @@ import ProductFragment from '../fragments/product-fragment';
 
 
 const GET_PRODUCTS = gql` 
-query GET_PRODUCTS {
-	products {
+query GET_PRODUCTS($where: RootQueryToProductConnectionWhereArgs, $first: Int) {
+	products(where: $where, first: $first) {
         edges {
           cursor
           node {

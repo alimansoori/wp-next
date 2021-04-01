@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 import useSWR from 'swr';
@@ -66,6 +67,11 @@ function Page(props) {
         >
           <h1>{pageData.title}</h1>
           <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+          <Link href={`/`}>
+            <a>
+              {`Home`}
+            </a>
+          </Link>
         </BasePage>
       ) : <div>Loading ...</div>}
     </>
@@ -80,8 +86,9 @@ export const getServerSideProps = async ({ query, params }) => {
   try {
     const result = await client.query({
       query: GET_PAGE,
-      refetch: true,
       variables: { id },
+      partialRefetch: true,
+      refetch: true
     });
     pageData = result.data.page
   } catch (e) {

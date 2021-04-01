@@ -17,6 +17,24 @@ ProductFragment.fragments = {
         sourceUrl(size: SHOP_CATALOG)
         title
       }
+      paPublishers {
+        nodes {
+          name
+        }
+      }
+      paTranslators {
+        nodes {
+          name
+        }
+      }
+      paWriters {
+        nodes {
+          name
+        }
+      }
+      ... on SimpleProduct {
+        price(format: RAW)
+      }
     }
   `,
 };

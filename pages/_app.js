@@ -4,6 +4,8 @@ import BaseLayout from '../components/layouts/BaseLayout'
 import ProgressBar from "@badrap/bar-of-progress"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/main.scss'
+import { Provider } from 'react-redux'
+import store from '../redux/store'
 
 const progress = new ProgressBar({
   size: 4,
@@ -31,11 +33,13 @@ class App extends React.Component {
 
   render() {
     const { Component, pageProps } = this.props
-    
+
     return (
-      <BaseLayout>
-        <Component {...pageProps} />
-      </BaseLayout>
+      <Provider store={store}>
+        <BaseLayout>
+          <Component {...pageProps} />
+        </BaseLayout>
+      </Provider>
     )
   }
 }
