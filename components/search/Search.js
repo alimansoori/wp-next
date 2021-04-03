@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Dropdown, Tab, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { DelayInput } from 'react-delay-input'
 import { getProductsBySearchInput } from '../../redux/actions/search.actions'
 import { searchConstants } from '../../redux/actions/constants'
 import { stringToNumber } from '../../functions'
@@ -12,46 +13,74 @@ function Search() {
     const searchValue = router.query.search
     const { products, loading } = useSelector(state => state.search)
     const [value, setValue] = useState('')
+    const [activeKey, setActiveKey] = useState('translator')
 
-    const handleSearchChange = (e) => {
-        e.preventDefault();
-        setValue(e.target.value);
-        console.log(e.target.value);
-        (e.target.value.length > 2) ?
-            dispatch(getProductsBySearchInput(value, 10)) :
-            dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
-    }
+    // focus Search Input
+    let searchInput = null
+
+    useEffect(() => {
+        searchInput.focus()
+    })
+
+    useEffect(() => {
+        dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
+
+        if (value.length > 2) {
+            dispatch(getProductsBySearchInput(value, 10, activeKey))
+        }
+    }, [value, activeKey])
+
 
     const SearchResultBox = () => {
         return (
             <Dropdown.Menu>
                 <div className={`search-bar__suggestion`}>
-                    <Tabs defaultActiveKey="موضوع" id="uncontrolled-tab-example">
-                        <Tab eventKey="موضوع" title="موضوع">
-                            <div className={`search-bar__suggestion__tab-content`}>
-                                {products.map((product) => {
-                                    return (
-                                        <SearchResultItem product={product.node} />
-                                    )
-                                })}
-                            </div>
+                    <Tabs
+                        defaultActiveKey={activeKey} id="uncontrolled-tab-example"
+                        onSelect={(selectedKey) => setActiveKey(selectedKey)}
+                    >
+                        <Tab eventKey="topic" title="موضوع">
+                            {products.length && <RenderResultItems />}
                         </Tab>
-                        <Tab eventKey="نویسنده" title="نویسنده">
-                            <div className={`search-bar__suggestion__tab-content`}>tab2</div>
+                        <Tab eventKey="writer" title="نویسنده">
+                            {products.length && <RenderResultItems />}
                         </Tab>
-                        <Tab eventKey="مترجم" title="مترجم">
-                            <div className={`search-bar__suggestion__tab-content`}>tab3</div>
+                        <Tab eventKey="translator" title="مترجم">
+                            {products.length && <RenderResultItems />}
                         </Tab>
-                        <Tab eventKey="ناشر" title="ناشر">
-                            <div className={`search-bar__suggestion__tab-content`}>tab4</div>
+                        <Tab eventKey="publisher" title="ناشر">
+                            {products.length && <RenderResultItems />}
                         </Tab>
-                        <Tab eventKey="همه" title="همه">
-                            <div className={`search-bar__suggestion__tab-content`}>all</div>
+                        <Tab eventKey="all" title="همه">
+                            {products.length && <RenderResultItems />}
                         </Tab>
                     </Tabs>
-                    <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
+                    {products.length && <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>}
                 </div>
             </Dropdown.Menu>
+        )
+    }
+
+    const SearchResultBoxLoading = () => {
+        return (
+            <Dropdown.Menu>
+                <div className={`search-bar__suggestion`}>
+                    Loading
+                </div>
+            </Dropdown.Menu>
+        )
+    }
+
+    const RenderResultItems = () => {
+        return (
+            <div className={`search-bar__suggestion__tab-content`}>
+                {products.map((product) => {
+                    console.log(product)
+                    return (
+                        <SearchResultItem key={product.node.id} product={product.node} />
+                    )
+                })}
+            </div>
         )
     }
 
@@ -77,55 +106,52 @@ function Search() {
 
     const SearchResultItem = ({ product }) => {
         return (
-            <>
-                <div className={`search-bar__suggestion__tab-content-wrap`}>
-                    <div className={`search-bar__suggestion__tab-content__pic`}>
-                        <RenderSearchResultItemImage img={product.image} />
+            <div className={`search-bar__suggestion__tab-content-wrap`}>
+                <div className={`search-bar__suggestion__tab-content__pic`}>
+                    <RenderSearchResultItemImage img={product.image} />
+                </div>
+                <div className={`search-bar__suggestion__tab-content__box-wrap`}>
+                    <div className={`search-bar__suggestion__tab-content__box`}>
+                        <strong>{product.name}</strong>
                     </div>
-                    <div className={`search-bar__suggestion__tab-content__box-wrap`}>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <strong>نام کتاب: </strong>
-                            <small>{product.name}</small>
-                        </div>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <strong>نویسنده: </strong>
-                            <SearchResultItemAttrs attrs={product.paWriters.nodes} />
-                        </div>
-                    </div>
-                    <div className={`search-bar__suggestion__tab-content__box-wrap`}>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <strong>مترجم: </strong>
-                            <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
-                        </div>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <strong>قیمت: </strong>
-                            <small>{stringToNumber(product.price)}</small>
-                        </div>
+                    <div className={`search-bar__suggestion__tab-content__box`}>
+                        <SearchResultItemAttrs attrs={product.paWriters.nodes} />
                     </div>
                 </div>
-            </>
+                <div className={`search-bar__suggestion__tab-content__box-wrap`}>
+                    <div className={`search-bar__suggestion__tab-content__box`}>
+                        <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
+                    </div>
+                    <div className={`search-bar__suggestion__tab-content__box`}>
+                        <strong>{stringToNumber(product.price)}</strong>
+                    </div>
+                </div>
+            </div>
         )
     }
 
     const SearchResultItemAttrs = ({ attrs }) => {
         const joinString = attrs.map(e => e.name).join(',')
         return (
-            <small>{joinString}</small>
+            <strong>{joinString}</strong>
         )
     }
 
     return (
         <div className={`search-bar-wrap`}>
-            <Dropdown>
+            <Dropdown show>
                 <Dropdown.Toggle as="div" id="dropdown-basic">
                     <div className={`search-bar`}>
                         <div className={`search-bar__box`}>
-                            <input
+                            <DelayInput
+                                minLength={2}
+                                delayTimeout={500}
                                 type="text"
+                                inputRef={(input) => { searchInput = input }}
                                 className={`search-bar__box__input`}
                                 placeholder="جست و جو"
                                 value={searchValue ? searchValue : value}
-                                onChange={(e) => handleSearchChange(e)}
+                                onChange={(e) => setValue(e.target.value)}
                             />
                             <button className={`search-bar__box__icon`}>
                                 <img
@@ -137,7 +163,7 @@ function Search() {
                         </div>
                     </div>
                 </Dropdown.Toggle>
-                {products.length && <SearchResultBox />}
+                <SearchResultBox />
             </Dropdown>
         </div>
     )
