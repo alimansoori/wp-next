@@ -30,10 +30,12 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                             },
                             first: count
                         },
-                        fetchPolicy: 'no-cache'
+                        fetchPolicy: 'no-cache',
+                        errorPolicy: 'all'
                     });
                     result.data.paTranslators.edges.map(translator => {
-                        products = Object.assign(translator.node.products.edges, products)
+                        products = translator.node.products.edges
+                        // products = Object.assign(translator.node.products.edges, products)
                     })
                     break;
 
@@ -43,10 +45,13 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                         variables: {
                             search: value,
                             first: count
-                        }
+                        },
+                        fetchPolicy: 'no-cache',
+                        errorPolicy: 'all'
                     });
                     result.data.paWriters.edges.map(writer => {
-                        products = Object.assign(writer.node.products.edges, products)
+                        products = writer.node.products.edges
+                        // products = Object.assign(writer.node.products.edges, products)
                     })
                     break;
 
@@ -58,10 +63,13 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                                 search: value
                             },
                             first: count
-                        }
+                        },
+                        fetchPolicy: 'no-cache',
+                        errorPolicy: 'all'
                     });
                     result.data.paPublishers.edges.map(publisher => {
-                        products = Object.assign(publisher.node.products.edges, products)
+                        products = publisher.node.products.edges
+                        // products = Object.assign(publisher.node.products.edges, products)
                     })
                     break;
 
@@ -73,7 +81,9 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                                 search: value
                             },
                             first: count
-                        }
+                        },
+                        fetchPolicy: 'no-cache',
+                        errorPolicy: 'all'
                     });
                     // products = result.data.paTranslator.edges
                     break;
@@ -86,7 +96,9 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                                 search: value
                             },
                             first: count
-                        }
+                        },
+                        fetchPolicy: 'no-cache',
+                        errorPolicy: 'all'
                     });
                     products = result.data.products.edges
             }

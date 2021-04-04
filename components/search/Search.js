@@ -23,13 +23,56 @@ function Search() {
     })
 
     useEffect(() => {
-        dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
+        console.log('products', products)
+    }, [products])
 
+    useEffect(() => {
+        // dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
+
+        
         if (value.length > 2) {
             dispatch(getProductsBySearchInput(value, 10, activeKey))
         }
     }, [value, activeKey])
 
+    return (
+        <div className={`search-bar-wrap`}>
+            <Dropdown show>
+                <Dropdown.Toggle as="div" id="dropdown-basic">
+                    <div className={`search-bar`}>
+                        <div className={`search-bar__box`}>
+                            {/* <input
+                                type="text"
+                                ref={(input) => { searchInput = input }}
+                                className={`search-bar__box__input`}
+                                placeholder="جست و جو"
+                                value={searchValue ? searchValue : value}
+                                onChange={(e) => setValue(e.target.value)}
+                            /> */}
+                            <DelayInput
+                                minLength={2}
+                                delayTimeout={500}
+                                type="text"
+                                inputRef={(input) => { searchInput = input }}
+                                className={`search-bar__box__input`}
+                                placeholder="جست و جو"
+                                value={searchValue ? searchValue : value}
+                                onChange={(e) => setValue(e.target.value)}
+                            />
+                            <button className={`search-bar__box__icon`}>
+                                <img
+                                    className={`search-bar__box__icon__img`}
+                                    src={`/image/icon/Magnifying glass.svg`}
+                                    alt="search"
+                                />
+                            </button>
+                        </div>
+                    </div>
+                </Dropdown.Toggle>
+                {/* <SearchResultBox /> */}
+            </Dropdown>
+        </div>
+    )
 
     const SearchResultBox = () => {
         return (
@@ -61,21 +104,10 @@ function Search() {
         )
     }
 
-    const SearchResultBoxLoading = () => {
-        return (
-            <Dropdown.Menu>
-                <div className={`search-bar__suggestion`}>
-                    Loading
-                </div>
-            </Dropdown.Menu>
-        )
-    }
-
     const RenderResultItems = () => {
         return (
             <div className={`search-bar__suggestion__tab-content`}>
                 {products.map((product) => {
-                    console.log(product)
                     return (
                         <SearchResultItem key={product.node.id} product={product.node} />
                     )
@@ -123,8 +155,11 @@ function Search() {
                         <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
                     </div>
                     <div className={`search-bar__suggestion__tab-content__box`}>
-                        <strong>{stringToNumber(product.price)}</strong>
+                        <SearchResultItemAttrs attrs={product.paPublishers.nodes} />
                     </div>
+                    {/* <div className={`search-bar__suggestion__tab-content__box`}>
+                        <strong>{stringToNumber(product.price)}</strong>
+                    </div> */}
                 </div>
             </div>
         )
@@ -136,37 +171,6 @@ function Search() {
             <strong>{joinString}</strong>
         )
     }
-
-    return (
-        <div className={`search-bar-wrap`}>
-            <Dropdown show>
-                <Dropdown.Toggle as="div" id="dropdown-basic">
-                    <div className={`search-bar`}>
-                        <div className={`search-bar__box`}>
-                            <DelayInput
-                                minLength={2}
-                                delayTimeout={500}
-                                type="text"
-                                inputRef={(input) => { searchInput = input }}
-                                className={`search-bar__box__input`}
-                                placeholder="جست و جو"
-                                value={searchValue ? searchValue : value}
-                                onChange={(e) => setValue(e.target.value)}
-                            />
-                            <button className={`search-bar__box__icon`}>
-                                <img
-                                    className={`search-bar__box__icon__img`}
-                                    src={`/image/icon/Magnifying glass.svg`}
-                                    alt="search"
-                                />
-                            </button>
-                        </div>
-                    </div>
-                </Dropdown.Toggle>
-                <SearchResultBox />
-            </Dropdown>
-        </div>
-    )
 }
 
 export default Search

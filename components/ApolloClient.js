@@ -4,6 +4,8 @@ import {ApolloClient} from 'apollo-client';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {createHttpLink} from 'apollo-link-http';
 import {ApolloLink} from "apollo-link";
+import { onError } from "@apollo/client/link/error";
+
 
 import {IntrospectionFragmentMatcher} from 'apollo-cache-inmemory';
 import introspectionQueryResultData from '../fragmentTypes.json';
@@ -81,6 +83,17 @@ export const authLink = setContext((_, {headers}) => {
         }
     }
 });
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+        ),
+      );
+  
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+  });
 
 // Apollo GraphQL client.
 const client = new ApolloClient({

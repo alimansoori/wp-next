@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import ProductFragment from '../fragments/product-fragment';
 
 
 
@@ -13,7 +12,7 @@ query GET_PRODUCTS_FROM_TRANSLATORS($search: String, $first: Int) {
         products(first: $first) {
           edges {
             node {
-              ...ProductForProductsPage
+              name
             }
           }
         }
@@ -27,7 +26,6 @@ query GET_PRODUCTS_FROM_TRANSLATORS($search: String, $first: Int) {
     }
   }
 }
-${ProductFragment.fragments.ProductForProductsPage}
 `;
 
 export default GET_PRODUCTS_FROM_TRANSLATORS;
