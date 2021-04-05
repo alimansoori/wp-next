@@ -23,10 +23,6 @@ function Search() {
     })
 
     useEffect(() => {
-        console.log('products', products)
-    }, [products])
-
-    useEffect(() => {
         dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
 
         if (value.length > 2) {
@@ -142,7 +138,7 @@ function Search() {
 
     return (
         <div className={`search-bar-wrap`}>
-            <Dropdown show>
+            <Dropdown>
                 <Dropdown.Toggle as="div" id="dropdown-basic">
                     <div className={`search-bar`}>
                         <div className={`search-bar__box`}>
