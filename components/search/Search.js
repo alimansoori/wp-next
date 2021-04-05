@@ -127,7 +127,14 @@ function Search() {
     }
 
     const SearchResultItemAttrs = ({ attrs }) => {
-        const joinString = attrs.map(e => e.name).join(',')
+        const joinString = attrs.map(e => {
+            var name = e.name
+            var split = name.split("|")
+
+            var nameRes = split.length ? split[0] : e.name
+
+            return nameRes
+        }).join(',')
         return (
             <small>{joinString}</small>
         )
