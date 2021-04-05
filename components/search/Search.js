@@ -58,7 +58,7 @@ function Search() {
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
                     </Tabs>
-                    {products.length ? <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button> : null}
+                    {products.length ? <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button> : null }
                 </div>
             </Dropdown.Menu>
         )

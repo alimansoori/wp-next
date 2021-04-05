@@ -5,6 +5,7 @@ import GET_PRODUCTS from "../../gql/queries/get-products";
 import GET_PRODUCTS_FROM_WRITERS from "../../gql/queries/get-products-from-writers";
 import GET_PRODUCTS_FROM_TRANSLATORS from "../../gql/queries/get-products-from-translators";
 import GET_PRODUCTS_FROM_PUBLISHERS from "../../gql/queries/get-products-from-publishers";
+import GET_PRODUCTS_FROM_ALL from "../../gql/queries/get-products-from-all";
 
 export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
     return async dispatch => {
@@ -72,16 +73,27 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                     break;
 
                 case 'all':
-                    // result = await client.query({
-                    //     query: GET_PRODUCTS,
-                    //     variables: {
-                    //         search: value,
-                    //         first: count
-                    //     },
-                    //     fetchPolicy: 'network-only',
-                    //     errorPolicy: 'all'
-                    // });
-                    // products = result.data.paTranslator.edges
+                    result = await client.query({
+                        query: GET_PRODUCTS_FROM_ALL,
+                        variables: {
+                            search: value,
+                            first: count
+                        },
+                        fetchPolicy: 'network-only',
+                        errorPolicy: 'all'
+                    });
+
+                    products = [...result.data.products.edges, ...products];
+                    
+                    result.data.paPublishers.edges.map(elem => {
+                        products = [...elem.node.products.edges, ...products];
+                    })
+                    result.data.paWriters.edges.map(elem => {
+                        products = [...elem.node.products.edges, ...products];
+                    })
+                    result.data.paTranslators.edges.map(elem => {
+                        products = [...elem.node.products.edges, ...products];
+                    })
                     break;
 
                 default:
