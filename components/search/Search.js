@@ -43,22 +43,22 @@ function Search() {
                         onSelect={(selectedKey) => setActiveKey(selectedKey)}
                     >
                         <Tab eventKey="topic" title="موضوع">
-                            {products.length && <RenderResultItems />}
+                            {products.length ? <RenderResultItems /> : null}
                         </Tab>
                         <Tab eventKey="writer" title="نویسنده">
-                            {products.length && <RenderResultItems />}
+                            {products.length ? <RenderResultItems /> : null}
                         </Tab>
                         <Tab eventKey="translator" title="مترجم">
-                            {products.length && <RenderResultItems />}
+                            {products.length ? <RenderResultItems /> : null}
                         </Tab>
                         <Tab eventKey="publisher" title="ناشر">
-                            {products.length && <RenderResultItems />}
+                            {products.length ? <RenderResultItems /> : null}
                         </Tab>
                         <Tab eventKey="all" title="همه">
-                            {products.length && <RenderResultItems />}
+                            {products.length ? <RenderResultItems /> : null}
                         </Tab>
                     </Tabs>
-                    {products.length && <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>}
+                    {products.length ? <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button> : null}
                 </div>
             </Dropdown.Menu>
         )
