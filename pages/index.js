@@ -29,11 +29,11 @@ const Home = (props) => {
   }, []);
 
   return (
-    // <BasePage
-    //   homePage
-    //   className={`home-page`}
-    //   seo={homePageData.seo}
-    // >
+    <BasePage
+      homePage
+      className={`home-page`}
+      seo={homePageData.seo}
+    >
       <div className={`landing`}>
         {/* <LandingLoading /> */}
         <div className={`landing-hero`}>
@@ -98,6 +98,7 @@ const Home = (props) => {
           </button>
         </div>
       </div>
+    </BasePage>
   )
 }
 

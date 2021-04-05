@@ -17,26 +17,26 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
 
         try {
             if (!value) value = "fkdfkasllfasdsfh";
-            let result = null
-            let products = {}
+            var result = null
+            var products = []
 
             switch (activeKey) {
                 case 'translator':
+                    
                     result = await client.query({
                         query: GET_PRODUCTS_FROM_TRANSLATORS,
                         variables: {
-                            where: {
-                                search: value
-                            },
+                            search: value,
                             first: count
                         },
-                        fetchPolicy: 'no-cache',
+                        fetchPolicy: 'network-only',
                         errorPolicy: 'all'
                     });
-                    result.data.paTranslators.edges.map(translator => {
-                        products = translator.node.products.edges
-                        // products = Object.assign(translator.node.products.edges, products)
+                    
+                    result.data.paTranslators.edges.map(elem => {
+                        products = [...elem.node.products.edges, ...products];
                     })
+                    
                     break;
 
                 case 'writer':
@@ -46,12 +46,12 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                             search: value,
                             first: count
                         },
-                        fetchPolicy: 'no-cache',
+                        fetchPolicy: 'network-only',
                         errorPolicy: 'all'
                     });
-                    result.data.paWriters.edges.map(writer => {
-                        products = writer.node.products.edges
-                        // products = Object.assign(writer.node.products.edges, products)
+                    
+                    result.data.paWriters.edges.map(elem => {
+                        products = [...elem.node.products.edges, ...products];
                     })
                     break;
 
@@ -59,48 +59,42 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                     result = await client.query({
                         query: GET_PRODUCTS_FROM_PUBLISHERS,
                         variables: {
-                            where: {
-                                search: value
-                            },
+                            search: value,
                             first: count
                         },
-                        fetchPolicy: 'no-cache',
+                        fetchPolicy: 'network-only',
                         errorPolicy: 'all'
                     });
-                    result.data.paPublishers.edges.map(publisher => {
-                        products = publisher.node.products.edges
-                        // products = Object.assign(publisher.node.products.edges, products)
+                    
+                    result.data.paPublishers.edges.map(elem => {
+                        products = [...elem.node.products.edges, ...products];
                     })
                     break;
 
                 case 'all':
-                    result = await client.query({
-                        query: GET_PRODUCTS,
-                        variables: {
-                            where: {
-                                search: value
-                            },
-                            first: count
-                        },
-                        fetchPolicy: 'no-cache',
-                        errorPolicy: 'all'
-                    });
+                    // result = await client.query({
+                    //     query: GET_PRODUCTS,
+                    //     variables: {
+                    //         search: value,
+                    //         first: count
+                    //     },
+                    //     fetchPolicy: 'network-only',
+                    //     errorPolicy: 'all'
+                    // });
                     // products = result.data.paTranslator.edges
                     break;
 
                 default:
-                    result = await client.query({
-                        query: GET_PRODUCTS,
-                        variables: {
-                            where: {
-                                search: value
-                            },
-                            first: count
-                        },
-                        fetchPolicy: 'no-cache',
-                        errorPolicy: 'all'
-                    });
-                    products = result.data.products.edges
+                result = await client.query({
+                    query: GET_PRODUCTS,
+                    variables: {
+                        search: value,
+                        first: count
+                    },
+                    fetchPolicy: 'network-only',
+                    errorPolicy: 'all'
+                });
+                products = result.data.products.edges
             }
 
             dispatch({
@@ -110,12 +104,12 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                 }
             });
         } catch (error) {
-            dispatch({
-                type: searchConstants.SEARCH_FAILURE,
-                payload: {
-                    error: error.response.data.message
-                }
-            });
+            // dispatch({
+            //     type: searchConstants.SEARCH_FAILURE,
+            //     payload: {
+            //         error: error.response.data.message
+            //     }
+            // });
         }
     }
 }

@@ -1,13 +1,9 @@
 import fetch from 'node-fetch';
-import {setContext} from "@apollo/client/link/context";
-import {ApolloClient} from 'apollo-client';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {createHttpLink} from 'apollo-link-http';
-import {ApolloLink} from "apollo-link";
-import { onError } from "@apollo/client/link/error";
+import { setContext } from "@apollo/client/link/context";
+import { ApolloClient, InMemoryCache, ApolloLink, createHttpLink } from '@apollo/client';
 
 
-import {IntrospectionFragmentMatcher} from 'apollo-cache-inmemory';
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import introspectionQueryResultData from '../fragmentTypes.json';
 
 import clientConfig from './../client-config';
@@ -28,7 +24,7 @@ export const middleware = new ApolloLink((operation, forward) => {
     const session = (process.browser) ? localStorage.getItem("wp-next-session") : null;
 
     if (session) {
-        operation.setContext(({headers = {}}) => ({
+        operation.setContext(({ headers = {} }) => ({
             headers: {
                 "woocommerce-session": `Session ${session}`
             }
@@ -51,7 +47,7 @@ export const afterware = new ApolloLink((operation, forward) => {
          * Check for session header and update session in local storage accordingly.
          */
         const context = operation.getContext();
-        const {response: {headers}} = context;
+        const { response: { headers } } = context;
         const session = headers.get("woocommerce-session");
 
         if (session) {
@@ -72,7 +68,7 @@ export const afterware = new ApolloLink((operation, forward) => {
     });
 });
 
-export const authLink = setContext((_, {headers}) => {
+export const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
     const token = process.browser ? localStorage.getItem('wp-next-token') : null;
     // return the headers to the context so httpLink can read them
@@ -83,17 +79,6 @@ export const authLink = setContext((_, {headers}) => {
         }
     }
 });
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors)
-      graphQLErrors.forEach(({ message, locations, path }) =>
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-        ),
-      );
-  
-    if (networkError) console.log(`[Network error]: ${networkError}`);
-  });
 
 // Apollo GraphQL client.
 const client = new ApolloClient({
@@ -107,7 +92,7 @@ const client = new ApolloClient({
             )
         )
     ),
-    cache: new InMemoryCache({fragmentMatcher}),
+    cache: new InMemoryCache({ fragmentMatcher }),
 });
 
 export default client;

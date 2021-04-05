@@ -1,6 +1,4 @@
 import { gql } from '@apollo/client';
-import ProductFragment from '../fragments/product-fragment';
-
 
 
 const GET_PRODUCTS_FROM_WRITERS = gql` 
@@ -13,7 +11,34 @@ query GET_PRODUCTS_FROM_WRITERS($search: String, $first: Int) {
         products(first: $first) {
           edges {
             node {
-              ...ProductForProductsPage
+              id
+              databaseId
+              name
+              type
+              slug
+              image {
+                altText
+                sourceUrl(size: SHOP_CATALOG)
+                title
+              }
+              paPublishers {
+                nodes {
+                  name
+                }
+              }
+              paTranslators {
+                nodes {
+                  name
+                }
+              }
+              paWriters {
+                nodes {
+                  name
+                }
+              }
+              ... on SimpleProduct {
+                price(format: RAW)
+              }
             }
           }
         }
@@ -27,7 +52,6 @@ query GET_PRODUCTS_FROM_WRITERS($search: String, $first: Int) {
     }
   }
 }
-${ProductFragment.fragments.ProductForProductsPage}
 `;
 
 export default GET_PRODUCTS_FROM_WRITERS;

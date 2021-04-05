@@ -1,15 +1,39 @@
 import { gql } from '@apollo/client';
-import ProductFragment from '../fragments/product-fragment';
-
-
 
 const GET_PRODUCTS = gql` 
-query GET_PRODUCTS($where: RootQueryToProductConnectionWhereArgs, $first: Int) {
-	products(where: $where, first: $first) {
+query GET_PRODUCTS($search: String, $first: Int) {
+	products(where: {search: $search}, first: $first) {
         edges {
           cursor
           node {
-              ...ProductForProductsPage
+            id
+            databaseId
+            name
+            type
+            slug
+            image {
+              altText
+              sourceUrl(size: SHOP_CATALOG)
+              title
+            }
+            paPublishers {
+              nodes {
+                name
+              }
+            }
+            paTranslators {
+              nodes {
+                name
+              }
+            }
+            paWriters {
+              nodes {
+                name
+              }
+            }
+            ... on SimpleProduct {
+              price(format: RAW)
+            }
           }
         }
         pageInfo {
@@ -25,7 +49,6 @@ query GET_PRODUCTS($where: RootQueryToProductConnectionWhereArgs, $first: Int) {
         }
     }
 }
-${ProductFragment.fragments.ProductForProductsPage}
 `;
 
 export default GET_PRODUCTS;

@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client';
 
 
-
 const GET_PRODUCTS_FROM_TRANSLATORS = gql` 
 query GET_PRODUCTS_FROM_TRANSLATORS($search: String, $first: Int) {
 	paTranslators(where: {search: $search}) {
@@ -12,7 +11,34 @@ query GET_PRODUCTS_FROM_TRANSLATORS($search: String, $first: Int) {
         products(first: $first) {
           edges {
             node {
+              id
+              databaseId
               name
+              type
+              slug
+              image {
+                altText
+                sourceUrl(size: SHOP_CATALOG)
+                title
+              }
+              paPublishers {
+                nodes {
+                  name
+                }
+              }
+              paTranslators {
+                nodes {
+                  name
+                }
+              }
+              paWriters {
+                nodes {
+                  name
+                }
+              }
+              ... on SimpleProduct {
+                price(format: RAW)
+              }
             }
           }
         }
