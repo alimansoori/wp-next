@@ -6,8 +6,8 @@ export default function BasePage(props) {
     const { className, children, seo, homePage } = props
 
     const pageType = homePage ? 'home-page' : 'base-page'
-    const canonical = seo.canonical ? useCanonical(seo.canonical) : null
-    const opengraphUrl = seo.opengraphUrl ? useCanonical(seo.opengraphUrl) : null
+    const canonical = seo && seo.canonical ? useCanonical(seo.canonical) : null
+    const opengraphUrl = seo && seo.opengraphUrl ? useCanonical(seo.opengraphUrl) : null
     return (
         <>
             <Head>

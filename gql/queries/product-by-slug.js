@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import PostTypeSeoFrg from '../fragments/post-type-seo-fragment'
 
 const PRODUCT_BY_SLUG_QUERY = gql` 
 fragment publisher on PaPublisher {
@@ -33,10 +34,6 @@ fragment related on Product {
 	...on SimpleProduct {
 	  price
 	  regularPrice
-	  usdPrice {
-		regularPriceUsd
-		salePriceUsd
-	  }
 	}
 	image {
 		... image
@@ -65,6 +62,9 @@ query Product($id: ID!) {
 	  averageRating
 	  slug
 	  description
+	  seo {
+        ...PostTypeSeoFrg
+      }
 	  related {
 		nodes {
 			...related
@@ -93,17 +93,7 @@ query Product($id: ID!) {
 		  name
 		}
 	  }
-	  paAdPublishDates {
-		nodes {
-		  name
-		}
-	  }
 	  paBookCodes {
-		nodes {
-		  name
-		}
-	  }
-	  paBookPrintSeries {
 		nodes {
 		  name
 		}
@@ -137,10 +127,6 @@ query Product($id: ID!) {
 			price
 			id
 			regularPrice
-			usdPrice {
-			regularPriceUsd
-			salePriceUsd
-		}
 	  }
 	  ... on VariableProduct {
 		price
@@ -164,6 +150,7 @@ query Product($id: ID!) {
 	  }
 	}
   }
+  ${PostTypeSeoFrg.fragments.PostTypeSeoFrg}
 `;
 
 export default PRODUCT_BY_SLUG_QUERY;

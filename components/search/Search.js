@@ -6,6 +6,7 @@ import { DelayInput } from 'react-delay-input'
 import { getProductsBySearchInput } from '../../redux/actions/search.actions'
 import { searchConstants } from '../../redux/actions/constants'
 import { stringToNumber } from '../../functions'
+import Link from 'next/link'
 
 function Search() {
     const dispatch = useDispatch()
@@ -54,19 +55,20 @@ function Search() {
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
                     </Tabs>
-                    {products.length ? <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button> : null }
+                    {products.length ? <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button> : null}
                 </div>
             </Dropdown.Menu>
         )
     }
 
     const RenderResultItems = () => {
-        
+
         return (
             <div className={`search-bar__suggestion__tab-content`}>
                 {products.map((product) => {
                     return (
                         <SearchResultItem key={product.node.id} product={product.node} />
+
                     )
                 })}
             </div>
@@ -95,30 +97,35 @@ function Search() {
 
     const SearchResultItem = ({ product }) => {
         return (
-            <div className={`search-bar__suggestion__tab-content-wrap`}>
-                <div className={`search-bar__suggestion__tab-content__pic`}>
-                    <RenderSearchResultItemImage img={product.image} />
-                </div>
-                <div className={`search-bar__suggestion__tab-content__box-wrap`}>
-                    <div className={`search-bar__suggestion__tab-content__box`}>
-                        <strong>{product.name}</strong>
+
+            <Link as={`/product/${product.slug}`}
+                href={`/product/[slug]`} >
+                <a className={`search-bar__suggestion__tab-content-wrap`}>
+                    <div className={`search-bar__suggestion__tab-content__pic`}>
+                        <RenderSearchResultItemImage img={product.image} />
                     </div>
-                    <div className={`search-bar__suggestion__tab-content__box`}>
-                        <SearchResultItemAttrs attrs={product.paWriters.nodes} />
+                    <div className={`search-bar__suggestion__tab-content__box-wrap`}>
+                        <div className={`search-bar__suggestion__tab-content__box`}>
+                            <strong>{product.name}</strong>
+                        </div>
+                        <div className={`search-bar__suggestion__tab-content__box`}>
+                            <SearchResultItemAttrs attrs={product.paWriters.nodes} />
+                        </div>
                     </div>
-                </div>
-                <div className={`search-bar__suggestion__tab-content__box-wrap`}>
-                    <div className={`search-bar__suggestion__tab-content__box`}>
-                        <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
+                    <div className={`search-bar__suggestion__tab-content__box-wrap`}>
+                        <div className={`search-bar__suggestion__tab-content__box`}>
+                            <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
+                        </div>
+                        <div className={`search-bar__suggestion__tab-content__box`}>
+                            <SearchResultItemAttrs attrs={product.paPublishers.nodes} />
+                        </div>
+                        <div className={`search-bar__suggestion__tab-content__box`}>
+                            <small>{stringToNumber(product.price)}</small>
+                        </div>
                     </div>
-                    <div className={`search-bar__suggestion__tab-content__box`}>
-                        <SearchResultItemAttrs attrs={product.paPublishers.nodes} />
-                    </div>
-                    <div className={`search-bar__suggestion__tab-content__box`}>
-                        <small>{stringToNumber(product.price)}</small>
-                    </div>
-                </div>
-            </div>
+                </a>
+            </Link>
+
         )
     }
 

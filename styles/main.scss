@@ -31,7 +31,10 @@ h1 {
 @import '../components/signUpModal/signUpModal';
 @import '../components/cart/cart';
 @import '../components/lightMode/lightMode';
+@import '../components/productHeader/productHeader';
+@import '../components/productHero/productHero';
 
 
 // Pages
 @import '../pages/landing.scss';
+@import '../pages/product/product';

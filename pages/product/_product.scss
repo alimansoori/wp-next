@@ -1,0 +1,40 @@
+.product-wrap {
+  .product-header-wrap {
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .product__body {
+    width: 90%;
+    margin: 0 auto 20px auto;
+    @include flex-bet;
+    align-items: flex-start;
+    .product__body__main {
+      width: 70%;
+      margin: 0 30px 0 auto;
+    }
+    .product__body__side {
+      width: 20%;
+      display: flex;
+      justify-content: flex-end;
+      .p-side-box-wrap {
+        width: 250px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .product__body {
+    width: 100% !important;
+  }
+
+  .product__body__side {
+    width: 0 !important;
+  }
+
+  .product__body__main {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
