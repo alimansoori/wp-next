@@ -5,6 +5,8 @@ import PRODUCT_BY_SLUG_QUERY from '../../gql/queries/product-by-slug';
 import BasePage from '../../components/BasePage';
 import ProductHeader from '../../components/productHeader/ProductHeader';
 import ProductHero from '../../components/productHero/ProductHero';
+import ProductInfo from '../../components/productInfo/ProductInfo';
+import ProductSuggestion from '../../components/productSuggestion/ProductSuggestion';
 
 const Product = ({ productData, router }) => {
 
@@ -24,8 +26,8 @@ const Product = ({ productData, router }) => {
                     <div className="product__body">
                         <div className="product__body__main">
                             <ProductHero product={productData} />
-                            {/* <ProductInfo /> */}
-                            {/* <ProductSuggestion /> */}
+                            <ProductInfo product={productData} />
+                            <ProductSuggestion products={productData.related.nodes} />
                         </div>
                         <div className="product__body__side">
                             {/* <ProductSidebar /> */}

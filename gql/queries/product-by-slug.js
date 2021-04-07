@@ -23,36 +23,44 @@ fragment image on MediaItem {
   }
   
 
-fragment related on Product {
-	id
-	name
-	type
-	slug
-	databaseId
-	averageRating
-	description
-	...on SimpleProduct {
-	  price
-	  regularPrice
+fragment relatedFRG on ProductToProductConnection {
+	nodes {
+		id
+		name
+		slug
+		databaseId
+		averageRating
+		...on SimpleProduct {
+			price
+			regularPrice
+		}
+		image {
+			... image
+		}
+		paPublishers {
+			nodes {
+				...publisher
+			}
+		}
+		paTranslators {
+			nodes {
+				...translator
+			}
+		}
+		paWriters {
+			nodes {
+				...writer
+			}
+		}
 	}
-	image {
-		... image
-	}
-	paPublishers {
-	  nodes {
-		...publisher
-	  }
-	}
-	paTranslators {
-	  nodes {
-		...translator
-	  }
-	}
-	paWriters {
-	  nodes {
-		...writer
-	  }
-	}
+  }
+
+  fragment ExtraFields on Product_Extrafields {
+	extraParagraph
+	extraAbout
+	fieldGroupName
+	subTitle
+	titleEn
   }
 
 query Product($id: ID!) {
@@ -62,13 +70,15 @@ query Product($id: ID!) {
 	  averageRating
 	  slug
 	  description
+	  shortDescription
+	  extraFields {
+		...ExtraFields
+	  }
 	  seo {
         ...PostTypeSeoFrg
       }
 	  related {
-		nodes {
-			...related
-		}
+		...relatedFRG
 	  }
 	  image {
 		id

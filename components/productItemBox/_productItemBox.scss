@@ -1,0 +1,72 @@
+.p-sug-box__container__item {
+  margin: 15px 0;
+  text-align: right;
+  background: #ebebeb;
+  box-shadow: $mainBoxShadow;
+  .p-sug-box__container__item__book {
+    position: relative;
+    transition: all 300ms;
+    &:hover .p-sug-box__container__item__header__icon-wrap {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .p-sug-box__container__item__book__pic {
+      width: 100%;
+    }
+
+    .p-sug-box__container__item__header__icon-wrap {
+      @include flex-org-r;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 300ms;
+      .p-sug-box__container__item__header__icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+        background: $mainBlue;
+        border-radius: 10px;
+        @include flex-org;
+        cursor: pointer;
+        .p-sug-box__container__item__header__icon__img {
+          width: 15px;
+        }
+      }
+    }
+  }
+
+  .p-sug-box__container__item__header {
+    padding: 10px 5px;
+    @include flex-bet-r;
+    .p-sug-box__container__item__header__title {
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #000000;
+    }
+  }
+
+  .p-sug-box__container__item__details {
+    padding: 0 5px;
+    .p-sug-box__container__item__details__author,
+    .p-sug-box__container__item__details__publisher {
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #7e7e7e;
+    }
+
+    .p-sug-box__container__item__details__price {
+      direction: rtl;
+      display: block;
+      font-size: 16px;
+      color: $mainBlue;
+      padding: 10px 0;
+    }
+  }
+}
