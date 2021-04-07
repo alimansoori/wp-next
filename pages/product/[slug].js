@@ -7,6 +7,7 @@ import ProductHeader from '../../components/productHeader/ProductHeader';
 import ProductHero from '../../components/productHero/ProductHero';
 import ProductInfo from '../../components/productInfo/ProductInfo';
 import ProductSuggestion from '../../components/productSuggestion/ProductSuggestion';
+import ProductSidebar from '../../components/productSidebar/ProductSidebar';
 
 const Product = ({ productData, router }) => {
 
@@ -30,7 +31,7 @@ const Product = ({ productData, router }) => {
                             <ProductSuggestion products={productData.related.nodes} />
                         </div>
                         <div className="product__body__side">
-                            {/* <ProductSidebar /> */}
+                            <ProductSidebar />
                         </div>
                     </div>
                 </div>
