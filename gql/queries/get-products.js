@@ -1,53 +1,48 @@
 import { gql } from '@apollo/client';
 
 const GET_PRODUCTS = gql` 
-query GET_PRODUCTS($search: String, $first: Int) {
-	products(where: {search: $search}, first: $first) {
-        edges {
-          cursor
-          node {
-            id
-            databaseId
+query GET_PRODUCTS($search: String, $offset: Int, $size: Int) {
+  products(where: {search: $search, offsetPagination: {offset: $offset, size: $size}}) {
+    edges {
+      node {
+        id
+        databaseId
+        name
+        type
+        slug
+        image {
+          altText
+          sourceUrl(size: SHOP_CATALOG)
+          title
+        }
+        paPublishers {
+          nodes {
             name
-            type
-            slug
-            image {
-              altText
-              sourceUrl(size: SHOP_CATALOG)
-              title
-            }
-            paPublishers {
-              nodes {
-                name
-              }
-            }
-            paTranslators {
-              nodes {
-                name
-              }
-            }
-            paWriters {
-              nodes {
-                name
-              }
-            }
-            ... on SimpleProduct {
-              price(format: RAW)
-            }
           }
         }
-        pageInfo {
-          endCursor
-          hasNextPage
-          hasPreviousPage
-          seo {
-            schema {
-              raw
-            }
+        paTranslators {
+          nodes {
+            name
           }
-          startCursor
         }
+        paWriters {
+          nodes {
+            name
+          }
+        }
+        ... on SimpleProduct {
+          price(format: RAW)
+        }
+      }
     }
+    pageInfo {
+      offsetPagination {
+        hasMore
+        hasPrevious
+        total
+      }
+    }
+  }
 }
 `;
 

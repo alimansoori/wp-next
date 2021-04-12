@@ -2,6 +2,7 @@ import { productConstants } from "../actions/constants";
 
 const initState = {
     products: [],
+    pageInfo: null,
     error: null,
     loading: false,
     searchInput: {
@@ -62,10 +63,25 @@ export default (state = initState, action) => {
                 loading: false
             }
             break;
-        case productConstants.SEARCH_PRODUCTS_REQUEST:
+        case productConstants.GET_ALL_PRODUCTS_REQUEST:
             state = {
                 ...state,
                 loading: true
+            }
+            break;
+        case productConstants.GET_ALL_PRODUCTS_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                products: state.products.concat(action.payload.products),
+                pageInfo: action.payload.pageInfo
+            }
+            break;
+        case productConstants.GET_ALL_PRODUCTS_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+                loading: false
             }
             break;
         case productConstants.PRODUCTS_NEW_DATA:
@@ -98,6 +114,13 @@ export default (state = initState, action) => {
                         categoryIn: action.payload.categoryIn
                     }
                 },
+            };
+            break;
+        case productConstants.PRODUCTS_INIT:
+            state = {
+                ...state,
+                products: action.payload.products,
+                pageInfo: action.payload.pageInfo
             };
             break;
     }

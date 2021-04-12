@@ -108,8 +108,7 @@ export const getServerSideProps = async (context) => {
   try {
     const result = await client.query({
       query: GET_HOME_PAGE,
-      partialRefetch: true,
-      refetch: true
+      partialRefetch: true
     });
     homePageData = result.data.homepage
   } catch (e) {

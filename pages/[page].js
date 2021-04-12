@@ -87,8 +87,7 @@ export const getServerSideProps = async ({ query, params }) => {
     const result = await client.query({
       query: GET_PAGE,
       variables: { id },
-      partialRefetch: true,
-      refetch: true
+      partialRefetch: true
     });
     pageData = result.data.page
   } catch (e) {

@@ -3,23 +3,45 @@ import SEARCH_PRODUCTS from "../../gql/queries/search-products";
 import client from "../../components/ApolloClient";
 import GET_PRODUCTS from "../../gql/queries/get-products";
 
-export const getProducts = () => {
+export const getProducts = (search, size, offset) => {
     return async dispatch => {
+        dispatch({
+            type: productConstants.GET_ALL_PRODUCTS_REQUEST
+        });
+
         try {
             const result = await client.query({
-                query: GET_PRODUCTS
+                query: GET_PRODUCTS,
+                variables: {
+                    search,
+                    size,
+                    offset
+                },
+                fetchPolicy: 'cache-first'
             })
 
-            return result.data.products
+            const { pageInfo, edges } = result.data.products;
 
-            // console.log(result)
-            
+            dispatch({
+                type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
+                payload: {
+                    products: edges,
+                    pageInfo: pageInfo
+                }
+            });
+
         } catch (error) {
-            console.log('Error', error)
+            dispatch({
+                type: productConstants.GET_ALL_PRODUCTS_FAILURE,
+                payload: {
+                    error: error.response.data.message
+                }
+            });
         }
-        return 
+        return
     }
 }
+
 
 // export const getProductsAndCategories = () => {
 //     return async dispatch => {
