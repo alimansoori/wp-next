@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import PostTypeSeoFrg from '../fragments/post-type-seo-fragment'
 
 const PRODUCT_BY_SLUG_QUERY = gql` 
 fragment publisher on PaPublisher {
@@ -20,7 +19,7 @@ fragment image on MediaItem {
 	sourceUrl
 	srcSet
 	uri
-  }
+}
   
 
 fragment relatedFRG on ProductToProductConnection {
@@ -55,14 +54,6 @@ fragment relatedFRG on ProductToProductConnection {
 	}
   }
 
-  fragment ExtraFields on Product_Extrafields {
-	extraParagraph
-	extraAbout
-	fieldGroupName
-	subTitle
-	titleEn
-  }
-
 query Product($id: ID!) {
 	product(id: $id, idType: SLUG) {
 	  id
@@ -71,11 +62,26 @@ query Product($id: ID!) {
 	  slug
 	  description
 	  shortDescription
-	  extraFields {
-		...ExtraFields
-	  }
 	  seo {
-        ...PostTypeSeoFrg
+        title
+		metaDesc
+		metaKeywords
+		canonical
+		opengraphTitle
+		opengraphUrl
+		opengraphSiteName
+		opengraphType
+		opengraphPublisher
+		opengraphPublishedTime
+		opengraphModifiedTime
+		opengraphImage {
+			sourceUrl
+		}
+		twitterTitle
+		twitterDescription
+		twitterImage {
+			sourceUrl
+		}
       }
 	  related {
 		...relatedFRG
@@ -103,22 +109,17 @@ query Product($id: ID!) {
 		  name
 		}
 	  }
-	  paBookCodes {
+	  paBookSeriesPrints {
 		nodes {
 		  name
 		}
 	  }
-	  paBookSizes {
+	  paDimensions {
 		nodes {
 		  name
 		}
 	  }
 	  paCoverTypes {
-		nodes {
-		  name
-		}
-	  }
-	  paIsbns {
 		nodes {
 		  name
 		}
@@ -160,7 +161,6 @@ query Product($id: ID!) {
 	  }
 	}
   }
-  ${PostTypeSeoFrg.fragments.PostTypeSeoFrg}
 `;
 
 export default PRODUCT_BY_SLUG_QUERY;

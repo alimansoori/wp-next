@@ -14,12 +14,12 @@ export default function ProductInfo({ product }) {
                 <h1 className="p-info-box__tab-content__box__title">
                   {`پاراگرافی از کتاب`}
                 </h1>
-                <div
+                {/* <div
                   dangerouslySetInnerHTML={{
                     __html: product.extraFields.extraParagraph,
                   }}
                   className="p-info-box__tab-content__box__text"
-                />
+                /> */}
               </div>
             </Tab>
             <Tab eventKey="نظرات کاربران" title="نظرات کاربران">
@@ -149,12 +149,12 @@ export default function ProductInfo({ product }) {
               </div>
             </Tab>
             <Tab eventKey="درباره" title="درباره">
-              <div
+              {/* <div
                 dangerouslySetInnerHTML={{
                   __html: product.extraFields.extraAbout,
                 }}
                 className="p-info-box__tab-content__box p-info-box__tab-content__box--flex"
-              />
+              /> */}
             </Tab>
           </Tabs>
         </div>

@@ -60,10 +60,10 @@ export default function ProductItemBox({ product }) {
         </div>
         <div className="p-sug-box__container__item__details">
           <div className="p-sug-box__container__item__details__author">
-            {/* <RenderProductAttrs attrs={product.paWriters.nodes} /> */}
+            <RenderProductAttrs attrs={product.paWriters.nodes} />
           </div>
           <div className="p-sug-box__container__item__details__publisher">
-            {/* <RenderProductAttrs attrs={product.paPublishers.nodes} /> */}
+            <RenderProductAttrs attrs={product.paPublishers.nodes} />
           </div>
           <strong className="p-sug-box__container__item__details__price">
             {stringToNumber(product.price) + 'ت'}

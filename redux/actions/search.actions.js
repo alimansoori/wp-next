@@ -101,7 +101,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                     query: GET_PRODUCTS,
                     variables: {
                         search: value,
-                        first: count
+                        size: count
                     },
                     fetchPolicy: 'network-only',
                     errorPolicy: 'all'

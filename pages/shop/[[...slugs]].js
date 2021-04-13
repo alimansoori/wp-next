@@ -114,7 +114,9 @@ const Shop = ({ productsData, router }) => {
 export const getServerSideProps = async ({ query }) => {
     let productsData = [];
     const { slugs, q } = query
-    const id = slugs ? slugs : query.id;
+    const cats = slugs ? slugs : query.id;
+
+    console.log(cats)
 
     try {
         const result = await client.query({
