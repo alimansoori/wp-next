@@ -11,7 +11,7 @@ import Link from 'next/link'
 function Search() {
     const dispatch = useDispatch()
     const router = useRouter()
-    const searchValue = router.query.search
+    const searchValue = router.query.q
     const { products, loading } = useSelector(state => state.search)
     const [value, setValue] = useState('')
     const [activeKey, setActiveKey] = useState('topic')
@@ -25,6 +25,16 @@ function Search() {
 
     useEffect(() => {
         dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
+
+        if (value.length > 0) {
+            router.push({
+                pathname: "/shop/[[...slugs]]",
+                query: {
+                    ...router.query,
+                    q: value,
+                },
+            });
+        }
 
         if (value.length > 2) {
             dispatch(getProductsBySearchInput(value, 10, activeKey))
@@ -74,7 +84,6 @@ function Search() {
                 {products.map((product) => {
                     return (
                         <SearchResultItem key={product.node.id} product={product.node} />
-
                     )
                 })}
             </div>

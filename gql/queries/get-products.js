@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const GET_PRODUCTS = gql` 
-query GET_PRODUCTS($search: String, $offset: Int, $size: Int) {
-  products(where: {search: $search, offsetPagination: {offset: $offset, size: $size}}) {
+query GET_PRODUCTS($search: String, $categoryIn: [String], $offset: Int, $size: Int, $orderby: [ProductsOrderbyInput] ) {
+  products(where: {search: $search, orderby: $orderby categoryIn: $categoryIn, offsetPagination: {offset: $offset, size: $size}}) {
     edges {
       node {
         id
@@ -12,7 +12,7 @@ query GET_PRODUCTS($search: String, $offset: Int, $size: Int) {
         slug
         image {
           altText
-          sourceUrl(size: SHOP_CATALOG)
+          sourceUrl(size: MEDIUM)
           title
         }
         paPublishers {

@@ -3,32 +3,87 @@ import SEARCH_PRODUCTS from "../../gql/queries/search-products";
 import client from "../../components/ApolloClient";
 import GET_PRODUCTS from "../../gql/queries/get-products";
 
-export const getProducts = (search, size, offset) => {
+export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offset=null) => {
     return async dispatch => {
         dispatch({
             type: productConstants.GET_ALL_PRODUCTS_REQUEST
         });
+
+        var orderby = [];
+
+        switch (sortby) {
+            case "1":
+                orderby.push({
+                    'field': 'DATE',
+                    'order': 'DESC'
+                })
+                break;
+            case "2":
+                orderby.push({
+                    'field': 'DATE',
+                    'order': 'ASC'
+                })
+                break;
+            case "3":
+                orderby.push({
+                    'field': 'PRICE',
+                    'order': 'DESC'
+                })
+                break;
+            case "4":
+                orderby.push({
+                    'field': 'PRICE',
+                    'order': 'ASC'
+                })
+                break;
+            case "5":
+                orderby.push({
+                    'field': 'RATING',
+                    'order': 'DESC'
+                })
+                break;
+        
+            default:
+                orderby.push({
+                    'field': 'DATE',
+                    'order': 'DESC'
+                })
+                break;
+        }
 
         try {
             const result = await client.query({
                 query: GET_PRODUCTS,
                 variables: {
                     search,
+                    categoryIn,
                     size,
-                    offset
+                    offset,
+                    orderby
                 },
                 fetchPolicy: 'cache-first'
             })
 
             const { pageInfo, edges } = result.data.products;
 
-            dispatch({
-                type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
-                payload: {
-                    products: edges,
-                    pageInfo: pageInfo
-                }
-            });
+            if (offset) {
+                dispatch({
+                    type: productConstants.GET_ADD_PRODUCTS_SUCCESS,
+                    payload: {
+                        products: edges,
+                        pageInfo: pageInfo
+                    }
+                });
+            } else {
+                dispatch({
+                    type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
+                    payload: {
+                        products: edges,
+                        pageInfo: pageInfo
+                    }
+                });
+            }
+            
 
         } catch (error) {
             dispatch({

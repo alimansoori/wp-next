@@ -73,6 +73,14 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 loading: false,
+                products: action.payload.products,
+                pageInfo: action.payload.pageInfo
+            }
+            break;
+        case productConstants.GET_ADD_PRODUCTS_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
                 products: state.products.concat(action.payload.products),
                 pageInfo: action.payload.pageInfo
             }

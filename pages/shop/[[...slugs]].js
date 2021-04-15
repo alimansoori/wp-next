@@ -14,9 +14,11 @@ import { getProducts } from '../../redux/actions/product.actions'
 
 const Shop = ({ productsData, router }) => {
     const dispatch = useDispatch()
+    const { slugs, q, sortby } = router.query
     const { products, loading, pageInfo } = useSelector(state => state.product)
     const [size, setSize] = useState(20)
-    const [offset, setOffset] = useState(0)
+    const [offset, setOffset] = useState(null)
+    const [selectedKeySortBy, setSelectedKeySortBy] = useState(sortby)
 
     useEffect(() => {
         console.log(productsData)
@@ -29,14 +31,38 @@ const Shop = ({ productsData, router }) => {
         });
     }, [])
 
-    function fetchProductsMore()  {
-        setOffset(offset+20)
+    useEffect(() => {
+        console.log(selectedKeySortBy)
+        if (selectedKeySortBy !== undefined) {
+            router.push({
+                pathname: "/shop/[[...slugs]]",
+                query: {
+                    ...router.query,
+                    sortby: selectedKeySortBy,
+                },
+            });
+        }
+
         dispatch(getProducts(
-            "",
+            q,
+            slugs,
+            sortby,
             size,
-            offset + 20
+            offset,
         ))
-    }
+    }, [selectedKeySortBy, slugs, q, offset, sortby])
+    
+
+    // function fetchProductsMore()  {
+    //     setOffset(offset+20)
+    //     dispatch(getProducts(
+    //         q,
+    //         slugs,
+    //         sortby,
+    //         size,
+    //         offset + 20,
+    //     ))
+    // }
 
 
     const Loader = () => {
@@ -69,15 +95,15 @@ const Shop = ({ productsData, router }) => {
                             </h1>
                         </div>
                         <div className="search__body__main__header__filter">
-                            <Dropdown>
+                            <Dropdown onSelect={(selectedKey) => setSelectedKeySortBy(selectedKey)}>
                                 <Dropdown.Toggle id="dropdown-basic">فیلتر ها</Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1">جدید ترین</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">قدیمی ترین</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">گران ترین</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-4">ارزان ترین</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-5">محبوب ترین</Dropdown.Item>
+                                    <Dropdown.Item eventKey="1">جدید ترین</Dropdown.Item>
+                                    <Dropdown.Item eventKey="2">قدیمی ترین</Dropdown.Item>
+                                    <Dropdown.Item eventKey="3">گران ترین</Dropdown.Item>
+                                    <Dropdown.Item eventKey="4">ارزان ترین</Dropdown.Item>
+                                    <Dropdown.Item eventKey="5">محبوب ترین</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
@@ -85,8 +111,8 @@ const Shop = ({ productsData, router }) => {
                     <div className="search__body__main__body" >
                         <InfiniteScroll
                             dataLength={products.length}
-                            next={() => fetchProductsMore()}
-                            hasMore={true}
+                            next={() => setOffset(offset+20)}
+                            hasMore={pageInfo ? pageInfo.offsetPagination.hasMore : true}
                             loader={<Loader />}
                         >
                             <div className="container-fluid" >
@@ -113,16 +139,59 @@ const Shop = ({ productsData, router }) => {
 
 export const getServerSideProps = async ({ query }) => {
     let productsData = [];
-    const { slugs, q } = query
+    const { slugs, q, sortby } = query
     const cats = slugs ? slugs : query.id;
+    const sortNum = sortby ? sortby : "1";
 
-    console.log(cats)
+    var orderby = [];
+
+    switch (sortNum) {
+        case "1":
+            orderby.push({
+                'field': 'DATE',
+                'order': 'DESC'
+            })
+            break;
+        case "2":
+            orderby.push({
+                'field': 'DATE',
+                'order': 'ASC'
+            })
+            break;
+        case "3":
+            orderby.push({
+                'field': 'PRICE',
+                'order': 'DESC'
+            })
+            break;
+        case "4":
+            orderby.push({
+                'field': 'PRICE',
+                'order': 'ASC'
+            })
+            break;
+        case "5":
+            orderby.push({
+                'field': 'RATING',
+                'order': 'DESC'
+            })
+            break;
+    
+        default:
+            orderby.push({
+                'field': 'DATE',
+                'order': 'DESC'
+            })
+            break;
+    }
 
     try {
         const result = await client.query({
             query: GET_PRODUCTS,
             variables: {
                 search: q,
+                categoryIn: cats,
+                orderby,
                 size: 20,
                 offset: null
             },

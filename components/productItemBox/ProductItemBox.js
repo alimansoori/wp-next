@@ -23,6 +23,8 @@ export default function ProductItemBox({ product }) {
 
     return (
       <img
+        width="189px"
+        height="253px"
         className="p-sug-box__container__item__book__pic"
         src={imageSrc}
         alt={imageAlt}
@@ -33,41 +35,43 @@ export default function ProductItemBox({ product }) {
   return (
     <Link as={`/product/${product.slug}`}
       href={`/product/[slug]`} >
-      <a className="p-sug-box__container__item">
-        <div className="p-sug-box__container__item__book">
-          <RenderImageItem />
-          <div className="p-sug-box__container__item__header__icon-wrap">
-            <div className="p-sug-box__container__item__header__icon">
-              <img
-                className="p-sug-box__container__item__header__icon__img"
-                src={`/image/icon/save.svg`}
-                alt="save"
-              />
+      <a>
+        <div className="p-sug-box__container__item">
+          <div className="p-sug-box__container__item__book">
+            <RenderImageItem />
+            <div className="p-sug-box__container__item__header__icon-wrap">
+              <div className="p-sug-box__container__item__header__icon">
+                <img
+                  className="p-sug-box__container__item__header__icon__img"
+                  src={`/image/icon/save.svg`}
+                  alt="save"
+                />
+              </div>
+              <div className="p-sug-box__container__item__header__icon">
+                <img
+                  className="p-sug-box__container__item__header__icon__img"
+                  src={`/image/icon/Basket.svg`}
+                  alt="basket"
+                />
+              </div>
             </div>
-            <div className="p-sug-box__container__item__header__icon">
-              <img
-                className="p-sug-box__container__item__header__icon__img"
-                src={`/image/icon/Basket.svg`}
-                alt="basket"
-              />
+          </div>
+          <div className="p-sug-box__container__item__header">
+            <strong className="p-sug-box__container__item__header__title">
+              {product.name}
+            </strong>
+          </div>
+          <div className="p-sug-box__container__item__details">
+            <div className="p-sug-box__container__item__details__author">
+              <RenderProductAttrs attrs={product.paWriters.nodes} />
             </div>
+            <div className="p-sug-box__container__item__details__publisher">
+              <RenderProductAttrs attrs={product.paPublishers.nodes} />
+            </div>
+            <strong className="p-sug-box__container__item__details__price">
+              {stringToNumber(product.price) + 'ت'}
+            </strong>
           </div>
-        </div>
-        <div className="p-sug-box__container__item__header">
-          <strong className="p-sug-box__container__item__header__title">
-            {product.name}
-          </strong>
-        </div>
-        <div className="p-sug-box__container__item__details">
-          <div className="p-sug-box__container__item__details__author">
-            <RenderProductAttrs attrs={product.paWriters.nodes} />
-          </div>
-          <div className="p-sug-box__container__item__details__publisher">
-            <RenderProductAttrs attrs={product.paPublishers.nodes} />
-          </div>
-          <strong className="p-sug-box__container__item__details__price">
-            {stringToNumber(product.price) + 'ت'}
-          </strong>
         </div>
       </a>
     </Link>
