@@ -5,6 +5,7 @@ const initState = {
     pageInfo: null,
     error: null,
     loading: false,
+    loadingAddToProducts: false,
     searchInput: {
         first: 50,
         last: null,
@@ -77,12 +78,25 @@ export default (state = initState, action) => {
                 pageInfo: action.payload.pageInfo
             }
             break;
+        case productConstants.GET_ADD_PRODUCTS_REQUEST:
+            state = {
+                ...state,
+                loadingAddToProducts: true
+            }
+            break;
         case productConstants.GET_ADD_PRODUCTS_SUCCESS:
             state = {
                 ...state,
-                loading: false,
+                loadingAddToProducts: false,
                 products: state.products.concat(action.payload.products),
                 pageInfo: action.payload.pageInfo
+            }
+            break;
+        case productConstants.GET_ALL_PRODUCTS_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+                loadingAddToProducts: false
             }
             break;
         case productConstants.GET_ALL_PRODUCTS_FAILURE:

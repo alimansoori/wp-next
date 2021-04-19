@@ -26,7 +26,7 @@ function Search() {
     useEffect(() => {
         dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
 
-        if (value.length > 0) {
+        if (value.length > 0 && router.pathname == "/shop/[[...slugs]]") {
             router.push({
                 pathname: "/shop/[[...slugs]]",
                 query: {

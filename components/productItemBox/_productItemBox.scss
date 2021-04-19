@@ -42,6 +42,7 @@
     padding: 10px 5px;
     @include flex-bet-r;
     .p-sug-box__container__item__header__title {
+      direction: rtl;
       font-size: 14px;
       overflow: hidden;
       white-space: nowrap;

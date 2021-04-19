@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Accordion from "react-bootstrap/Accordion";
 
+
 export default function ProductSidebar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = useCallback(() => setShowSidebar((value) => !value));
@@ -15,7 +16,7 @@ export default function ProductSidebar() {
               <Accordion.Toggle as="div" variant="link" eventKey="1">
                 <img
                   className="p-side-box__header__icon__img"
-                  src={`/image/icon/Help icon.png`}
+                  src={`/image/icon/Help icon.svg`}
                   alt="side-icon"
                 />
               </Accordion.Toggle>
@@ -72,15 +73,55 @@ export default function ProductSidebar() {
             src={`/image/Rectangle 78.png`}
             alt="side-icon"
           />
-          <h2 className="p-side-box__list__title">دسته بندی ها</h2>
+          <h2 className="p-side-box__list__title">
+            <a href="#" className="p-side-box__list__title__link">
+              دسته بندی ها
+            </a>
+          </h2>
+          <div className="p-side-box__list__return">
+            <div className="p-side-box__list__return__text">بازگشت </div>
+            <img
+              className="p-side-box__list__return__icon"
+              src={`/image/icon/Return icon.svg`}
+              alt="ret"
+            />
+          </div>
           <ul className="p-side-box__list">
-            <li className="p-side-box__list__item">دسته بندی</li>
-            <li className="p-side-box__list__item">دسته بندی</li>
-            <li className="p-side-box__list__item">دسته بندی</li>
-            <li className="p-side-box__list__item">دسته بندی</li>
-            <li className="p-side-box__list__item">دسته بندی</li>
-            <li className="p-side-box__list__item">دسته بندی</li>
-            <li className="p-side-box__list__item">دسته بندی</li>
+            <li className="p-side-box__list__item">
+              <a href="#" className="p-side-box__list__item__link">
+                دسته بندی
+              </a>
+            </li>
+            <li className="p-side-box__list__item">
+              <a href="#" className="p-side-box__list__item__link">
+                دسته بندی
+              </a>
+            </li>
+            <li className="p-side-box__list__item">
+              <a href="#" className="p-side-box__list__item__link">
+                دسته بندی
+              </a>
+            </li>
+            <li className="p-side-box__list__item">
+              <a href="#" className="p-side-box__list__item__link">
+                دسته بندی
+              </a>
+            </li>
+            <li className="p-side-box__list__item">
+              <a href="#" className="p-side-box__list__item__link">
+                دسته بندی
+              </a>
+            </li>
+            <li className="p-side-box__list__item">
+              <a href="#" className="p-side-box__list__item__link">
+                دسته بندی
+              </a>
+            </li>
+            <li className="p-side-box__list__item">
+              <a href="#" className="p-side-box__list__item__link">
+                دسته بندی
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -111,7 +152,7 @@ export default function ProductSidebar() {
                 <Accordion.Toggle as="div" variant="link" eventKey="1">
                   <img
                     className="p-side-box__header__icon__img"
-                    src={`/image/icon/Help icon.png`}
+                    src={`/image/icon/Help icon.svg`}
                     alt="side-icon"
                   />
                 </Accordion.Toggle>
@@ -168,15 +209,53 @@ export default function ProductSidebar() {
               src={`/image/Rectangle 78.png`}
               alt="side-icon"
             />
-            <h2 className="p-side-box__list__title">دسته بندی ها</h2>
+            <h2 className="p-side-box__list__title">
+              <a href="#">دسته بندی ها</a>
+            </h2>
+            <div className="p-side-box__list__return">
+              <div className="p-side-box__list__return__text">بازگشت </div>
+              <img
+                className="p-side-box__list__return__icon"
+                src={`/image/icon/Return icon.svg`}
+                alt="ret"
+              />
+            </div>
             <ul className="p-side-box__list">
-              <li className="p-side-box__list__item">دسته بندی</li>
-              <li className="p-side-box__list__item">دسته بندی</li>
-              <li className="p-side-box__list__item">دسته بندی</li>
-              <li className="p-side-box__list__item">دسته بندی</li>
-              <li className="p-side-box__list__item">دسته بندی</li>
-              <li className="p-side-box__list__item">دسته بندی</li>
-              <li className="p-side-box__list__item">دسته بندی</li>
+              <li className="p-side-box__list__item">
+                <a href="#" className="p-side-box__list__item__link">
+                  دسته بندی
+                </a>
+              </li>
+              <li className="p-side-box__list__item">
+                <a href="#" className="p-side-box__list__item__link">
+                  دسته بندی
+                </a>
+              </li>
+              <li className="p-side-box__list__item">
+                <a href="#" className="p-side-box__list__item__link">
+                  دسته بندی
+                </a>
+              </li>
+              <li className="p-side-box__list__item">
+                <a href="#" className="p-side-box__list__item__link">
+                  دسته بندی
+                </a>
+              </li>
+              <li className="p-side-box__list__item">
+                <a href="#" className="p-side-box__list__item__link">
+                  دسته بندی
+                </a>
+              </li>
+              <li className="p-side-box__list__item">
+                <a href="#" className="p-side-box__list__item__link">
+                  دسته بندی
+                </a>
+              </li>
+              <li className="p-side-box__list__item">
+                <a href="#" className="p-side-box__list__item__link">
+                  دسته بندی
+                </a>
+              </li>
             </ul>
           </div>
         </div>

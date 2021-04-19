@@ -5,9 +5,15 @@ import GET_PRODUCTS from "../../gql/queries/get-products";
 
 export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offset=null) => {
     return async dispatch => {
-        dispatch({
-            type: productConstants.GET_ALL_PRODUCTS_REQUEST
-        });
+        if (offset) {
+            dispatch({
+                type: productConstants.GET_ADD_PRODUCTS_REQUEST
+            });
+        } else {
+            dispatch({
+                type: productConstants.GET_ALL_PRODUCTS_REQUEST
+            });
+        }
 
         var orderby = [];
 
@@ -86,12 +92,21 @@ export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offse
             
 
         } catch (error) {
-            dispatch({
-                type: productConstants.GET_ALL_PRODUCTS_FAILURE,
-                payload: {
-                    error: error.response.data.message
-                }
-            });
+            if (offset) {
+                dispatch({
+                    type: productConstants.GET_ADD_PRODUCTS_FAILURE,
+                    payload: {
+                        error: error.response.data.message
+                    }
+                });
+            } else {
+                dispatch({
+                    type: productConstants.GET_ALL_PRODUCTS_FAILURE,
+                    payload: {
+                        error: error.response.data.message
+                    }
+                });
+            }
         }
         return
     }

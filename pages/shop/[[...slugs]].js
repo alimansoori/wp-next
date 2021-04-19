@@ -32,15 +32,15 @@ const Shop = ({ productsData, router }) => {
     }, [])
 
     useEffect(() => {
-        console.log(selectedKeySortBy)
+        console.log(router)
         if (selectedKeySortBy !== undefined) {
             router.push({
                 pathname: "/shop/[[...slugs]]",
                 query: {
                     ...router.query,
                     sortby: selectedKeySortBy,
-                },
-            });
+                }
+            }, undefined, { shallow: true });
         }
 
         dispatch(getProducts(
@@ -51,7 +51,7 @@ const Shop = ({ productsData, router }) => {
             offset,
         ))
     }, [selectedKeySortBy, slugs, q, offset, sortby])
-    
+
 
     // function fetchProductsMore()  {
     //     setOffset(offset+20)
@@ -73,6 +73,29 @@ const Shop = ({ productsData, router }) => {
                     color="rgb(0, 114, 187)"
                 />
             </div>
+        )
+    }
+
+    const RenderInfiniteScroll = () => {
+        return (
+            <InfiniteScroll
+                dataLength={products.length}
+                next={() => setOffset(offset + 20)}
+                hasMore={pageInfo ? pageInfo.offsetPagination.hasMore : true}
+                loader={<Loader />}
+            >
+                <div className="container-fluid" >
+                    <div className="row" >
+                        {
+                            products.length ? products.map(product => (
+                                <div key={product.node.id + Math.random()} className="col-md-3">
+                                    <ProductItemBox product={product.node} />
+                                </div>
+                            )) : null
+                        }
+                    </div>
+                </div>
+            </InfiniteScroll>
         )
     }
 
@@ -109,28 +132,11 @@ const Shop = ({ productsData, router }) => {
                         </div>
                     </div>
                     <div className="search__body__main__body" >
-                        <InfiniteScroll
-                            dataLength={products.length}
-                            next={() => setOffset(offset+20)}
-                            hasMore={pageInfo ? pageInfo.offsetPagination.hasMore : true}
-                            loader={<Loader />}
-                        >
-                            <div className="container-fluid" >
-                                <div className="row" >
-                                    {
-                                        products.length ? products.map(product => (
-                                            <div key={product.node.id + Math.random()} className="col-md-3">
-                                                <ProductItemBox product={product.node} />
-                                            </div>
-                                        )) : null
-                                    }
-                                </div>
-                            </div>
-                        </InfiniteScroll>
+                        {loading ? (<Loader />) : <RenderInfiniteScroll />}
                     </div>
                 </div>
                 <div className="search__body__side">
-                    {/* <ProductSidebar /> */}
+                    <ProductSidebar />
                 </div>
             </div>
         </div>
@@ -176,7 +182,7 @@ export const getServerSideProps = async ({ query }) => {
                 'order': 'DESC'
             })
             break;
-    
+
         default:
             orderby.push({
                 'field': 'DATE',

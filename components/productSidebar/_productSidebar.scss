@@ -85,6 +85,17 @@
       font-weight: bold;
     }
 
+    .p-side-box__list__return {
+      margin-right: 40px;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      cursor: pointer;
+      .p-side-box__list__return__text {
+        margin: 10px 0 10px 10px;
+      }
+    }
+
     .p-side-box__list {
       margin-right: 30px;
     }
@@ -164,5 +175,12 @@
         transform: rotate(180deg);
       }
     }
+  }
+}
+
+.p-side-box__list__item__link {
+  color: #5a5a5a;
+  &:hover {
+    color: #000000;
   }
 }

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14.5" viewBox="0 0 14 14.5">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="11" height="11" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Return_icon" data-name="Return icon" transform="translate(-1161 -288.5)">
+    <g id="Scroll_Group_1" data-name="Scroll Group 1" transform="translate(1161 292)" clip-path="url(#clip-path)" style="isolation: isolate">
+      <g id="Rectangle_84" data-name="Rectangle 84" fill="#fff" stroke="#505050" stroke-width="2">
+        <rect width="16" height="11" rx="5.5" stroke="none"/>
+        <rect x="1" y="1" width="14" height="9" rx="4.5" fill="none"/>
+      </g>
+    </g>
+    <path id="Polygon_2" data-name="Polygon 2" d="M4.5,0,9,8H0Z" transform="translate(1175 288.5) rotate(90)" fill="#505050"/>
+  </g>
+</svg>
