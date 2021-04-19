@@ -23,8 +23,8 @@ export default function ProductItemBox({ product }) {
 
     return (
       <img
-        width="189px"
-        height="253px"
+        width="172px"
+        height="231px"
         className="p-sug-box__container__item__book__pic"
         src={imageSrc}
         alt={imageAlt}

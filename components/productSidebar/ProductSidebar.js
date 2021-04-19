@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import Accordion from "react-bootstrap/Accordion";
 
-
 export default function ProductSidebar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = useCallback(() => setShowSidebar((value) => !value));
@@ -134,7 +133,7 @@ export default function ProductSidebar() {
           <button
             className="p-side-box--res__toggle"
             onClick={toggleSidebar}
-            showSideBar={showSidebar}
+            // showSideBar={showSidebar}
           >
             <img
               className={
