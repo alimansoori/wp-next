@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Dropdown, Tab, Tabs } from 'react-bootstrap'
+import { Dropdown, Spinner, Tab, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { DelayInput } from 'react-delay-input'
 import { getProductsBySearchInput } from '../../redux/actions/search.actions'
@@ -20,8 +20,9 @@ function Search() {
     let searchInput = null
 
     useEffect(() => {
-        searchInput.focus()
-    })
+        // searchInput.click()
+        // searchInput.focus()
+    }, [searchInput])
 
     useEffect(() => {
         dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
@@ -36,9 +37,10 @@ function Search() {
             });
         }
 
-        if (value.length > 2) {
-            dispatch(getProductsBySearchInput(value, 10, activeKey))
-        }
+        dispatch(getProductsBySearchInput(value, 10, activeKey))
+        // if (value.length > 2) {
+            
+        // }
     }, [value, activeKey])
 
     const SearchResultBox = () => {
@@ -66,9 +68,20 @@ function Search() {
                         </Tab>
                     </Tabs>
                     {products.length ? (
-                        <Link href='/shop'>
+                        <Link
+                            href={
+                                {
+                                    pathname: "/shop/[[...slugs]]",
+                                    query: {
+                                        ...router.query,
+                                        q: value,
+                                    },
+                                }
+                            }
+                            shallow= {true}
+                        >
                             <a>
-                                <button as='a' className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
+                                <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
                             </a>
                         </Link>
                     ) : null}
@@ -164,6 +177,13 @@ function Search() {
                 <Dropdown.Toggle as="div" id="dropdown-basic">
                     <div className={`search-bar`}>
                         <div className={`search-bar__box`}>
+                            {loading ? (
+                                <div className="search-data-loading">
+                                    <Spinner animation="border" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </Spinner>
+                                </div>
+                            ) : null}
                             {/* <input
                                 type="text"
                                 ref={(input) => { searchInput = input }}

@@ -8,7 +8,7 @@ const CategoryFilterRender = (props) => {
     const router = useRouter();
     const { categoriesFilter } = useSelector(state => state.category);
 
-    console.log('categoriesFilter', categoriesFilter)
+    // console.log('categoriesFilter', categoriesFilter)
 
     const RenderCatIsRoot = () => (
         <>

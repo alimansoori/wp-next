@@ -3,7 +3,7 @@ import SEARCH_PRODUCTS from "../../gql/queries/search-products";
 import client from "../../components/ApolloClient";
 import GET_PRODUCTS from "../../gql/queries/get-products";
 
-export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offset=null) => {
+export const getProducts = (search = "", categoryIn = [], sortby = "1", size = 20, offset = null) => {
     return async dispatch => {
         if (offset) {
             dispatch({
@@ -13,6 +13,22 @@ export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offse
             dispatch({
                 type: productConstants.GET_ALL_PRODUCTS_REQUEST
             });
+        }
+
+        let taxonomyFilter = [];
+
+        if (categoryIn.length) {
+            taxonomyFilter = [
+                {
+                    and: [
+                        {
+                            operator: "IN",
+                            taxonomy: "PRODUCTCATEGORY",
+                            terms: [categoryIn[categoryIn.length - 1]]
+                        }
+                    ]
+                }
+            ]
         }
 
         var orderby = [];
@@ -48,7 +64,7 @@ export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offse
                     'order': 'DESC'
                 })
                 break;
-        
+
             default:
                 orderby.push({
                     'field': 'DATE',
@@ -62,12 +78,11 @@ export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offse
                 query: GET_PRODUCTS,
                 variables: {
                     search,
-                    categoryIn,
                     size,
                     offset,
-                    orderby
+                    orderby,
+                    taxonomyFilter
                 },
-                fetchPolicy: 'cache-first'
             })
 
             const { pageInfo, edges } = result.data.products;
@@ -89,7 +104,7 @@ export const getProducts = (search="", categoryIn=[], sortby="1", size=20, offse
                     }
                 });
             }
-            
+
 
         } catch (error) {
             if (offset) {

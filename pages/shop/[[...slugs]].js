@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { withRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import PropagateLoader from 'react-spinners/PropagateLoader'
@@ -40,26 +40,28 @@ const Shop = ({ productsData, catsData, catsData2, router }) => {
         });
     }, [])
 
+    const didMount = useRef(false);
     useEffect(() => {
-        // console.log(router)
-        if (selectedKeySortBy !== undefined) {
-            router.push({
-                pathname: "/shop/[[...slugs]]",
-                query: {
-                    ...router.query,
-                    sortby: selectedKeySortBy,
-                }
-            }, undefined, { shallow: true });
-        }
+        if (didMount.current) {
+            if (selectedKeySortBy !== undefined) {
+                router.push({
+                    pathname: "/shop/[[...slugs]]",
+                    query: {
+                        ...router.query,
+                        sortby: selectedKeySortBy,
+                    }
+                }, undefined, { shallow: true });
+            }
 
-        dispatch(getProducts(
-            q,
-            slugs,
-            sortby,
-            size,
-            offset,
-        ))
-    }, [selectedKeySortBy, slugs, q, offset, sortby])
+            dispatch(getProducts(
+                q,
+                slugs,
+                sortby,
+                size,
+                offset,
+            ))
+        } else didMount.current = true;;
+    }, [selectedKeySortBy, slugs, q, offset, sortby]);
 
 
     // function fetchProductsMore()  {
@@ -162,6 +164,22 @@ export const getServerSideProps = async ({ query }) => {
 
     var orderby = [];
 
+    let taxonomyFilter = [];
+
+    if (Array.isArray(cats) && cats.length) {
+        taxonomyFilter = [
+            {
+                and: [
+                    {
+                        operator: "IN",
+                        taxonomy: "PRODUCTCATEGORY",
+                        terms: [cats[cats.length - 1]]
+                    }
+                ]
+            }
+        ]
+    }
+
     switch (sortNum) {
         case "1":
             orderby.push({
@@ -207,7 +225,7 @@ export const getServerSideProps = async ({ query }) => {
             query: GET_PRODUCTS,
             variables: {
                 search: q,
-                categoryIn: cats,
+                taxonomyFilter,
                 orderby,
                 size: 20,
                 offset: null
