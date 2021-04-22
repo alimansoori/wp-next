@@ -7,12 +7,13 @@ import ProductItemBox from '../../components/productItemBox/ProductItemBox'
 import ProductSidebar from '../../components/productSidebar/ProductSidebar'
 import { Dropdown } from 'react-bootstrap'
 import GET_PRODUCTS from '../../gql/queries/get-products'
+import GET_CATS from '../../gql/queries/get-categories'
 import client from '../../components/ApolloClient'
-import { productConstants } from '../../redux/actions/constants'
+import { categoryConstants, productConstants } from '../../redux/actions/constants'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { getProducts } from '../../redux/actions/product.actions'
 
-const Shop = ({ productsData, router }) => {
+const Shop = ({ productsData, catsData, catsData2, router }) => {
     const dispatch = useDispatch()
     const { slugs, q, sortby } = router.query
     const { products, loading, pageInfo } = useSelector(state => state.product)
@@ -21,7 +22,9 @@ const Shop = ({ productsData, router }) => {
     const [selectedKeySortBy, setSelectedKeySortBy] = useState(sortby)
 
     useEffect(() => {
-        console.log(productsData)
+        // console.log(productsData)
+        // console.log('catsData', catsData)
+        // console.log('catsData2', catsData2)
         dispatch({
             type: productConstants.PRODUCTS_INIT,
             payload: {
@@ -29,10 +32,16 @@ const Shop = ({ productsData, router }) => {
                 pageInfo: productsData.pageInfo
             }
         });
+        dispatch({
+            type: categoryConstants.CATEGORIES_INIT,
+            payload: {
+                categories: catsData.edges.concat(catsData2.edges),
+            }
+        });
     }, [])
 
     useEffect(() => {
-        console.log(router)
+        // console.log(router)
         if (selectedKeySortBy !== undefined) {
             router.push({
                 pathname: "/shop/[[...slugs]]",
@@ -136,7 +145,7 @@ const Shop = ({ productsData, router }) => {
                     </div>
                 </div>
                 <div className="search__body__side">
-                    <ProductSidebar />
+                    <ProductSidebar slugs={slugs} />
                 </div>
             </div>
         </div>
@@ -145,6 +154,8 @@ const Shop = ({ productsData, router }) => {
 
 export const getServerSideProps = async ({ query }) => {
     let productsData = [];
+    let catsData = [];
+    let catsData2 = [];
     const { slugs, q, sortby } = query
     const cats = slugs ? slugs : query.id;
     const sortNum = sortby ? sortby : "1";
@@ -204,13 +215,38 @@ export const getServerSideProps = async ({ query }) => {
             notifyOnNetworkStatusChange: true
         });
         productsData = result.data.products
+
+        const catsResult = await client.query({
+            query: GET_CATS,
+            variables: {
+                first: 100
+            },
+            notifyOnNetworkStatusChange: true
+        });
+
+        catsData = catsResult.data.productCategories
+
+        const catsResult2 = await client.query({
+            query: GET_CATS,
+            variables: {
+                first: 100,
+                after: "YXJyYXljb25uZWN0aW9uOjgyMzU="
+            },
+            notifyOnNetworkStatusChange: true
+        });
+
+        catsData2 = catsResult2.data.productCategories
+
+
     } catch (e) {
         console.error(e)
     }
 
     return {
         props: {
-            productsData
+            productsData,
+            catsData,
+            catsData2
         }
     }
 }

@@ -232,6 +232,7 @@ const recurciveCat = (list, slugs = [], activeCatId = null) => {
 
 const renderSlugs = (slugs, categories) => {
     const catToTree = toTree(categories)
+    // console.log(catToTree)
     var node = [];
     var activeId = null;
     var isRoot = false;
@@ -243,7 +244,7 @@ const renderSlugs = (slugs, categories) => {
 
         return {
             isRoot: true,
-            activeId: activeId,
+            activeId,
             node: node
         }
     }
@@ -253,9 +254,16 @@ const renderSlugs = (slugs, categories) => {
             return decodeURIComponent(cat.node.slug) === slugs[i]
         })
 
-        console.log(catFind)
+        // if (slugs.length-1 !== i) {
+        //     continue
+        // }
 
-        if (catFind['children'] !== undefined && typeof catFind['children'] === 'object' && catFind.children.length) {
+        if (
+            catFind['children'] !== undefined &&
+            typeof catFind['children'] === 'object' &&
+            catFind.children.length
+        ) 
+        {
             node.push(catFind)
         } else {
             activeId = catFind.node.databaseId
@@ -264,13 +272,15 @@ const renderSlugs = (slugs, categories) => {
                 node = catToTree.filter((cat) => {
                     return cat.node.parentDatabaseId === catFind.node.parentDatabaseId
                 });
-    
+
                 if (!catFind.node.parentDatabaseId) {
                     isRoot = true
                 }
             }
         }
     }
+
+    // console.log('Node', node)
 
     return {
         isRoot: isRoot,

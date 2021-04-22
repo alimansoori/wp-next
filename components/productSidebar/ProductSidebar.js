@@ -1,9 +1,22 @@
-import React, { useState, useCallback } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect, useCallback } from "react";
 import Accordion from "react-bootstrap/Accordion";
+import { useDispatch, useSelector } from "react-redux";
+import { catFilters } from "../../redux/actions/category.actions";
+import { categoryConstants } from "../../redux/actions/constants";
+import CategoryFilterRender from "./CategoryFilterRender";
 
-export default function ProductSidebar() {
+export default function ProductSidebar({ slugs }) {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = useCallback(() => setShowSidebar((value) => !value));
+  const { categories } = useSelector(state => state.category);
+
+  useEffect(() => {
+    // console.log(categories)
+    dispatch(catFilters(slugs, categories));
+  }, [slugs, categories]);
 
   return (
     <div className="p-side-box-wrap">
@@ -72,56 +85,7 @@ export default function ProductSidebar() {
             src={`/image/Rectangle 78.png`}
             alt="side-icon"
           />
-          <h2 className="p-side-box__list__title">
-            <a href="#" className="p-side-box__list__title__link">
-              دسته بندی ها
-            </a>
-          </h2>
-          <div className="p-side-box__list__return">
-            <div className="p-side-box__list__return__text">بازگشت </div>
-            <img
-              className="p-side-box__list__return__icon"
-              src={`/image/icon/Return icon.svg`}
-              alt="ret"
-            />
-          </div>
-          <ul className="p-side-box__list">
-            <li className="p-side-box__list__item">
-              <a href="#" className="p-side-box__list__item__link">
-                دسته بندی
-              </a>
-            </li>
-            <li className="p-side-box__list__item">
-              <a href="#" className="p-side-box__list__item__link">
-                دسته بندی
-              </a>
-            </li>
-            <li className="p-side-box__list__item">
-              <a href="#" className="p-side-box__list__item__link">
-                دسته بندی
-              </a>
-            </li>
-            <li className="p-side-box__list__item">
-              <a href="#" className="p-side-box__list__item__link">
-                دسته بندی
-              </a>
-            </li>
-            <li className="p-side-box__list__item">
-              <a href="#" className="p-side-box__list__item__link">
-                دسته بندی
-              </a>
-            </li>
-            <li className="p-side-box__list__item">
-              <a href="#" className="p-side-box__list__item__link">
-                دسته بندی
-              </a>
-            </li>
-            <li className="p-side-box__list__item">
-              <a href="#" className="p-side-box__list__item__link">
-                دسته بندی
-              </a>
-            </li>
-          </ul>
+          <CategoryFilterRender />
         </div>
       </div>
       <div className="p-side-box p-side-box--res">
@@ -133,7 +97,7 @@ export default function ProductSidebar() {
           <button
             className="p-side-box--res__toggle"
             onClick={toggleSidebar}
-            // showSideBar={showSidebar}
+          // showSideBar={showSidebar}
           >
             <img
               className={

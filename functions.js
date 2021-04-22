@@ -343,13 +343,17 @@ export function isEmpty(obj) {
 }
 
 export function uriToUse(uri) {
-	// uri = decodeURIComponent(uri);
+	uri = decodeURIComponent(uri);
 	uri = uri.split('/');
 	uri.splice(0, 1);
 	uri.splice(0, 1);
 	uri.splice(uri.length - 1, 1);
 
 	return uri;
+}
+
+export function randomString() {
+	return Math.random().toString(36).substring(7);;
 }
 
 export function copy(array) {

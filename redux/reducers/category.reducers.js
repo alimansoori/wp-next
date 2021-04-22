@@ -1,4 +1,4 @@
-import {categoryConstants} from "../actions/constants";
+import { categoryConstants } from "../actions/constants";
 
 const initState = {
     categories: [],
@@ -43,6 +43,12 @@ export default (state = initState, action) => {
                 ...state,
                 categoriesFilter: action.payload.categoriesFilter
             }
+            break;
+        case categoryConstants.CATEGORIES_INIT:
+            state = {
+                ...state,
+                categories: action.payload.categories,
+            };
             break;
     }
 
