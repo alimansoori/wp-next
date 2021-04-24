@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import SignInModal from '../signInModal/SignInModal';
 import SignUpModal from '../signUpModal/SignUpModal';
 
 function Register() {
     const [modalShow, setModalShow] = useState(false);
+    const [whoModal, setWhoModal] = useState('login')
 
     return (
         <div>
@@ -16,7 +18,15 @@ function Register() {
                     <div className="register__btn__title">ورود / ثبت نام</div>
                 </button>
             </div>
-            <SignUpModal show={modalShow} onHide={() => setModalShow(false)} />
+            {/* <SignUpModal show={modalShow} onHide={() => setModalShow(false)} /> */}
+            {whoModal === 'register' ?
+                <SignUpModal whoModal={() => setWhoModal('login')} show={modalShow} onHide={() => setModalShow(false)} /> :
+                null
+            }
+            {whoModal === 'login' ?
+                <SignInModal whoModal={() => setWhoModal('register')} show={modalShow} onHide={() => setModalShow(false)} /> :
+                null
+            }
         </div>
     );
 }

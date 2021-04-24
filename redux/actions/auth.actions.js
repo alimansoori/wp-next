@@ -25,7 +25,7 @@ export const loginUser = (loginForm = {}) => {
 
             const { user, authToken } = result.data.login
 
-            localStorage.setItem('book-token', authToken);
+            localStorage.setItem('wp-next-token', authToken);
             localStorage.setItem('user', JSON.stringify(user));
 
             dispatch({
@@ -51,10 +51,10 @@ export const isUserLoggedIn = () => {
     return async dispatch => {
         dispatch({ type: authConstants.REFRESH_TOKEN_REQUEST });
 
-        const token = localStorage.getItem('book-token');
+        const token = localStorage.getItem('wp-next-token');
 
         if (typeof token === undefined) {
-            localStorage.removeItem('book-token');
+            localStorage.removeItem('wp-next-token');
         }
 
 
@@ -76,7 +76,7 @@ export const isUserLoggedIn = () => {
 
                 const { authToken } = result.data.refreshJwtAuthToken
                 const { viewer } = qry.data
-                localStorage.setItem('book-token', authToken)
+                localStorage.setItem('wp-next-token', authToken)
 
                 dispatch({
                     type: authConstants.REFRESH_TOKEN_SUCCESS,
@@ -88,7 +88,7 @@ export const isUserLoggedIn = () => {
                 return true
             }
         } catch (error) {
-            localStorage.removeItem('book-token');
+            localStorage.removeItem('wp-next-token');
             dispatch({
                 type: authConstants.REFRESH_TOKEN_FAILURE,
                 payload: {
@@ -103,7 +103,7 @@ export const isUserLoggedIn = () => {
 export const signout = () => {
     return async dispatch => {
         dispatch({ type: authConstants.LOGOUT_REQUEST });
-        localStorage.removeItem('book-token');
+        localStorage.removeItem('wp-next-token');
         dispatch({
             type: authConstants.LOGOUT_SUCCESS
         });

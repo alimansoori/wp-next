@@ -1,0 +1,19 @@
+.sign-out-wrap {
+  border-radius: 40px;
+  box-shadow: $mainBoxShadowDark;
+  .sign-out {
+    height: 40px;
+    padding: 0 10px;
+    border: none;
+    background: $mainBlue;
+    color: #ffffff;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .sign-out {
+    height: 30px;
+  }
+}

@@ -1,19 +1,24 @@
 import React from "react";
 import Register from "../register/Register";
+import Register from "../signOut/SignOut";
 import Cart from "../cart/Cart";
 import LightMode from "../lightMode/LightMode";
 import Search from "../search/Search";
 import Credit from "../credit/Credit";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 
 export default function ProductHeader() {
+
+  const { authenticate } = useSelector(state => state.auth);
+
   return (
     <div className="product-header">
       <div className="product-header-wrap">
         <div className="product-header__btns-wrap">
           <div className="product-header__btns">
-            <Register />
+            {authenticate ? <SignOut />: <Register />}
             <Cart />
             <LightMode />
           </div>

@@ -16,7 +16,8 @@ const AuthReducers = (state = initState, action) => {
         case authConstants.LOGIN_REQUEST:
             state = {
                 ...state,
-                authenticating: true
+                authenticating: true,
+                loading: true
             }
             break;
         case authConstants.LOGIN_SUCCESS:
@@ -25,7 +26,8 @@ const AuthReducers = (state = initState, action) => {
                 user: action.payload.user,
                 token: action.payload.token,
                 authenticate: true,
-                authenticating: false
+                authenticating: false,
+                loading: false
             }
             break;
         case authConstants.LOGIN_FAILURE:
@@ -33,7 +35,8 @@ const AuthReducers = (state = initState, action) => {
                 ...state,
                 authenticate: false,
                 authenticating: false,
-                error: action.payload.error
+                error: action.payload.error,
+                loading: false
             }
             break;
         case authConstants.LOGOUT_REQUEST:
