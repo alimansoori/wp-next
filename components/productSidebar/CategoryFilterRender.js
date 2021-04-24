@@ -43,11 +43,12 @@ const CategoryFilterRender = (props) => {
                                     href={{
                                         pathname: "/shop/[[...slugs]]",
                                         query: {
-                                            ...router.query,
-                                            slugs: uriToUse(cat.node.uri),
+                                            // ...router.query,
+                                            slugs: cat.node.parent ? uriToUse(cat.node.parent.node.uri) : [],
                                         }
                                     }}
                                     shallow={true}
+                                    scroll= {false}
                                 >
                                     <a className="p-side-box__list__title__link">
                                         {cat.node.name}
@@ -58,15 +59,17 @@ const CategoryFilterRender = (props) => {
                                 href={{
                                     pathname: "/shop/[[...slugs]]",
                                     query: {
-                                        ...router.query,
-                                        slugs: cat.node.parent ? uriToUse(cat.node.parent.node.uri) : [],
+                                        // ...router.query,
+                                        slugs: [],
                                     }
                                 }}
                                 shallow={true}
                                 scroll= {false}
                             >
                                 <a className="p-side-box__list__return">
-                                    <div className="p-side-box__list__return__text">بازگشت </div>
+                                    <div className="p-side-box__list__return__text">
+                                        {`همه کتاب‌ها`}
+                                    </div>
                                     <img
                                         className="p-side-box__list__return__icon"
                                         src={`/image/icon/Return icon.svg`}
@@ -114,11 +117,12 @@ const CategoryFilterRender = (props) => {
                 href={{
                     pathname: "/shop/[[...slugs]]",
                     query: {
-                        ...router.query,
+                        // ...router.query,
                         slugs: uriToUse(cat.node.uri),
                     }
                 }}
                 shallow={true}
+                scroll= {false}
             >
                 <a className={`p-side-box__list__item__link ${active ? 'active' : ''}`}>
                     {cat.node.name}

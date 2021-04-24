@@ -19,7 +19,7 @@ export default function ProductHeader() {
           </div>
           <Search className="product-header__search" />
         </div>
-        <Link href={`/`} >
+        <Link href={`/`} shallow={true} >
           <a className="product-header__logo">
             <img className="product-header__logo__img" src={`/image/LOGO TYPE 2.png`} alt="logo" />
           </a>
