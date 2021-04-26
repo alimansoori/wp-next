@@ -1,0 +1,33 @@
+.user-ad-modal {
+  text-align: right;
+  .user-ad-modal__header {
+    padding: 20px;
+    border-bottom: 1px solid #a7a7a7;
+    .user-ad-modal__header__title {
+      font-size: 24px;
+      color: #a7a7a7;
+    }
+  }
+
+  .modal-body {
+    padding: 0;
+    .user-ad-modal__list {
+      .user-ad-modal__list__item {
+        padding: 20px;
+        border-bottom: 1px solid #a7a7a7;
+        .user-ad-modal__list__item__text {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .user-ad-modal__add {
+      padding: 10px;
+      @include flex-org;
+      .user-ad-modal__add__img {
+        width: 50px;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
-import useSWR from 'swr';
+import Custom404 from './404';
 import client from '../components/ApolloClient';
 import BasePage from '../components/BasePage'
 import GET_PAGE from '../gql/queries/get-page';
@@ -73,7 +73,7 @@ function Page(props) {
             </a>
           </Link>
         </BasePage>
-      ) : <div>Loading ...</div>}
+      ) : <Custom404/>}
     </>
   )
 }

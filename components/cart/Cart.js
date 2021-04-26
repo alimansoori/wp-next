@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -51,7 +52,9 @@ export default function Cart() {
 
           <div className="cart__purchase">
             <div className="cart__purchase__price">مبلغ کل: {stringToNumber(cart.total)} ت</div>
-            <button className="cart__purchase__buy">ادامه فرایند خرید</button>
+            <Link href={`/account`}>
+              <button as='a' className="cart__purchase__buy">ادامه فرایند خرید</button>
+            </Link>
           </div>
         </Dropdown.Menu>
       </Dropdown>

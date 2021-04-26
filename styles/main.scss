@@ -39,9 +39,18 @@ h1 {
 @import '../components/productItemBox/productItemBox';
 @import '../components/productInfo/productInfo';
 @import '../components/signOut/signOut';
+@import '../components/userNav/userNav';
+@import '../components/userBasket/userBasket';
+@import '../components/userHistory/userHistory';
+@import '../components/userWallet/userWallet';
+@import '../components/userFavourites/userFavourites';
+@import '../components/userCart/userCart';
+@import '../components/userInfo/userInfo';
+@import '../components/userAddressModal/userAddressModal';
 
 
 // Pages
 @import '../pages/landing.scss';
 @import '../pages/product/product';
 @import '../pages/shop/searchResult';
+@import '../pages/account';

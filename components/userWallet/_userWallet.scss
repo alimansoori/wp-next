@@ -1,0 +1,115 @@
+.user-wallet-box {
+  text-align: right;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: $mainBoxShadow;
+  .user-wallet-box__header {
+    .user-wallet-box__header__title {
+      padding: 20px;
+      font-size: 20px;
+      color: #afafaf;
+    }
+  }
+
+  .user-wallet-box__body {
+    padding: 20px;
+    border-bottom: 1px solid #afafaf;
+    .user-wallet-box__body__logo {
+      @include flex-org;
+      .user-wallet-box__body__logo__img {
+        width: 100px;
+      }
+    }
+
+    .user-wallet-box__body__desc {
+      margin: 15px 0;
+      .user-wallet-box__body__desc__text {
+        text-align: justify;
+        direction: rtl;
+        color: #afafaf;
+      }
+    }
+
+    .user-wallet-box__body__amount {
+      @include flex-org;
+      margin: 15px 0;
+      .user-wallet-box__body__amount__input-wrap {
+        @include flex-bet-r;
+        width: 250px;
+        height: 50px;
+        border: 1px solid #c7c7c7;
+        border-radius: 40px;
+
+        .user-wallet-box__body__amount__plus,
+        .user-wallet-box__body__amount__minus {
+          width: 40px;
+          height: 40px;
+          margin: 0 3px;
+          @include flex-org;
+          border: 1px solid #c7c7c7;
+          border-radius: 50%;
+        }
+
+        .user-wallet-box__body__amount__input {
+          background: transparent;
+          width: 130px;
+          height: 30px;
+          border: none;
+          text-align: center;
+          color: #000000;
+        }
+      }
+    }
+
+    .user-wallet-box__body__credit {
+      .user-wallet-box__body__credit-wrap {
+        margin: 40px 0;
+      }
+
+      .user-wallet-box__body__credit-wrap > div {
+        justify-content: center;
+      }
+
+      .user-wallet-box__body__credit-wrap > div > div {
+        border-radius: 20px !important;
+        flex: none !important;
+        margin: 0 10px !important;
+        padding: 20px !important;
+        border: none !important;
+        background: #efefef !important;
+      }
+
+      .user-wallet-box__body__credit-wrap > div > div > div {
+        display: block !important;
+      }
+
+      .user-wallet-box__body__credit-wrap > div > div > div > div {
+        text-align: center !important;
+      }
+
+      .user-wallet-box__body__credit-wrap > div > div > div > div + div {
+        display: none !important;
+      }
+    }
+  }
+
+  .user-wallet-box__footer {
+    padding: 20px;
+    @include flex-bet-r;
+    .user-wallet-box__footer__cancel {
+      padding: 8px 15px;
+      background: #e2e2e2;
+      color: #afafaf;
+      border: 1px solid #afafaf;
+      border-radius: 20px;
+    }
+
+    .user-wallet-box__footer__submit {
+      padding: 8px 50px;
+      background: $mainBlue;
+      color: #ffffff;
+      border: 1px solid $mainBlue;
+      border-radius: 20px;
+    }
+  }
+}

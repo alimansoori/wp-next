@@ -1,0 +1,63 @@
+.user-fav-box {
+  text-align: right;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: $mainBoxShadow;
+  .user-fav-box__header {
+    .user-fav-box__header__title {
+      padding: 20px;
+      font-size: 20px;
+      color: #afafaf;
+    }
+  }
+
+  .user-fav-box__list-wrap {
+    .user-fav-box__list {
+      height: 500px;
+      overflow-y: scroll;
+      .user-fav-box__list__item {
+        padding: 20px;
+        text-align: left;
+        // border-bottom: 1px solid #afafaf;
+        // &:last-child {
+        //   border-bottom: none;
+        // }
+        .user-fav-box__list__item__box {
+          text-align: right;
+          @include flex-bet-r;
+          align-items: flex-start;
+          .user-fav-box__list__item__box__items {
+            .user-fav-box__list__item__box__items__pics {
+              .user-fav-box__list__item__box__items__pics__img {
+                width: 80px;
+                border-bottom-right-radius: 30px;
+              }
+            }
+          }
+
+          .user-fav-box__list__item__box__desc {
+            margin: 0 20px;
+            .user-fav-box__list__item__box__desc__title {
+              font-size: 20px;
+            }
+
+            .user-fav-box__list__item__box__desc__text {
+              direction: rtl;
+              text-align: justify;
+              font-size: 14px;
+              color: #afafaf;
+            }
+          }
+        }
+
+        .user-fav-box__list__item__box__icon {
+          .user-fav-box__list__item__box__icon__img {
+            width: 20px;
+            margin: 0 5px 0 0;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
