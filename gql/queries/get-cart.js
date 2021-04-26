@@ -34,7 +34,7 @@ const GET_CART = gql`
                 }
               }
               ... on SimpleProduct {
-                price
+                price(format: RAW)
                 regularPrice
               }
             }
@@ -43,25 +43,6 @@ const GET_CART = gql`
           total
           subtotal
           subtotalTax
-        }
-      }
-      appliedCoupons {
-        nodes {
-          id
-          databaseId
-          discountType
-          amount
-          dateExpiry
-          products {
-            nodes {
-              id
-            }
-          }
-          productCategories {
-            nodes {
-              id
-            }
-          }
         }
       }
       subtotal

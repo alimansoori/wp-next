@@ -1,8 +1,23 @@
 import Link from "next/link";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { v4 } from "uuid";
 import { stringToNumber } from "../../functions";
+import { addToCart } from "../../redux/actions";
 
 export default function ProductItemBox({ product }) {
+
+  const dispatch = useDispatch();
+
+	const productQryInput = {
+		clientMutationId: v4(), // Generate a unique id.
+		productId: product.databaseId,
+	};
+
+  const handleAddToCart = (e) => {
+		e.preventDefault();
+		dispatch(addToCart(productQryInput));
+	}
 
   const RenderProductAttrs = ({ attrs }) => {
     const joinString = attrs.map(e => {
@@ -47,7 +62,7 @@ export default function ProductItemBox({ product }) {
                   alt="save"
                 />
               </div>
-              <div className="p-sug-box__container__item__header__icon">
+              <div onClick={(e) => handleAddToCart(e)} className="p-sug-box__container__item__header__icon">
                 <img
                   className="p-sug-box__container__item__header__icon__img"
                   src={`/image/icon/Basket.svg`}

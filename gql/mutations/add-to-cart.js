@@ -33,7 +33,7 @@ fragment cart on Cart {
             }
           }
           ... on SimpleProduct {
-            price
+            price(format: RAW)
             regularPrice
           }
         }
@@ -42,25 +42,6 @@ fragment cart on Cart {
       total
       subtotal
       subtotalTax
-    }
-  }
-  appliedCoupons {
-    nodes {
-      id
-      databaseId
-      discountType
-      amount
-      dateExpiry
-      products {
-        nodes {
-          id
-        }
-      }
-      productCategories {
-        nodes {
-          id
-        }
-      }
     }
   }
   subtotal
@@ -75,71 +56,71 @@ fragment cart on Cart {
   discountTotal
 }
 
-  mutation ($input: AddToCartInput!) {
-    addToCart(input: $input) {
-      cart {
-        ...cart
-      }
-      cartItem {
-        key
-        product {
-          node {
+mutation ($input: AddToCartInput!) {
+  addToCart(input: $input) {
+    cart {
+      ...cart
+    }
+    cartItem {
+      key
+      product {
+        node {
+          id
+          databaseId
+          name
+          description
+          type
+          onSale
+          slug
+          averageRating
+          reviewCount
+          image {
             id
-            databaseId
-            name
-            description
-            type
-            onSale
-            slug
-            averageRating
-            reviewCount
-            image {
+            sourceUrl
+            altText
+          }
+          galleryImages {
+            nodes {
               id
               sourceUrl
               altText
             }
-            galleryImages {
-              nodes {
-                id
-                sourceUrl
-                altText
-              }
-            }
           }
         }
-        variation {
-          node {
-            id
-            databaseId
-            name
-            description
-            type
-            onSale
-            price
-            regularPrice
-            salePrice
-            image {
-              id
-              sourceUrl
-              altText
-            }
-            attributes {
-              nodes {
-                id
-                attributeId
-                name
-                value
-              }
-            }
-          }
-        }
-        quantity
-        total
-        subtotal
-        subtotalTax
       }
+      variation {
+        node {
+          id
+          databaseId
+          name
+          description
+          type
+          onSale
+          price(format: RAW)
+          regularPrice
+          salePrice
+          image {
+            id
+            sourceUrl
+            altText
+          }
+          attributes {
+            nodes {
+              id
+              attributeId
+              name
+              value
+            }
+          }
+        }
+      }
+      quantity
+      total
+      subtotal
+      subtotalTax
     }
   }
+}
 `;
 
 export default ADD_TO_CART;

@@ -32,7 +32,7 @@ export const addFirstProduct = (product) => {
 	const newProduct = createNewProduct(product, productPrice, 1);
 	newCart.products.push(newProduct);
 
-	localStorage.setItem('book-cart', JSON.stringify(newCart));
+	localStorage.setItem('wp-next-cart', JSON.stringify(newCart));
 
 	return newCart;
 };
@@ -87,7 +87,7 @@ export const updateCart = (existingCart, product, qtyToBeAdded, newQty = false) 
 		totalProductsPrice: parseFloat(total.totalPrice)
 	};
 
-	localStorage.setItem('book-cart', JSON.stringify(updatedCart));
+	localStorage.setItem('wp-next-cart', JSON.stringify(updatedCart));
 
 	return updatedCart;
 };
@@ -158,13 +158,13 @@ const isProductInCart = (existingProductsInCart, productId) => {
  */
 export const removeItemFromCart = (productId) => {
 
-	let existingCart = localStorage.getItem('book-cart');
+	let existingCart = localStorage.getItem('wp-next-cart');
 	existingCart = JSON.parse(existingCart);
 
 	// If there is only one item in the cart, delete the cart.
 	if (1 === existingCart.products.length) {
 
-		localStorage.removeItem('book-cart');
+		localStorage.removeItem('wp-next-cart');
 		return null;
 
 	}
@@ -185,7 +185,7 @@ export const removeItemFromCart = (productId) => {
 		updatedCart.totalProductsCount = updatedCart.totalProductsCount - qtyToBeRemovedFromTotal;
 		updatedCart.totalProductsPrice = updatedCart.totalProductsPrice - priceToBeDeductedFromTotal;
 
-		localStorage.setItem('book-cart', JSON.stringify(updatedCart));
+		localStorage.setItem('wp-next-cart', JSON.stringify(updatedCart));
 		return updatedCart;
 
 	} else {
@@ -369,10 +369,11 @@ export function copy(array) {
 export function stringToNumber(str = 0) {
 	if (typeof str == 'number') return str.toLocaleString();
 
-	let splitStr = str.split(/(\d+)/);
 	
+	let splitStr = str.split(/(\d+)/);
+		
 	splitStr = splitStr.filter(item => {
-		return (item !== 'تومان' && item !== '.' && item !== "" && item !== "00" && item !== ",");
+		return (item !== "£" && item !== 'تومان' && item !== '.' && item !== "" && item !== "00" && item !== ",");
 	});
 
 	return parseInt(splitStr.join("")).toLocaleString();

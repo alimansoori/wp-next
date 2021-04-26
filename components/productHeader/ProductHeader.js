@@ -1,6 +1,6 @@
 import React from "react";
 import Register from "../register/Register";
-import Register from "../signOut/SignOut";
+import SignOut from "../signOut/SignOut";
 import Cart from "../cart/Cart";
 import LightMode from "../lightMode/LightMode";
 import Search from "../search/Search";
