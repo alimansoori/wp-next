@@ -14,8 +14,8 @@ export default function Landingheader(props) {
             <div className={`landing-header-wrap`}>
                 {authenticate ? <SignOut/> : <Register/>}
                 <Cart />
-                <LightMode />
-                <Credit />
+                {/* <LightMode /> */}
+                {/* <Credit /> */}
             </div>
         </div>
     )

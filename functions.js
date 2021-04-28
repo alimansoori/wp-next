@@ -106,7 +106,7 @@ export const updateCart = (existingCart, product, qtyToBeAdded, newQty = false) 
 export const getUpdatedProducts = (existingProductsInCart, product, qtyToBeAdded, newQty = false) => {
 
 	// Check if the product already exits in the cart.
-	const productExitsIndex = isProductInCart(existingProductsInCart, product.productId);
+	const productExitsIndex = isProductInCart(existingProductsInCart, product.databaseId);
 
 	// If product exits ( index of that product found in the array ), update the product quantity and totalPrice
 	if (-1 < productExitsIndex) {
@@ -139,7 +139,7 @@ export const getUpdatedProducts = (existingProductsInCart, product, qtyToBeAdded
 const isProductInCart = (existingProductsInCart, productId) => {
 
 	const returnItemThatExits = (item, index) => {
-		if (productId === item.productId) {
+		if (productId === item.databaseId) {
 			return item;
 		}
 	};
@@ -218,7 +218,7 @@ export const getFormattedCart = (data) => {
 		const product = {};
 		const total = getFloatVal(givenProducts[i].total);
 
-		product.productId = givenProduct.productId;
+		product.productId = givenProduct.databaseId;
 		product.cartKey = givenProducts[i].key;
 		product.name = givenProduct.name;
 		product.qty = givenProducts[i].quantity;

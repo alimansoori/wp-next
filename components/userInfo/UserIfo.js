@@ -84,7 +84,7 @@ export default function UserIfo() {
         </div>
         <div className="user-info-box__bot__body">
           <div className="user-info-box__bot__body-wrap">
-            <RadioGroup vertical>
+            <RadioGroup>
               <RadioButton pointColor="#26c7bf" rootColor="#000" value="ad1">
                 ایران- تهران- خیابان- کوچه-پلاک
               </RadioButton>

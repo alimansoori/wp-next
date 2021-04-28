@@ -1,23 +1,25 @@
 import Link from "next/link";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import { stringToNumber } from "../../functions";
 import { addToCart } from "../../redux/actions";
+import BounceLoader from 'react-spinners/BounceLoader'
 
 export default function ProductItemBox({ product }) {
 
   const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.cart)
 
-	const productQryInput = {
-		clientMutationId: v4(), // Generate a unique id.
-		productId: product.databaseId,
-	};
+  const productQryInput = {
+    clientMutationId: v4(), // Generate a unique id.
+    productId: product.databaseId,
+  };
 
   const handleAddToCart = (e) => {
-		e.preventDefault();
-		dispatch(addToCart(productQryInput));
-	}
+    e.preventDefault();
+    dispatch(addToCart(productQryInput));
+  }
 
   const RenderProductAttrs = ({ attrs }) => {
     const joinString = attrs.map(e => {
@@ -63,11 +65,24 @@ export default function ProductItemBox({ product }) {
                 />
               </div>
               <div onClick={(e) => handleAddToCart(e)} className="p-sug-box__container__item__header__icon">
-                <img
-                  className="p-sug-box__container__item__header__icon__img"
-                  src={`/image/icon/Basket.svg`}
-                  alt="basket"
-                />
+                {
+                  loading ? (
+                    <BounceLoader
+                      loading={true}
+                      size={25}
+                      color="#ffffff"
+                    />
+                  ) : (
+                    <img
+                      className="p-sug-box__container__item__header__icon__img"
+                      src={`/image/icon/Basket.svg`}
+                      alt="basket"
+                    />
+                  )
+                }
+
+
+
               </div>
             </div>
           </div>

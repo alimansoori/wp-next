@@ -51,25 +51,6 @@ fragment cart on Cart {
       subtotalTax
     }
   }
-  appliedCoupons {
-    nodes {
-      id
-      databaseId
-      discountType
-      amount
-      dateExpiry
-      products {
-        nodes {
-          id
-        }
-      }
-      productCategories {
-        nodes {
-          id
-        }
-      }
-    }
-  }
   subtotal
   subtotalTax
   shippingTax

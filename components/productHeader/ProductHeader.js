@@ -12,15 +12,16 @@ import { useSelector } from "react-redux";
 export default function ProductHeader() {
 
   const { authenticate } = useSelector(state => state.auth);
+  const { cart } = useSelector(state => state.cart)
 
   return (
     <div className="product-header">
       <div className="product-header-wrap">
         <div className="product-header__btns-wrap">
           <div className="product-header__btns">
-            {authenticate ? <SignOut />: <Register />}
-            <Cart />
-            <LightMode />
+            {authenticate ? <SignOut /> : <Register />}
+            {cart.contents.nodes.length ? <Cart /> : null}
+            {/* <LightMode /> */}
           </div>
           <Search className="product-header__search" />
         </div>
@@ -50,7 +51,7 @@ export default function ProductHeader() {
               <Search />
             </div>
             <div className="product-header--res__box__bot__credit">
-              <Credit />
+              {/* <Credit /> */}
             </div>
           </div>
         </div>
