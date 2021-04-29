@@ -111,7 +111,7 @@ export default function SignUpModal(props) {
           </button>
         </Modal.Body>
         <Modal.Footer className="sign-up-modal__footer">
-          <button onClick={props.whoModal} className="sign-up-modal__link">
+          <button onClick={() => props.setwhomodal('login')} className="sign-up-modal__link">
             قبلا ثبت نام کرده اید؟ / ورود
           </button>
         </Modal.Footer>

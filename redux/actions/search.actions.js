@@ -23,7 +23,6 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
 
             switch (activeKey) {
                 case 'translator':
-                    
                     result = await client.query({
                         query: GET_PRODUCTS_FROM_TRANSLATORS,
                         variables: {
@@ -33,11 +32,11 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                         fetchPolicy: 'network-only',
                         errorPolicy: 'all'
                     });
-                    
+
                     result.data.paTranslators.edges.map(elem => {
                         products = [...elem.node.products.edges, ...products];
                     })
-                    
+
                     break;
 
                 case 'writer':
@@ -50,7 +49,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                         fetchPolicy: 'network-only',
                         errorPolicy: 'all'
                     });
-                    
+
                     result.data.paWriters.edges.map(elem => {
                         products = [...elem.node.products.edges, ...products];
                     })
@@ -66,7 +65,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                         fetchPolicy: 'network-only',
                         errorPolicy: 'all'
                     });
-                    
+
                     result.data.paPublishers.edges.map(elem => {
                         products = [...elem.node.products.edges, ...products];
                     })
@@ -84,7 +83,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                     });
 
                     products = [...result.data.products.edges, ...products];
-                    
+
                     result.data.paPublishers.edges.map(elem => {
                         products = [...elem.node.products.edges, ...products];
                     })
@@ -97,16 +96,17 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                     break;
 
                 default:
-                result = await client.query({
-                    query: GET_PRODUCTS,
-                    variables: {
-                        search: value,
-                        size: count
-                    },
-                    fetchPolicy: 'network-only',
-                    errorPolicy: 'all'
-                });
-                products = result.data.products.edges
+                    result = await client.query({
+                        query: GET_PRODUCTS,
+                        variables: {
+                            search: value,
+                            size: count
+                        },
+                        fetchPolicy: 'network-only',
+                        errorPolicy: 'all'
+                    });
+                    console.log(result)
+                    products = result.data.products.edges
             }
 
             dispatch({

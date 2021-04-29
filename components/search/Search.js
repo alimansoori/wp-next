@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Dropdown, Spinner, Tab, Tabs } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,23 +24,24 @@ function Search() {
         // searchInput.focus()
     }, [searchInput])
 
+    const didMount = useRef(false);
     useEffect(() => {
-        dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
+        if (didMount.current) {
+            dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
 
-        if (value.length > 0 && router.pathname == "/shop/[[...slugs]]") {
-            router.push({
-                pathname: "/shop/[[...slugs]]",
-                query: {
-                    ...router.query,
-                    q: value,
-                },
-            });
-        }
+            // if (value.length > 0 && router.pathname == "/shop/[[...slugs]]") {
+            //     router.push({
+            //         pathname: "/shop/[[...slugs]]",
+            //         query: {
+            //             ...router.query,
+            //             q: value,
+            //         },
+            //     });
+            // }
 
-        dispatch(getProductsBySearchInput(value, 10, activeKey))
-        // if (value.length > 2) {
-            
-        // }
+            dispatch(getProductsBySearchInput(value, 10, activeKey))
+        } else didMount.current = true;
+
     }, [value, activeKey])
 
     const SearchResultBox = () => {
@@ -78,7 +79,7 @@ function Search() {
                                     },
                                 }
                             }
-                            shallow= {true}
+                            shallow={true}
                         >
                             <a>
                                 <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
