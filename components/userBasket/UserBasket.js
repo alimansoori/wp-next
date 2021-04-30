@@ -1,7 +1,11 @@
 import React from "react";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
+import { useSelector } from "react-redux";
+import { stringToNumber } from "../../functions";
 
 export default function UserBasket() {
+  const {cart} = useSelector(state => state.cart)
+
   return (
     <div className="user-basket-box">
       <div className="user-basket-box__header">
@@ -9,7 +13,7 @@ export default function UserBasket() {
         <div className="user-basket-box__header__content">
           <div className="user-basket-box__header__content__price">
             <h2 className="user-basket-box__header__content__price__text">
-              150/000 ت
+              {stringToNumber(cart.total) + ' ت'}
             </h2>
           </div>
           <div className="user-basket-box__header__content__wallet">

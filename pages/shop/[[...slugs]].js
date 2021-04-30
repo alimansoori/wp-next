@@ -248,7 +248,7 @@ export const getServerSideProps = async ({ query }) => {
             query: GET_CATS,
             variables: {
                 first: 100,
-                after: "YXJyYXljb25uZWN0aW9uOjgyMzU="
+                after: "YXJyYXljb25uZWN0aW9uOjkw"
             },
             notifyOnNetworkStatusChange: true
         });

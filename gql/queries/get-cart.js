@@ -45,6 +45,17 @@ const GET_CART = gql`
           subtotalTax
         }
       }
+      availableShippingMethods {
+        packageDetails
+        supportsShippingCalculator
+        rates {
+          cost
+          id
+          instanceId
+          label
+          methodId
+        }
+      }
       subtotal
       subtotalTax
       shippingTax

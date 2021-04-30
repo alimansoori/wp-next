@@ -42,7 +42,6 @@ export default function UserCartourites() {
     const didMount = useRef(false);
     useEffect(() => {
         if (didMount.current) {
-            console.log('jjj')
             handleQtyChange(item.key)
         } else didMount.current = true;;
     }, [value]);
