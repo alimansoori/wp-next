@@ -6,13 +6,14 @@ import productReducer from './product.reducers';
 import searchReducer from './search.reducers';
 import localReducer from './local.reducers';
 import cartReducer from './cart.reducers';
+import viewerReducer from './viewer.reducers';
 import {combineReducers} from "redux";
-import allSettingReducers from "./allSetting.reducers";
 
 const rootReducer = combineReducers({
     allSetting: allSettingReducer,
     auth: authReducer,
     user: userReducer,
+    viewer: viewerReducer,
     category: categoryReducer,
     product: productReducer,
     search: searchReducer,

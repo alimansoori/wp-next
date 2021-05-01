@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
 import { useSelector } from "react-redux";
 import { stringToNumber } from "../../functions";
 
 export default function UserBasket() {
   const {cart} = useSelector(state => state.cart)
+
+  // const getData=()=>{
+  //   fetch('api/ir'
+  //   ,{
+  //     headers : { 
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //      }
+  //   }
+  //   )
+  //     .then(function(response){
+  //       console.log(response)
+  //       return response.json();
+  //     })
+  //     .then(function(myJson) {
+  //       console.log(myJson);
+  //     });
+  // }
+
+  useEffect(() => {
+  }, [])
 
   return (
     <div className="user-basket-box">

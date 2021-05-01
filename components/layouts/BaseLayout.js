@@ -4,6 +4,7 @@ import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import client from '../ApolloClient'
 import { getCart, isUserLoggedIn } from "../../redux/actions";
 import { useDispatch } from 'react-redux';
+import { getViewer } from '../../redux/actions/viewer.actions';
 
 export default function BaseLayout(props) {
     const dispatch = useDispatch()

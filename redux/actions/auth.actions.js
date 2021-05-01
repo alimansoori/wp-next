@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { authConstants, userConstants } from "./constants";
+import { authConstants, userConstants, viewerConstants } from "./constants";
 import LOGIN_USER from "../../gql/mutations/login-user";
 import client from "../../components/ApolloClient";
 import { v4 } from "uuid";
@@ -35,8 +35,13 @@ export const loginUser = (loginForm = {}) => {
                     user: user
                 }
             })
+            dispatch({
+                type: viewerConstants.VIEWER_REGISTER_SUCCESS,
+                payload: {
+                    viewer: user
+                }
+            })
         } catch (error) {
-            console.log(error.message);
             dispatch({
                 type: authConstants.LOGIN_FAILURE,
                 payload: {
@@ -83,6 +88,12 @@ export const isUserLoggedIn = () => {
                     payload: {
                         token: authToken,
                         user: viewer
+                    }
+                });
+                dispatch({
+                    type: viewerConstants.VIEWER_REGISTER_SUCCESS,
+                    payload: {
+                        viewer
                     }
                 });
                 return true

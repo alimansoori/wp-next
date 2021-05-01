@@ -42,8 +42,8 @@ export default function ProductHeader() {
               />
             </div>
             <div className="product-header--res__box__top__btns">
-              <Register />
-              <Cart />
+              {authenticate ? <SignOut /> : <Register />}
+              {cart.contents.nodes.length ? <Cart /> : null}
             </div>
           </div>
           <div className="product-header--res__box__bot">

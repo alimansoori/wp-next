@@ -84,7 +84,7 @@ export default function SignInModal(props) {
           </button>
         </Modal.Body>
         <Modal.Footer className="sign-in-modal__footer">
-          <button onClick={() => props.setwhomodal('register')} className="sign-in-modal__link">
+          <button className="sign-in-modal__link">
             ثبت نام نکرده اید؟ / ثبت نام
           </button>
         </Modal.Footer>

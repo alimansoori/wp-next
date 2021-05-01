@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import UserFragment from "../fragments/user-fragment";
 
 const GET_VIEWER = gql`
-  query GET_CART {
+  query GET_VIEWER {
     viewer {
       ...UserThatLogin
     }

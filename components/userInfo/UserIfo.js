@@ -1,10 +1,13 @@
 import React from "react";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
+import { useSelector } from "react-redux";
 
 import UserAddressModal from "../userAddressModal/UserAddressModal";
 
 export default function UserIfo() {
   const [modalShow, setModalShow] = React.useState(false);
+  const { viewer } = useSelector(state => state.viewer)
+
 
   return (
     <div className="user-info-box">
@@ -22,7 +25,7 @@ export default function UserIfo() {
               />
             </div>
             <div className="user-info-box__top__row__box__body">
-              علی علیزاده
+              {viewer ? viewer.firstName + ' ' + viewer.lastName : null}
             </div>
           </div>
           <div className="user-info-box__top__row__box">
@@ -37,7 +40,7 @@ export default function UserIfo() {
               />
             </div>
             <div className="user-info-box__top__row__box__body">
-              ali.alizade@yahoo.com
+              {viewer ? viewer.email : null}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import SignUpModal from '../signUpModal/SignUpModal';
 
 function Register() {
     const [modalShow, setModalShow] = useState(false);
-    const [whomodal, setWhomodal] = useState('login')
+    // const [whomodal, setWhomodal] = useState('login')
 
     return (
         <div>
@@ -18,15 +18,15 @@ function Register() {
                     <div className="register__btn__title">ورود / ثبت نام</div>
                 </button>
             </div>
-            {/* <SignUpModal show={modalShow} onHide={() => setModalShow(false)} /> */}
-            {whomodal === 'register' ?
-                <SignUpModal setwhomodal={setWhomodal} show={modalShow} onHide={() => setModalShow(false)} /> :
+            <SignInModal show={modalShow} onHide={() => setModalShow(false)} />
+            {/* {whomodal === 'register' ?
+                <SignUpModal show={modalShow} onHide={() => setModalShow(false)} /> :
                 null
             }
             {whomodal === 'login' ?
-                <SignInModal setwhomodal={setWhomodal} show={modalShow} onHide={() => setModalShow(false)} /> :
+                <SignInModal show={modalShow} onHide={() => setModalShow(false)} /> :
                 null
-            }
+            } */}
         </div>
     );
 }
