@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { authConstants, userConstants, viewerConstants } from "./constants";
+import { authConstants, customerConstants, userConstants, viewerConstants } from "./constants";
 import LOGIN_USER from "../../gql/mutations/login-user";
 import client from "../../components/ApolloClient";
 import { v4 } from "uuid";
 import REFRESH_TOKEN from "../../gql/mutations/refresh-token";
 import GET_VIEWER from "../../gql/queries/get-viewer";
+import { getViewer } from "./viewer.actions";
+import { getCustomer } from "./customer.actions";
 
 export const loginUser = (loginForm = {}) => {
     return async dispatch => {
@@ -23,7 +25,7 @@ export const loginUser = (loginForm = {}) => {
                 }
             })
 
-            const { user, authToken } = result.data.login
+            const { user, authToken, customer } = result.data.login
 
             localStorage.setItem('wp-next-token', authToken);
             localStorage.setItem('user', JSON.stringify(user));
@@ -39,6 +41,12 @@ export const loginUser = (loginForm = {}) => {
                 type: viewerConstants.VIEWER_REGISTER_SUCCESS,
                 payload: {
                     viewer: user
+                }
+            })
+            dispatch({
+                type: customerConstants.CUSTOMER_REGISTER_SUCCESS,
+                payload: {
+                    customer
                 }
             })
         } catch (error) {
@@ -75,27 +83,32 @@ export const isUserLoggedIn = () => {
                     }
                 })
 
-                const qry = await client.query({
-                    query: GET_VIEWER,
-                })
+                
+
+                // const qry = await client.query({
+                //     query: GET_VIEWER,
+                // })
 
                 const { authToken } = result.data.refreshJwtAuthToken
-                const { viewer } = qry.data
+                // const { viewer } = qry.data
                 localStorage.setItem('wp-next-token', authToken)
+                console.log('wp-next-token', authToken)
 
                 dispatch({
                     type: authConstants.REFRESH_TOKEN_SUCCESS,
                     payload: {
-                        token: authToken,
-                        user: viewer
+                        token: authToken
                     }
                 });
-                dispatch({
-                    type: viewerConstants.VIEWER_REGISTER_SUCCESS,
-                    payload: {
-                        viewer
-                    }
-                });
+
+                dispatch(getViewer())
+                dispatch(getCustomer())
+                // dispatch({
+                //     type: viewerConstants.VIEWER_REGISTER_SUCCESS,
+                //     payload: {
+                //         viewer
+                //     }
+                // });
                 return true
             }
         } catch (error) {

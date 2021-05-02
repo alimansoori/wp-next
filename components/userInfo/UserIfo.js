@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCustomer } from "../../redux/actions/customer.actions";
 
 import UserAddressModal from "../userAddressModal/UserAddressModal";
 
 export default function UserIfo() {
   const [modalShow, setModalShow] = React.useState(false);
-  const { viewer } = useSelector(state => state.viewer)
+  const { customer } = useSelector(state => state.customer)
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <div className="user-info-box">
+      <button onClick={() => dispatch(updateCustomer())}>DDDDDDDDD</button>
       <div className="user-info-box__top">
         <div className="user-info-box__top__row">
           <div className="user-info-box__top__row__box">
@@ -25,7 +31,7 @@ export default function UserIfo() {
               />
             </div>
             <div className="user-info-box__top__row__box__body">
-              {viewer ? viewer.firstName + ' ' + viewer.lastName : null}
+              {customer ? customer.displayName : null}
             </div>
           </div>
           <div className="user-info-box__top__row__box">
@@ -40,7 +46,7 @@ export default function UserIfo() {
               />
             </div>
             <div className="user-info-box__top__row__box__body">
-              {viewer ? viewer.email : null}
+              {customer ? customer.email : null}
             </div>
           </div>
         </div>
@@ -57,13 +63,13 @@ export default function UserIfo() {
               />
             </div>
             <div className="user-info-box__top__row__box__body">
-              09212345678
+              {customer ? customer.billing.phone : null}
             </div>
           </div>
           <div className="user-info-box__top__row__box">
             <div className="user-info-box__top__row__box__title">
               <h3 className="user-info-box__top__row__box__title__text">
-                کد ملی
+                کد پستی
               </h3>
               <img
                 className="user-info-box__top__row__box__title__icon"
@@ -71,7 +77,9 @@ export default function UserIfo() {
                 alt="edit"
               />
             </div>
-            <div className="user-info-box__top__row__box__body">1234567</div>
+            <div className="user-info-box__top__row__box__body">
+              {customer ? customer.billing.postcode : null}
+            </div>
           </div>
         </div>
       </div>

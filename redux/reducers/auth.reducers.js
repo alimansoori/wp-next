@@ -69,7 +69,6 @@ const AuthReducers = (state = initState, action) => {
             state = {
                 ...state,
                 token: action.payload.token,
-                user: action.payload.user,
                 authenticating: false,
                 authenticate: true
             }
