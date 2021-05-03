@@ -55,16 +55,16 @@ export const updateCustomer = () => {
                 }
             })
 
-            const { customer, authToken, clientMutationId, refreshToken } = result.data
+            const { customer, clientMutationId } = result.data
 
-            localStorage.setItem('wp-next-token', authToken)
+            // localStorage.setItem('wp-next-token', authToken)
 
-            dispatch({
-                type: authConstants.REFRESH_TOKEN_SUCCESS,
-                payload: {
-                    token: authToken
-                }
-            });
+            // dispatch({
+            //     type: authConstants.REFRESH_TOKEN_SUCCESS,
+            //     payload: {
+            //         token: authToken
+            //     }
+            // });
 
             dispatch({
                 type: customerConstants.CUSTOMER_UPDATE_SUCCESS,

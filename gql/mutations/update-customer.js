@@ -5,9 +5,7 @@ const UPDATE_CUSTOMER = gql`
 
 mutation ($input: UpdateCustomerInput!) {
   updateCustomer(input: $input) {
-    authToken
     clientMutationId
-    refreshToken
     customer {
       ...MyCustomer
     }

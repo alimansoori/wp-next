@@ -19,13 +19,8 @@ CustomerFragment.fragments = {
       firstName
       hasCalculatedShipping
       id
-      isJwtAuthSecretRevoked
       isPayingCustomer
       isVatExempt
-      jwtAuthExpiration
-      jwtAuthToken
-      jwtRefreshToken
-      jwtUserSecret
       lastName
       orderCount
       role

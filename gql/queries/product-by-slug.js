@@ -62,6 +62,9 @@ query Product($id: ID!) {
 	  slug
 	  description
 	  shortDescription
+	  extraFields {
+		extraAbout
+	  }
 	  seo {
         title
 		metaDesc

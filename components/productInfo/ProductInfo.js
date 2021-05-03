@@ -3,6 +3,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
 export default function ProductInfo({ product }) {
+
   return (
     <div className="p-info-box-wrap">
       <div className="p-info-box p-info-box--desktop">
@@ -16,7 +17,7 @@ export default function ProductInfo({ product }) {
                 </h1>
                 {/* <div
                   dangerouslySetInnerHTML={{
-                    __html: product.extraFields.extraParagraph,
+                    __html: product.extraFields.extraAbout,
                   }}
                   className="p-info-box__tab-content__box__text"
                 /> */}
@@ -149,12 +150,11 @@ export default function ProductInfo({ product }) {
               </div>
             </Tab>
             <Tab eventKey="درباره" title="درباره">
-              {/* <div
+              <div
                 dangerouslySetInnerHTML={{
                   __html: product.extraFields.extraAbout,
                 }}
-                className="p-info-box__tab-content__box p-info-box__tab-content__box--flex"
-              /> */}
+              />
             </Tab>
           </Tabs>
         </div>
