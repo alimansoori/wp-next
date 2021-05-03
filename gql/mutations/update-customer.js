@@ -3,7 +3,7 @@ import CustomerFragment from "../fragments/customer-fragment";
 
 const UPDATE_CUSTOMER = gql`
 
-mutation ($input: UpdateCustomerInput!) {
+mutation ($input: UpdateCustomerInput!, $keysIn: [String]) {
   updateCustomer(input: $input) {
     clientMutationId
     customer {

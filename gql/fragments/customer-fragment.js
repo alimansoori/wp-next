@@ -19,6 +19,10 @@ CustomerFragment.fragments = {
       firstName
       hasCalculatedShipping
       id
+      metaData(keysIn: $keysIn) {
+        key
+        value
+      }
       isPayingCustomer
       isVatExempt
       lastName

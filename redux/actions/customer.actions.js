@@ -2,29 +2,42 @@ import { authConstants, customerConstants } from "./constants";
 import client from "../../components/ApolloClient";
 import GET_CUSTOMER from "../../gql/queries/get-customer";
 import UPDATE_CUSTOMER from "../../gql/mutations/update-customer";
+import { getCart } from "./cart.actions";
 
 export const getCustomer = () => {
     return async dispatch => {
         dispatch({
-            type: customerConstants.CUSTOMER_REGISTER_REQUEST
+            type: customerConstants.GET_CUSTOMER_REQUEST
         })
 
         try {
             const result = await client.query({
                 query: GET_CUSTOMER,
+                variables: {
+                    keysIn: [
+                        "country-",
+                        "state-",
+                        "city-",
+                        "street-",
+                        "alley-",
+                        "number-",
+                        "postcode-",
+                        "number-address"
+                    ]
+                }
             })
 
             const { customer } = result.data
 
             dispatch({
-                type: customerConstants.CUSTOMER_REGISTER_SUCCESS,
+                type: customerConstants.GET_CUSTOMER_SUCCESS,
                 payload: {
                     customer
                 }
             })
         } catch (error) {
             dispatch({
-                type: customerConstants.CUSTOMER_REGISTER_FAILURE,
+                type: customerConstants.GET_CUSTOMER_FAILURE,
                 payload: {
                     error: error.message
                 }
@@ -33,7 +46,7 @@ export const getCustomer = () => {
     }
 }
 
-export const updateCustomer = () => {
+export const updateCustomer = (input) => {
     return async dispatch => {
         dispatch({
             type: customerConstants.CUSTOMER_UPDATE_REQUEST
@@ -43,28 +56,23 @@ export const updateCustomer = () => {
             const result = await client.mutate({
                 mutation: UPDATE_CUSTOMER,
                 variables: {
-                    input: {
-                        billing: {
-                            address1: 'kkkkkkk',
-                            address2: "22222222222",
-                            city: "8443",
-                            country: "IR",
-                            state: "8433",
-                        }
-                    }
+                    input,
+                    keysIn: [
+                        "country-",
+                        "state-",
+                        "city-",
+                        "street-",
+                        "alley-",
+                        "number-",
+                        "postcode-",
+                        "number-address"
+                    ]
                 }
             })
 
-            const { customer, clientMutationId } = result.data
+            const { customer } = result.data.updateCustomer
 
-            // localStorage.setItem('wp-next-token', authToken)
-
-            // dispatch({
-            //     type: authConstants.REFRESH_TOKEN_SUCCESS,
-            //     payload: {
-            //         token: authToken
-            //     }
-            // });
+            dispatch(getCart())
 
             dispatch({
                 type: customerConstants.CUSTOMER_UPDATE_SUCCESS,

@@ -10,13 +10,8 @@ export default function UserIfo() {
   const { customer } = useSelector(state => state.customer)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    
-  }, [])
-
   return (
     <div className="user-info-box">
-      <button onClick={() => dispatch(updateCustomer())}>DDDDDDDDD</button>
       <div className="user-info-box__top">
         <div className="user-info-box__top__row">
           <div className="user-info-box__top__row__box">

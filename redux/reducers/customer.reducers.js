@@ -9,33 +9,26 @@ const initState = {
 
 export default (state = initState, action) => {
     switch (action.type) {
-        case customerConstants.CUSTOMER_REGISTER_REQUEST:
+        case customerConstants.GET_CUSTOMER_REQUEST:
             state = {
                 ...state,
                 loading: true
             }
             break;
-        case customerConstants.CUSTOMER_REGISTER_SUCCESS:
+        case customerConstants.GET_CUSTOMER_SUCCESS:
             state = {
                 ...state,
                 loading: false,
                 customer: action.payload.customer,
-                message: action.payload.message,
                 error: null
             }
             break;
-        case customerConstants.CUSTOMER_REGISTER_FAILURE:
+        case customerConstants.GET_CUSTOMER_FAILURE:
             state = {
                 ...state,
                 loading: false,
                 error: action.payload.error,
                 message: null
-            }
-            break;
-        case customerConstants.CUSTOMER_REGISTER_REQUEST:
-            state = {
-                ...state,
-                loading: true
             }
             break;
         case customerConstants.CUSTOMER_UPDATE_SUCCESS:

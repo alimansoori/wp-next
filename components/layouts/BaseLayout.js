@@ -10,7 +10,7 @@ export default function BaseLayout(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // dispatch(isUserLoggedIn())
+        dispatch(isUserLoggedIn())
         dispatch(getCart());
     }, []);
 

@@ -1,0 +1,51 @@
+.notification__btn {
+  width: 40px;
+  height: 40px;
+  @include flex-org;
+  margin: 0 10px;
+  background: $mainBlue;
+  border: none;
+  border-radius: 50%;
+  transition: all 300ms;
+  box-shadow: $mainBoxShadowDark;
+  .notification__btn__title {
+    color: #ffffff;
+    margin: 0 5px;
+    visibility: hidden;
+    position: absolute;
+  }
+
+  &:hover {
+    width: 140px;
+    padding: 0 5px;
+    border-radius: 18px;
+  }
+
+  &:hover .notification__btn__title {
+    visibility: visible;
+    position: relative;
+    transition-delay: 300ms;
+  }
+
+  .notification__btn__icon {
+    width: 26px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .notification__btn__title {
+    &:hover {
+      width: 0 !important;
+      padding: 0 !important;
+    }
+
+    &:hover .notification__btn__title {
+      visibility: hidden !important;
+    }
+  }
+  .notification__btn {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px !important;
+  }
+}
