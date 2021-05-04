@@ -19,7 +19,7 @@ CustomerFragment.fragments = {
       firstName
       hasCalculatedShipping
       id
-      metaData(keysIn: $keysIn) {
+      metaData(keysIn: $keysIn, key: $key, multiple: $multiple) {
         key
         value
       }

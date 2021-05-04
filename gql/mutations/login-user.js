@@ -3,7 +3,7 @@ import UserFragment from "../fragments/user-fragment";
 import CustomerFragment from "../fragments/customer-fragment";
 
 const LOGIN_USER = gql`
-  mutation ($input: LoginInput!) {
+  mutation ($input: LoginInput!, $keysIn: [String], $key: String, $multiple: Boolean) {
     login(input: $input) {
         authToken
         refreshToken

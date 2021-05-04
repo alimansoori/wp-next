@@ -14,16 +14,8 @@ export const getCustomer = () => {
             const result = await client.query({
                 query: GET_CUSTOMER,
                 variables: {
-                    keysIn: [
-                        "country-",
-                        "state-",
-                        "city-",
-                        "street-",
-                        "alley-",
-                        "number-",
-                        "postcode-",
-                        "number-address"
-                    ]
+                    key: "number-address",
+                    multiple: true
                 }
             })
 
@@ -58,15 +50,10 @@ export const updateCustomer = (input) => {
                 variables: {
                     input,
                     keysIn: [
-                        "country-",
-                        "state-",
-                        "city-",
-                        "street-",
-                        "alley-",
-                        "number-",
-                        "postcode-",
-                        "number-address"
-                    ]
+                        "number-address",
+                        "address-"
+                    ],
+                    multiple: true
                 }
             })
 

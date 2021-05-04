@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
-import { RadioGroup, RadioButton } from "react-radio-buttons";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCustomer } from "../../redux/actions/customer.actions";
 
-import UserAddressModal from "../userAddressModal/UserAddressModal";
+import UserAddresses from "./UserAddresses";
 
 export default function UserIfo() {
-  const [modalShow, setModalShow] = React.useState(false);
   const { customer } = useSelector(state => state.customer)
   const dispatch = useDispatch()
 
@@ -78,33 +75,8 @@ export default function UserIfo() {
           </div>
         </div>
       </div>
-      <div className="user-info-box__bot">
-        <div className="user-info-box__bot__title">
-          <h3 className="user-info-box__bot__title__text">آدرس ها</h3>
-          <img
-            className="user-info-box__bot__title__icon"
-            onClick={() => setModalShow(true)}
-            src={`/image/icon/edit (1).png`}
-            alt="edit"
-          />
-        </div>
-        <div className="user-info-box__bot__body">
-          <div className="user-info-box__bot__body-wrap">
-            <RadioGroup>
-              <RadioButton pointColor="#26c7bf" rootColor="#000" value="ad1">
-                ایران- تهران- خیابان- کوچه-پلاک
-              </RadioButton>
-              <RadioButton pointColor="#26c7bf" rootColor="#000" value="ad2">
-                ایران- تهران- خیابان- کوچه-پلاک
-              </RadioButton>
-              <RadioButton pointColor="#26c7bf" rootColor="#000" value="ad3">
-                ایران- تهران- خیابان- کوچه-پلاک
-              </RadioButton>
-            </RadioGroup>
-          </div>
-        </div>
-      </div>
-      <UserAddressModal show={modalShow} onHide={() => setModalShow(false)} />
+      <UserAddresses/>
+      
     </div>
   );
 }

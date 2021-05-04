@@ -21,7 +21,12 @@ export const loginUser = (loginForm = {}) => {
                     input: {
                         clientMutationId: v4(),
                         ...loginForm
-                    }
+                    },
+                    keysIn: [
+                        "number-address",
+                        "address-"
+                    ],
+                    multiple: true
                 }
             })
 
@@ -44,7 +49,7 @@ export const loginUser = (loginForm = {}) => {
                 }
             })
             dispatch({
-                type: customerConstants.CUSTOMER_REGISTER_SUCCESS,
+                type: customerConstants.GET_CUSTOMER_SUCCESS,
                 payload: {
                     customer
                 }
