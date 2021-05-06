@@ -2,9 +2,31 @@ import React, { useEffect } from "react";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
 import { useSelector } from "react-redux";
 import { stringToNumber } from "../../functions";
+import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
 
 export default function UserBasket() {
-  const {cart} = useSelector(state => state.cart)
+  const { cart } = useSelector(state => state.cart)
+  const [modalShow, setModalShow] = React.useState(false);
+  const [address, setAddress] = React.useState('');
+  const { customer } = useSelector(state => state.customer)
+  const { region } = useSelector(state => state.local)
+
+  useEffect(() => {
+    if (!customer) return false;
+
+    var state = customer.billing.state ? (region.states.find(x => x.value === customer.billing.state)).label : null;
+    var city = customer.billing.city && customer.billing.state ?
+      (region.states.find(x => x.value === customer.billing.state)).cities.find(
+        x => x.value === customer.billing.city
+      ).label
+      : null;
+
+    var address1 = customer ? customer.billing.address1 : '';
+    var address2 = customer ? customer.billing.address2 : '';
+
+    setAddress('ایران' + '-' + state + '-' + city + '-' + address1 + '-' + address2)
+
+  }, [customer])
 
   // const getData=()=>{
   //   fetch('api/ir'
@@ -90,9 +112,16 @@ export default function UserBasket() {
       <div className="user-basket-box__address">
         <h1 className="user-basket-box__title">:آدرس</h1>
         <p className="user-basket-box__address__text">
-          ایران- تهران- خیابان- کوچه-پلاک
+          {address}
         </p>
+        <img
+          className="user-info-box__bot__title__icon"
+          onClick={() => setModalShow(true)}
+          src={`/image/icon/edit (1).png`}
+          alt="edit"
+        />
       </div>
+      <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />
       <div className="user-basket-box__transport">
         <h1 className="user-basket-box__title">:روش ارسال</h1>
         <div className="user-basket-box__transport__radio-btn-wrap">

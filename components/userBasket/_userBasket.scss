@@ -105,6 +105,7 @@
     align-items: center;
     flex-direction: row-reverse;
     .user-basket-box__address__text {
+      direction: rtl;
       margin: 0 5px 0 0;
       font-size: 14px;
     }

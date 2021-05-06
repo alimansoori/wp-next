@@ -4,9 +4,9 @@ import LOGIN_USER from "../../gql/mutations/login-user";
 import client from "../../components/ApolloClient";
 import { v4 } from "uuid";
 import REFRESH_TOKEN from "../../gql/mutations/refresh-token";
-import GET_VIEWER from "../../gql/queries/get-viewer";
 import { getViewer } from "./viewer.actions";
 import { getCustomer } from "./customer.actions";
+import { getCart } from "./cart.actions";
 
 export const loginUser = (loginForm = {}) => {
     return async dispatch => {
@@ -27,7 +27,8 @@ export const loginUser = (loginForm = {}) => {
                         "address-"
                     ],
                     multiple: true
-                }
+                },
+                fetchPolicy: 'network-only'
             })
 
             const { user, authToken, customer } = result.data.login
@@ -54,6 +55,8 @@ export const loginUser = (loginForm = {}) => {
                     customer
                 }
             })
+
+            dispatch(getCart())
         } catch (error) {
             dispatch({
                 type: authConstants.LOGIN_FAILURE,
@@ -85,7 +88,8 @@ export const isUserLoggedIn = () => {
                             clientMutationId: v4(),
                             jwtRefreshToken: token
                         }
-                    }
+                    },
+                    fetchPolicy: 'network-only'
                 })
 
                 
@@ -97,7 +101,7 @@ export const isUserLoggedIn = () => {
                 const { authToken } = result.data.refreshJwtAuthToken
                 // const { viewer } = qry.data
                 localStorage.setItem('wp-next-token', authToken)
-                console.log('wp-next-token', authToken)
+                // console.log('wp-next-token', authToken)
 
                 dispatch({
                     type: authConstants.REFRESH_TOKEN_SUCCESS,

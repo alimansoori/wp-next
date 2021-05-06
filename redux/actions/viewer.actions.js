@@ -14,10 +14,10 @@ export const getViewer = () => {
             })
 
             const { viewer } = result.data
-            console.log('viewer.jwtAuthExpiration', viewer.jwtAuthExpiration)
-            console.log('viewer.jwtAuthToken', viewer.jwtAuthToken)
-            console.log('viewer.jwtRefreshToken', viewer.jwtRefreshToken)
-            console.log('viewer.jwtUserSecret', viewer.jwtUserSecret)
+            // console.log('viewer.jwtAuthExpiration', viewer.jwtAuthExpiration)
+            // console.log('viewer.jwtAuthToken', viewer.jwtAuthToken)
+            // console.log('viewer.jwtRefreshToken', viewer.jwtRefreshToken)
+            // console.log('viewer.jwtUserSecret', viewer.jwtUserSecret)
 
             dispatch({
                 type: viewerConstants.VIEWER_REGISTER_SUCCESS,

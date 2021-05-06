@@ -16,7 +16,8 @@ export const getCustomer = () => {
                 variables: {
                     key: "number-address",
                     multiple: true
-                }
+                },
+                fetchPolicy: 'network-only'
             })
 
             const { customer } = result.data
@@ -54,7 +55,8 @@ export const updateCustomer = (input) => {
                         "address-"
                     ],
                     multiple: true
-                }
+                },
+                fetchPolicy: 'network-only'
             })
 
             const { customer } = result.data.updateCustomer

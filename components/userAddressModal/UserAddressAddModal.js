@@ -1,32 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
+import Select from 'react-select'
 import { updateCustomer } from "../../redux/actions/customer.actions";
 
 export default function UserAddressAddModal(props) {
   const dispatch = useDispatch()
-  const {customer} = useSelector(state => state.customer)
+  const { customer } = useSelector(state => state.customer)
+  const { region } = useSelector(state => state.local)
 
   const [newAddressForm, setNewAddressForm] = useState({
-    "country": "IR",
-    "state": "",
-    "city": "",
-    "street": "",
-    "alley": "",
-    "number": "",
-    "desc": "",
-    "postcode": "",
-    "phone": "",
-    "mobile": ""
+    country: "IR",
+    state: "",
+    city: "",
+    address1: "",
+    address2: "",
+    postcode: "",
+    phone: "",
+    mobile: ""
   })
 
   const [error, setError] = useState(null)
+  const [selectedState, setSelectedState] = useState(null)
+  const [selectedCity, setSelectedCity] = useState(null)
+  const [cities, setCities] = useState(null)
+
+  useEffect(() => {
+    setSelectedState(customer ? region.states.find(x => x.value === customer.billing.state) : null)
+    setSelectedCity(
+      customer ? 
+      (selectedState ? selectedState.cities.find(x => x.value === customer.billing.city) : null) : 
+    null
+    )
+    setCities(
+      selectedState ? selectedState.cities : null
+    )
+
+    customer && setNewAddressForm({
+      ...newAddressForm,
+      country: customer.billing.country,
+      state: customer.billing.state,
+      city: customer.billing.city,
+      address1: customer.billing.address1,
+      address2: customer.billing.address2,
+      phone: customer.billing.phone,
+      postcode: customer.billing.postcode
+    })
+  }, [customer, selectedState, selectedCity, cities])
 
   const submitAddress = () => {
-    if (!newAddressForm.state) {setError('فیلد استان را پر کنید'); return false}
-    if (!newAddressForm.city) {setError('فیلد شهر را پر کنید'); return false}
-    
+    if (!newAddressForm.state) { setError('فیلد استان را پر کنید'); return false }
+    if (!newAddressForm.city) { setError('فیلد شهر را پر کنید'); return false }
+
     let numberAddress = 1
     if (customer.metaData) {
       numberAddress = parseInt(customer.metaData.find(m => m.key === 'number-address')) + 1
@@ -45,8 +71,26 @@ export default function UserAddressAddModal(props) {
       ]
     }))
 
-    props.setIsAdd(false)
+    // props.setIsAdd(false)
   }
+
+  const handleChangeState = selectedOption => {
+    setSelectedState(selectedOption)
+    setNewAddressForm({
+      ...newAddressForm,
+      state: selectedOption.value
+    })
+
+    setCities(region.states.find(x => x.value === selectedOption.value).cities)
+  };
+  
+  const handleChangeCity = selectedOption => {
+    setSelectedCity(selectedOption)
+    setNewAddressForm({
+      ...newAddressForm,
+      city: selectedOption.value
+    })
+  };
 
   return (
     <Modal
@@ -62,7 +106,7 @@ export default function UserAddressAddModal(props) {
           className="sign-in-modal__title"
           id="contained-modal-title-vcenter"
         >
-          {`افزودن آدرس جدید`}
+          {`افزودن آدرس`}
         </Modal.Title>
       </Modal.Header>
       {/* {loading ? <Loader /> : null} */}
@@ -77,58 +121,58 @@ export default function UserAddressAddModal(props) {
         </Alert>
       ) : null}
       <Modal.Body>
+        <Select
+          className="address-modal__select"
+          value={selectedState}
+          isSearchable={true}
+          onChange={handleChangeState}
+          options={region.states}
+          placeholder={`استان ...`}
+        />
+        {
+          (cities || selectedCity) ? (
+            <Select
+              className="address-modal__select"
+              value={selectedCity}
+              isSearchable={true}
+              onChange={handleChangeCity}
+              options={cities}
+              placeholder={`شهر ...`}
+            />
+          ) : null
+        }
         <input
           className="sign-in-modal__input"
           type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "state": e.target.value})}
-          placeholder="استان"
+          value={newAddressForm.address1}
+          onChange={(e) => setNewAddressForm({ ...newAddressForm, "address1": e.target.value })}
+          placeholder="خیابان و محله ..."
         />
         <input
           className="sign-in-modal__input"
           type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "city": e.target.value})}
-          placeholder="شهر"
+          value={newAddressForm.address2}
+          onChange={(e) => setNewAddressForm({ ...newAddressForm, "address2": e.target.value })}
+          placeholder="کوچه و پلاک ..."
         />
         <input
           className="sign-in-modal__input"
           type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "street": e.target.value})}
-          placeholder="خیابان"
-        />
-        <input
-          className="sign-in-modal__input"
-          type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "alley": e.target.value})}
-          placeholder="کوچه"
-        />
-        <input
-          className="sign-in-modal__input"
-          type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "number": e.target.value})}
-          placeholder="پلاک"
-        />
-        <input
-          className="sign-in-modal__input"
-          type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "desc": e.target.value})}
-          placeholder="خیابان-کوچه-پلاک"
-        />
-        <input
-          className="sign-in-modal__input"
-          type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "postcode": e.target.value})}
+          value={newAddressForm.postcode}
+          onChange={(e) => setNewAddressForm({ ...newAddressForm, "postcode": e.target.value })}
           placeholder="کدپستی"
         />
         <input
           className="sign-in-modal__input"
           type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "phone": e.target.value})}
+          value={newAddressForm.phone ? newAddressForm.phone : ''}
+          onChange={(e) => setNewAddressForm({ ...newAddressForm, "phone": e.target.value })}
           placeholder="تلفن"
         />
         <input
           className="sign-in-modal__input"
           type="text"
-          onChange={(e) => setNewAddressForm({...newAddressForm, "mobile": e.target.value})}
+          onChange={(e) => setNewAddressForm({ ...newAddressForm, "mobile": e.target.value })}
           placeholder="موبایل"
         />
         <button
@@ -137,7 +181,7 @@ export default function UserAddressAddModal(props) {
           onClick={submitAddress}
         >
           {`ثبت`}
-          </button>
+        </button>
       </Modal.Body>
     </Modal>
   );

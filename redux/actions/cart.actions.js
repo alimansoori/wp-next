@@ -14,6 +14,7 @@ export const getCart = () => {
         try {
             const result = await client.query({
                 query: GET_CART,
+                fetchPolicy: 'network-only'
             });
 
             const { cart } = result.data;
@@ -21,7 +22,7 @@ export const getCart = () => {
             dispatch({
                 type: cartConstants.CART_SUCCESS,
                 payload: {
-                    cart: cart,
+                    cart
                 }
             });
         } catch (error) {
@@ -46,7 +47,8 @@ export const addToCart = (addToCartInput) => {
                 mutation: ADD_TO_CART,
                 variables: {
                     input: addToCartInput
-                }
+                },
+                fetchPolicy: 'network-only'
             });
 
             const { addToCart } = result.data;
@@ -78,7 +80,8 @@ export const updateCart = (variables) => {
         try {
             const result = await client.mutate({
                 mutation: UPDATE_CART,
-                variables: variables
+                variables: variables,
+                fetchPolicy: 'network-only'
             });
 
             const { updateItemQuantities } = result.data;
@@ -109,7 +112,8 @@ export const clearCart = (variables) => {
         try {
             const result = await client.mutate({
                 mutation: CLEAR_CART_MUTATION,
-                variables: variables
+                variables: variables,
+                fetchPolicy: 'network-only'
             });
 
             const { removeItemsFromCart } = result.data;
