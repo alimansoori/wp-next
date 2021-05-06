@@ -56,7 +56,7 @@ export const updateCustomer = (input) => {
                     ],
                     multiple: true
                 },
-                fetchPolicy: 'network-only'
+                fetchPolicy: 'no-cache'
             })
 
             const { customer } = result.data.updateCustomer

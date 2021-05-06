@@ -28,7 +28,7 @@ export const loginUser = (loginForm = {}) => {
                     ],
                     multiple: true
                 },
-                fetchPolicy: 'network-only'
+                fetchPolicy: 'no-cache'
             })
 
             const { user, authToken, customer } = result.data.login
@@ -89,7 +89,7 @@ export const isUserLoggedIn = () => {
                             jwtRefreshToken: token
                         }
                     },
-                    fetchPolicy: 'network-only'
+                    fetchPolicy: 'no-cache'
                 })
 
                 

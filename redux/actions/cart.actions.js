@@ -48,7 +48,7 @@ export const addToCart = (addToCartInput) => {
                 variables: {
                     input: addToCartInput
                 },
-                fetchPolicy: 'network-only'
+                fetchPolicy: 'no-cache'
             });
 
             const { addToCart } = result.data;
@@ -81,7 +81,7 @@ export const updateCart = (variables) => {
             const result = await client.mutate({
                 mutation: UPDATE_CART,
                 variables: variables,
-                fetchPolicy: 'network-only'
+                fetchPolicy: 'no-cache'
             });
 
             const { updateItemQuantities } = result.data;
@@ -113,7 +113,7 @@ export const clearCart = (variables) => {
             const result = await client.mutate({
                 mutation: CLEAR_CART_MUTATION,
                 variables: variables,
-                fetchPolicy: 'network-only'
+                fetchPolicy: 'no-cache'
             });
 
             const { removeItemsFromCart } = result.data;
