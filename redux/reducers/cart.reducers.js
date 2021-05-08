@@ -5,6 +5,11 @@ const initState = {
         contents: {
             nodes: []
         },
+        availableShippingMethods: [
+            {
+                rates: []
+            }
+        ],
         total: 0
     },
     loading: false,

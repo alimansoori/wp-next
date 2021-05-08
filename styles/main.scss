@@ -24,6 +24,7 @@ h1 {
 
 // Components
 @import './index';
+@import '../components/landingLoading/landingLoading';
 @import '../components/landingHeader/landingHeader';
 @import '../components/search/search';
 @import '../components/register/register';

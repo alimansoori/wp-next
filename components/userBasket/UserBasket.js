@@ -3,6 +3,7 @@ import { RadioGroup, RadioButton } from "react-radio-buttons";
 import { useSelector } from "react-redux";
 import { stringToNumber } from "../../functions";
 import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
+import ShippingBasket from "./ShippingBasket";
 
 export default function UserBasket() {
   const { cart } = useSelector(state => state.cart)
@@ -122,25 +123,7 @@ export default function UserBasket() {
         />
       </div>
       <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />
-      <div className="user-basket-box__transport">
-        <h1 className="user-basket-box__title">:روش ارسال</h1>
-        <div className="user-basket-box__transport__radio-btn-wrap">
-          <RadioGroup horizontal>
-            <RadioButton pointColor="white" rootColor="#000" value="سفارشی">
-              فوری
-            </RadioButton>
-            <RadioButton pointColor="red" rootColor="#000" value="پیشتاز">
-              پیشتاز
-            </RadioButton>
-            <RadioButton pointColor="red" rootColor="#000" value="فوری">
-              سفارشی
-            </RadioButton>
-            <RadioButton pointColor="red" rootColor="#000" value="پیک">
-              پیک
-            </RadioButton>
-          </RadioGroup>
-        </div>
-      </div>
+      <ShippingBasket />
       <div className="user-basket-box__transport-time">
         <h1 className="user-basket-box__title">:انتخاب زمان ارسال</h1>
         <div className="user-basket-box__transport-time__day">

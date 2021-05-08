@@ -119,6 +119,8 @@ export const isUserLoggedIn = () => {
                 //     }
                 // });
                 return true
+            } else {
+                throw "User is Guest"
             }
         } catch (error) {
             localStorage.removeItem('wp-next-token');

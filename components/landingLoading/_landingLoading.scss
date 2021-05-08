@@ -1,0 +1,42 @@
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #71a4f080;
+  opacity: 1;
+  visibility: visible;
+  transition: 300ms;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  animation-name: loading-fade;
+  // animation-duration: 1s;
+  animation-iteration-count: 1;
+  .loading__logo {
+    width: 200px;
+  }
+}
+
+@keyframes loading-fade {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  70% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.hidden {
+  display: none;
+  position: absolute;
+}
