@@ -22,10 +22,9 @@ const Account = ({ router }) => {
             <UserHeader />
             {authenticate ? (
                 <>
-
                     <UserNav />
                 </>
-            ) : <div>Access Denied!</div>}
+            ) : <div>Access Denied! ... Please Log in</div>}
         </>
     )
 }

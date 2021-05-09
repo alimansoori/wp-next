@@ -8,6 +8,7 @@ import { updateCustomer } from "../../redux/actions/customer.actions";
 export default function UserAddressAddModal(props) {
   const dispatch = useDispatch()
   const { customer } = useSelector(state => state.customer)
+  const { viewer } = useSelector(state => state.viewer)
   const { region } = useSelector(state => state.local)
 
   const [newAddressForm, setNewAddressForm] = useState({
@@ -17,8 +18,7 @@ export default function UserAddressAddModal(props) {
     address1: "",
     address2: "",
     postcode: "",
-    phone: "",
-    mobile: ""
+    phone: ""
   })
 
   const [error, setError] = useState(null)
@@ -27,69 +27,74 @@ export default function UserAddressAddModal(props) {
   const [cities, setCities] = useState(null)
 
   useEffect(() => {
-    setSelectedState(customer ? region.states.find(x => x.value === customer.billing.state) : null)
-    setSelectedCity(
-      customer ? 
-      (selectedState ? selectedState.cities.find(x => x.value === customer.billing.city) : null) : 
-    null
-    )
-    setCities(
-      selectedState ? selectedState.cities : null
+    setSelectedState(
+      customer
+        ?
+        region.states.find(x => x.value === customer.billing.state)
+        :
+        null
     )
 
-    customer && setNewAddressForm({
-      ...newAddressForm,
-      country: customer.billing.country,
-      state: customer.billing.state,
-      city: customer.billing.city,
-      address1: customer.billing.address1,
-      address2: customer.billing.address2,
-      phone: customer.billing.phone,
-      postcode: customer.billing.postcode
-    })
-  }, [customer, selectedState, selectedCity, cities])
+    setSelectedCity(
+      customer
+        ?
+        selectedState
+          ?
+          selectedState.cities.find(x => x.value === customer.billing.city)
+          :
+          (region.states.find(x => x.value === customer.billing.state)).cities.find(x => x.value === customer.billing.city)
+        :
+        null
+    )
+
+    setCities(
+      selectedState
+        ?
+        selectedState.cities
+        :
+        (
+          customer
+            ?
+            (region.states.find(x => x.value === customer.billing.state)).cities
+            :
+            null
+        )
+    )
+
+    if (customer) {
+      setNewAddressForm({
+        ...newAddressForm,
+        address1: customer.billing.address1,
+        address2: customer.billing.address2,
+        postcode: customer.billing.postcode,
+        phone: customer.billing.phone
+      })
+    }
+  }, [])
 
   const submitAddress = () => {
-    if (!newAddressForm.state) { setError('فیلد استان را پر کنید'); return false }
-    if (!newAddressForm.city) { setError('فیلد شهر را پر کنید'); return false }
-
-    let numberAddress = 1
-    if (customer.metaData) {
-      numberAddress = parseInt(customer.metaData.find(m => m.key === 'number-address')) + 1
-    }
+    if (!selectedState) { setError('فیلد استان را پر کنید'); return false }
+    if (!selectedCity) { setError('فیلد شهر را پر کنید'); return false }
 
     dispatch(updateCustomer({
-      metaData: [
-        {
-          "key": `address-${numberAddress}`,
-          "value": JSON.stringify(newAddressForm)
-        },
-        {
-          "key": "number-address",
-          "value": `${numberAddress}`
-        }
-      ]
+      id: viewer.id,
+      billing: {
+        ...newAddressForm,
+        state: selectedState.value,
+        city: selectedCity.value
+      }
     }))
-
-    // props.setIsAdd(false)
   }
 
   const handleChangeState = selectedOption => {
     setSelectedState(selectedOption)
-    setNewAddressForm({
-      ...newAddressForm,
-      state: selectedOption.value
-    })
 
     setCities(region.states.find(x => x.value === selectedOption.value).cities)
+    setSelectedCity(null)
   };
-  
+
   const handleChangeCity = selectedOption => {
     setSelectedCity(selectedOption)
-    setNewAddressForm({
-      ...newAddressForm,
-      city: selectedOption.value
-    })
   };
 
   return (
@@ -144,21 +149,21 @@ export default function UserAddressAddModal(props) {
         <input
           className="sign-in-modal__input"
           type="text"
-          value={newAddressForm.address1}
+          value={newAddressForm.address1 ? newAddressForm.address1 : ''}
           onChange={(e) => setNewAddressForm({ ...newAddressForm, "address1": e.target.value })}
           placeholder="خیابان و محله ..."
         />
         <input
           className="sign-in-modal__input"
           type="text"
-          value={newAddressForm.address2}
+          value={newAddressForm.address2 ? newAddressForm.address2 : ''}
           onChange={(e) => setNewAddressForm({ ...newAddressForm, "address2": e.target.value })}
           placeholder="کوچه و پلاک ..."
         />
         <input
           className="sign-in-modal__input"
           type="text"
-          value={newAddressForm.postcode}
+          value={newAddressForm.postcode ? newAddressForm.postcode : ''}
           onChange={(e) => setNewAddressForm({ ...newAddressForm, "postcode": e.target.value })}
           placeholder="کدپستی"
         />
@@ -168,12 +173,6 @@ export default function UserAddressAddModal(props) {
           value={newAddressForm.phone ? newAddressForm.phone : ''}
           onChange={(e) => setNewAddressForm({ ...newAddressForm, "phone": e.target.value })}
           placeholder="تلفن"
-        />
-        <input
-          className="sign-in-modal__input"
-          type="text"
-          onChange={(e) => setNewAddressForm({ ...newAddressForm, "mobile": e.target.value })}
-          placeholder="موبایل"
         />
         <button
           className="sign-in-modal__btn"

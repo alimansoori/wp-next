@@ -50,18 +50,11 @@ export const updateCustomer = (input) => {
                 mutation: UPDATE_CUSTOMER,
                 variables: {
                     input,
-                    keysIn: [
-                        "number-address",
-                        "address-"
-                    ],
-                    multiple: true
                 },
-                fetchPolicy: 'no-cache'
+                fetchPolicy: "no-cache"
             })
 
             const { customer } = result.data.updateCustomer
-
-            dispatch(getCart())
 
             dispatch({
                 type: customerConstants.CUSTOMER_UPDATE_SUCCESS,
@@ -69,6 +62,8 @@ export const updateCustomer = (input) => {
                     customer
                 }
             })
+
+            dispatch(getCart())
         } catch (error) {
             dispatch({
                 type: customerConstants.CUSTOMER_UPDATE_FAILURE,

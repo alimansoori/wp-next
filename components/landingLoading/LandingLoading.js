@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function (props) {
-  const { authenticate, authenticating } = useSelector(state => state.auth)
+  const { authenticating } = useSelector(state => state.auth)
 
   return (
     <div className={authenticating ? "loading" : "hidden"}>
