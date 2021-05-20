@@ -5,7 +5,7 @@ import { stringToNumber } from "../../functions";
 import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
 import ShippingBasket from "./ShippingBasket";
 
-export default function UserBasket() {
+export default function UserBasket(props) {
   const { cart } = useSelector(state => state.cart)
   const [modalShow, setModalShow] = React.useState(false);
   const [address, setAddress] = React.useState('');
@@ -123,7 +123,7 @@ export default function UserBasket() {
         />
       </div>
       <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />
-      <ShippingBasket />
+      <ShippingBasket {...props} />
       <div className="user-basket-box__transport-time">
         <h1 className="user-basket-box__title">:انتخاب زمان ارسال</h1>
         <div className="user-basket-box__transport-time__day">

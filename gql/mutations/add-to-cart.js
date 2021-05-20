@@ -1,65 +1,11 @@
 import gql from "graphql-tag";
+import CartFragment from "../fragments/cart-fragment";
 
 const ADD_TO_CART = gql`
-fragment cart on Cart {
-  contents {
-    nodes {
-      key
-      product {
-        node {
-          id
-          databaseId
-          name
-          description
-          type
-          onSale
-          slug
-          averageRating
-          reviewCount
-          image {
-            id
-            sourceUrl
-            srcSet
-            altText
-            title
-          }
-          galleryImages {
-            nodes {
-              id
-              sourceUrl
-              srcSet
-              altText
-              title
-            }
-          }
-          ... on SimpleProduct {
-            price(format: RAW)
-            regularPrice
-          }
-        }
-      }
-      quantity
-      total
-      subtotal
-      subtotalTax
-    }
-  }
-  subtotal
-  subtotalTax
-  shippingTax
-  shippingTotal
-  total
-  totalTax
-  feeTax
-  feeTotal
-  discountTax
-  discountTotal
-}
-
 mutation ($input: AddToCartInput!) {
   addToCart(input: $input) {
     cart {
-      ...cart
+      ...MyCart
     }
     cartItem {
       key
@@ -121,6 +67,7 @@ mutation ($input: AddToCartInput!) {
     }
   }
 }
+${CartFragment.fragments.MyCart}
 `;
 
 export default ADD_TO_CART;

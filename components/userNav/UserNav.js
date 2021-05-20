@@ -9,7 +9,7 @@ import UserIfo from "../userInfo/UserIfo";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
-export default function UserNav() {
+export default function UserNav(props) {
   return (
     <div className="user-nav-wrap">
       <div className="user-nav">
@@ -90,7 +90,7 @@ export default function UserNav() {
           </div>
           <div className="user-nav__content">
             <div className="user-nav__content__basket">
-              <UserBasket />
+              <UserBasket {...props} />
             </div>
             <div className="user-nav__content__tabs">
               <Tab.Content>

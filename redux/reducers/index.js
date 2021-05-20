@@ -8,6 +8,7 @@ import localReducer from './local.reducers';
 import cartReducer from './cart.reducers';
 import viewerReducer from './viewer.reducers';
 import customerReducer from './customer.reducers';
+import checkoutReducer from './checkout.reducers';
 import {combineReducers} from "redux";
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     viewer: viewerReducer,
     customer: customerReducer,
+    checkout: checkoutReducer,
     category: categoryReducer,
     product: productReducer,
     search: searchReducer,

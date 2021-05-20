@@ -3,6 +3,7 @@ import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import Select from 'react-select'
+import { checkout } from "../../redux/actions/checout.actions";
 import { updateCustomer } from "../../redux/actions/customer.actions";
 
 export default function UserAddressAddModal(props) {
@@ -76,8 +77,7 @@ export default function UserAddressAddModal(props) {
     if (!selectedState) { setError('فیلد استان را پر کنید'); return false }
     if (!selectedCity) { setError('فیلد شهر را پر کنید'); return false }
 
-    dispatch(updateCustomer({
-      id: viewer.id,
+    dispatch(checkout({
       billing: {
         ...newAddressForm,
         state: selectedState.value,

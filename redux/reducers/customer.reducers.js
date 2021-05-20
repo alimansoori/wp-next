@@ -1,4 +1,4 @@
-import {customerConstants} from "../actions/constants";
+import { customerConstants } from "../actions/constants";
 
 const initState = {
     customer: null,
@@ -45,6 +45,14 @@ export default (state = initState, action) => {
                 loading: false,
                 error: action.payload.error,
                 message: null
+            }
+            break;
+        case customerConstants.SET_CUSTOMER:
+            state = {
+                ...state,
+                loading: false,
+                customer: action.payload.customer,
+                error: null
             }
             break;
     }
