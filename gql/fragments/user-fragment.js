@@ -12,6 +12,7 @@ UserFragment.fragments = {
       name
       firstName
       lastName
+      description
       username
       email
       locale

@@ -1,6 +1,7 @@
 import { viewerConstants } from "./constants";
 import client from "../../components/ApolloClient";
 import GET_VIEWER from "../../gql/queries/get-viewer";
+import { initAddresses } from "./customer.actions";
 
 export const getViewer = () => {
     return async dispatch => {
@@ -25,6 +26,12 @@ export const getViewer = () => {
                     viewer
                 }
             })
+
+            // set address billing
+            if (viewer.description) {
+                dispatch(initAddresses(viewer.description))
+            }
+
         } catch (error) {
             dispatch({
                 type: viewerConstants.VIEWER_REGISTER_FAILURE,

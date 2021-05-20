@@ -5,7 +5,7 @@ import client from "../../components/ApolloClient";
 import { v4 } from "uuid";
 import REFRESH_TOKEN from "../../gql/mutations/refresh-token";
 import { getViewer } from "./viewer.actions";
-import { getCustomer } from "./customer.actions";
+import { getCustomer, initAddresses } from "./customer.actions";
 import { getCart } from "./cart.actions";
 
 export const loginUser = (loginForm = {}) => {
@@ -49,6 +49,13 @@ export const loginUser = (loginForm = {}) => {
                     viewer: user
                 }
             })
+
+            // set address billing
+            if (user.description) {
+                dispatch(initAddresses(user.description))
+            }
+
+
             dispatch({
                 type: customerConstants.GET_CUSTOMER_SUCCESS,
                 payload: {

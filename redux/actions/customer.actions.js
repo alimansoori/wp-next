@@ -74,3 +74,62 @@ export const updateCustomer = (input) => {
         }
     }
 }
+
+export const initAddresses = (addressesString) => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: customerConstants.INIT_ADDRESSES_REQUEST
+        })
+
+        try {
+            let addresses = JSON.parse(addressesString)
+
+            if (typeof addresses === "object" && addresses !== null) {
+                dispatch({
+                    type: customerConstants.INIT_ADDRESSES_SUCCESS,
+                    payload: {
+                        addresses
+                    }
+                })
+            } else throw "addresses is not json"
+            
+        } catch (error) {
+            dispatch({
+                type: customerConstants.INIT_ADDRESSES_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
+export const setActiveAddress = (active=null) => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: customerConstants.SET_ACTIVE_ADDRESS_REQUEST
+        })
+
+        try {
+            const {customer} = getState()
+            const {active, addresses} = customer.address
+            if (!addresses) throw "آدرسی هنوز تنظیم نشده است"
+            if (!addresses[active]) throw "آدرسی برای این اکتیو وجود ندارد"
+            
+            dispatch({
+                type: customerConstants.SET_ACTIVE_ADDRESS_SUCCESS,
+                payload: {
+                    active: active
+                }
+            })
+
+        } catch (error) {
+            dispatch({
+                type: customerConstants.SET_ACTIVE_ADDRESS_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
