@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import Select from 'react-select'
 import { checkout } from "../../redux/actions/checout.actions";
+import { updateCustomer } from "../../redux/actions/customer.actions";
 
 export default function UserAddressAddModal(props) {
   const dispatch = useDispatch()

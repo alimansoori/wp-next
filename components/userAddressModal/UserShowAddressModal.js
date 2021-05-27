@@ -3,28 +3,32 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
 
 export default function UserShowAddressModal(props) {
-  const { customer } = useSelector(state => state.customer)
+  const { addresses, active } = useSelector(state => state.customer.address)
+  const { region } = useSelector(state => state.local)
 
-  const getAddresses = () => {
-    let addresses = []
+  const RenderAddress = ({ address, index }) => {
+    var state = address.state ? (region.states.find(x => x.value === address.state)).label : null;
+    var city = address.city && address.state ?
+      (region.states.find(x => x.value === address.state)).cities.find(
+        x => x.value === address.city
+      ).label
+      : null;
 
-    // if (customer.metaData) {
-    //   addresses = customer.metaData.find(m => m.key.startWith('address-'))
-    // }
-    return addresses
+    var address1 = address.address1 ? address.address1 : '';
+    var address2 = address.address2 ? address.address2 : '';
+
+    return ('ایران' + '-' + state + '-' + city + '-' + address1 + '-' + address2)
   }
 
   const RenderAddressItems = () => {
-    let addresses = getAddresses()
 
     return (
       <>
-        {addresses.map((address) => {
-          var addValue = JSON.parse(address.value)
+        {Object.keys(addresses).map((key) => {
           return (
-            <li className="user-ad-modal__list__item">
-              <p className="user-ad-modal__list__item__text">
-                {`${addValue.country}-${addValue.state}-${addValue.city}`}
+            <li key={key} className="user-ad-modal__list__item">
+              <p style={{direction:'rtl'}} className="user-ad-modal__list__item__text">
+                <RenderAddress address={addresses[key]} index={key} />
               </p>
             </li>
           )

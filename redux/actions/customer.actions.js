@@ -2,7 +2,10 @@ import { authConstants, customerConstants } from "./constants";
 import client from "../../components/ApolloClient";
 import GET_CUSTOMER from "../../gql/queries/get-customer";
 import UPDATE_CUSTOMER from "../../gql/mutations/update-customer";
+import UPDATE_USER from "../../gql/mutations/update-user";
 import { getCart } from "./cart.actions";
+import { getViewer } from "./viewer.actions";
+import { v4 } from "uuid";
 
 export const getCustomer = () => {
     return async dispatch => {
@@ -92,7 +95,7 @@ export const initAddresses = (addressesString) => {
                     }
                 })
             } else throw "addresses is not json"
-            
+
         } catch (error) {
             dispatch({
                 type: customerConstants.INIT_ADDRESSES_FAILURE,
@@ -104,18 +107,18 @@ export const initAddresses = (addressesString) => {
     }
 }
 
-export const setActiveAddress = (active=null) => {
+export const setActiveAddress = (active = null) => {
     return async (dispatch, getState) => {
         dispatch({
             type: customerConstants.SET_ACTIVE_ADDRESS_REQUEST
         })
 
         try {
-            const {customer} = getState()
-            const {active, addresses} = customer.address
+            const { customer } = getState()
+            const { addresses } = customer.address
             if (!addresses) throw "آدرسی هنوز تنظیم نشده است"
             if (!addresses[active]) throw "آدرسی برای این اکتیو وجود ندارد"
-            
+
             dispatch({
                 type: customerConstants.SET_ACTIVE_ADDRESS_SUCCESS,
                 payload: {
@@ -123,9 +126,53 @@ export const setActiveAddress = (active=null) => {
                 }
             })
 
+            dispatch(saveAddresses())
+
         } catch (error) {
             dispatch({
                 type: customerConstants.SET_ACTIVE_ADDRESS_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
+export const saveAddresses = () => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: customerConstants.SAVE_ADDRESSES_REQUEST
+        })
+
+        try {
+            const { customer, viewer } = getState()
+            const { addresses, active } = customer.address
+
+            const result = await client.mutate({
+                mutation: UPDATE_USER,
+                variables: {
+                    input: {
+                        id: viewer.viewer.id,
+                        description: JSON.stringify({
+                            active,
+                            addresses
+                        }),
+                        clientMutationId: v4()
+                    }
+                },
+                fetchPolicy: "no-cache"
+            })
+
+            const { user } = result.data.updateUser
+
+            dispatch(getViewer())
+
+            dispatch({ type: customerConstants.SAVE_ADDRESSES_SUCCESS })
+
+        } catch (error) {
+            dispatch({
+                type: customerConstants.SAVE_ADDRESSES_FAILURE,
                 payload: {
                     error: error.message
                 }

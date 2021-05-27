@@ -59,6 +59,12 @@
       padding: 10px 0;
       .user-info-box__bot__body-wrap {
         margin: 10px 0;
+        .user-info-box__bot__body__address-code {
+          padding: 10px;
+          border-radius: 20px;
+          color: $mainBlue;
+          border: 1px solid $mainBlue;
+        }
       }
 
       .user-info-box__bot__body-wrap > div > div {
@@ -73,6 +79,10 @@
 
       .user-info-box__bot__body-wrap > div > div > div > div {
         text-align: right !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-direction: row-reverse !important;
       }
 
       .user-info-box__bot__body-wrap > div > div > div > div + div {
