@@ -1,33 +1,39 @@
 import React, { useEffect } from "react";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { stringToNumber } from "../../functions";
 import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
 import ShippingBasket from "./ShippingBasket";
+import {getValueByKey} from "../../functions";
+import { setBillingInput } from "../../redux/actions/checout.actions";
 
 export default function UserBasket(props) {
+  const dispatch = useDispatch()
   const { cart } = useSelector(state => state.cart)
   const [modalShow, setModalShow] = React.useState(false);
   const [address, setAddress] = React.useState('');
   const { customer } = useSelector(state => state.customer)
+  const { addresses, active } = useSelector(state => state.customer.address)
   const { region } = useSelector(state => state.local)
 
   useEffect(() => {
-    if (!customer) return false;
+    if (!active) return false
 
-    var state = customer.billing.state ? (region.states.find(x => x.value === customer.billing.state)).label : null;
-    var city = customer.billing.city && customer.billing.state ?
-      (region.states.find(x => x.value === customer.billing.state)).cities.find(
-        x => x.value === customer.billing.city
+    const billingAddress = getValueByKey(addresses, active)
+
+    var state = billingAddress.state ? (region.states.find(x => x.value === billingAddress.state)).label : null;
+    var city = billingAddress.city && billingAddress.state ?
+      (region.states.find(x => x.value === billingAddress.state)).cities.find(
+        x => x.value === billingAddress.city
       ).label
       : null;
 
-    var address1 = customer ? customer.billing.address1 : '';
-    var address2 = customer ? customer.billing.address2 : '';
+    var address1 = billingAddress ? billingAddress.address1 : '';
+    var address2 = billingAddress ? billingAddress.address2 : '';
 
     setAddress('ایران' + '-' + state + '-' + city + '-' + address1 + '-' + address2)
 
-  }, [customer])
+  }, [active])
 
   // const getData=()=>{
   //   fetch('api/ir'
@@ -48,7 +54,9 @@ export default function UserBasket(props) {
   // }
 
   useEffect(() => {
-  }, [])
+    if (!active) return false
+    dispatch(setBillingInput())
+  }, [active])
 
   return (
     <div className="user-basket-box">

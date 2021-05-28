@@ -45,6 +45,31 @@ export default (state = initState, action) => {
                 }
             }
             break;
+        case checkoutConstants.CHANGE_BILLING_INPUT_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case checkoutConstants.CHANGE_BILLING_INPUT_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                input: {
+                    ...state.input,
+                    billing: action.payload.billing
+                },
+                error: null
+            }
+            break;
+        case checkoutConstants.CHANGE_BILLING_INPUT_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.error,
+                message: null
+            }
+            break;
     }
 
     return state;

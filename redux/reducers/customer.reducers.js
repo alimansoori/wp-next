@@ -119,6 +119,100 @@ export default (state = initState, action) => {
                 }
             }
             break;
+        case customerConstants.ADD_NEW_ADDRESS_REQUEST:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: true
+                }
+            }
+            break;
+        case customerConstants.ADD_NEW_ADDRESS_SUCCESS:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: false,
+                    addresses: {
+                        ...state.address.addresses,
+                        [action.payload.key]: {...action.payload.newAddress}
+                    }
+                }
+            }
+            break;
+        case customerConstants.ADD_NEW_ADDRESS_FAILURE:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: false,
+                    error: action.payload.error
+                }
+            }
+            break;
+        case customerConstants.REMOVE_ADDRESS_REQUEST:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: true
+                }
+            }
+            break;
+        case customerConstants.REMOVE_ADDRESS_SUCCESS:
+            delete state.address.addresses[action.payload.key]
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    active: null,
+                    loading: false,
+                }
+            }
+            break;
+        case customerConstants.REMOVE_ADDRESS_FAILURE:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: false,
+                    error: action.payload.error
+                }
+            }
+            break;
+        case customerConstants.EDIT_ADDRESS_REQUEST:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: true
+                }
+            }
+            break;
+        case customerConstants.EDIT_ADDRESS_SUCCESS:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: false,
+                    addresses: {
+                        ...state.address.addresses,
+                        [action.payload.editKey]: action.payload.editAddress
+                    }
+                }
+            }
+            break;
+        case customerConstants.EDIT_ADDRESS_FAILURE:
+            state = {
+                ...state,
+                address: {
+                    ...state.address,
+                    loading: false,
+                    error: action.payload.error
+                }
+            }
+            break;
     }
 
     return state;

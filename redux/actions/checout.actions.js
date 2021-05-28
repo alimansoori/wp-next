@@ -15,8 +15,7 @@ export const checkout = (input) => {
                 mutation: CHECKOUT,
                 variables: {
                     input: input,
-                },
-                fetchPolicy: "no-cache"
+                }
             })
 
             const { customer, order } = result.data.checkout
@@ -34,6 +33,36 @@ export const checkout = (input) => {
         } catch (error) {
             dispatch({
                 type: checkoutConstants.CHECKOUT_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
+export const setBillingInput = () => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: checkoutConstants.CHANGE_BILLING_INPUT_REQUEST
+        })
+
+        try {
+            const { addresses, active } = getState().customer.address
+
+            dispatch({
+                type: checkoutConstants.CHANGE_BILLING_INPUT_SUCCESS,
+                payload: {
+                    billing: {
+                        ...addresses[active]
+                    }
+                }
+            })
+
+            dispatch(getCart())
+        } catch (error) {
+            dispatch({
+                type: checkoutConstants.CHANGE_BILLING_INPUT_FAILURE,
                 payload: {
                     error: error.message
                 }

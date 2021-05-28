@@ -139,6 +139,107 @@ export const setActiveAddress = (active = null) => {
     }
 }
 
+export const removeAddress = (key = null) => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: customerConstants.REMOVE_ADDRESS_REQUEST
+        })
+
+        try {
+            const { customer } = getState()
+            const { addresses } = customer.address
+            if (!addresses) throw "آدرسی هنوز تنظیم نشده است"
+            if (!addresses[key]) throw "آدرسی برای این ایندکس وجود ندارد"
+
+            dispatch({
+                type: customerConstants.REMOVE_ADDRESS_SUCCESS,
+                payload: {
+                    key: key
+                }
+            })
+
+            dispatch(saveAddresses())
+
+        } catch (error) {
+            dispatch({
+                type: customerConstants.REMOVE_ADDRESS_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
+export const addNewAddress = (newAddress) => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: customerConstants.ADD_NEW_ADDRESS_REQUEST
+        })
+
+        try {
+            const { customer } = getState()
+            const { addresses } = customer.address
+            if (!addresses) throw "آدرسی هنوز تنظیم نشده است"
+
+            // last key
+            const key = parseInt((Object.keys(addresses))[Object.keys(addresses).length - 1] ) + 1
+
+            dispatch({
+                type: customerConstants.ADD_NEW_ADDRESS_SUCCESS,
+                payload: {
+                    newAddress,
+                    key
+                }
+            })
+
+            dispatch(saveAddresses())
+
+        } catch (error) {
+            dispatch({
+                type: customerConstants.ADD_NEW_ADDRESS_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
+export const editAddress = (editKey, editAddress) => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: customerConstants.EDIT_ADDRESS_REQUEST
+        })
+
+        try {
+            const { customer } = getState()
+            const { addresses } = customer.address
+            if (!addresses) throw "آدرسی هنوز تنظیم نشده است"
+            if (!addresses[editKey]) throw "آدرسی برای این ایندکس وجود ندارد"
+
+
+            dispatch({
+                type: customerConstants.EDIT_ADDRESS_SUCCESS,
+                payload: {
+                    editAddress,
+                    editKey
+                }
+            })
+
+            dispatch(saveAddresses())
+
+        } catch (error) {
+            dispatch({
+                type: customerConstants.EDIT_ADDRESS_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
 export const saveAddresses = () => {
     return async (dispatch, getState) => {
         dispatch({
@@ -166,7 +267,17 @@ export const saveAddresses = () => {
 
             const { user } = result.data.updateUser
 
-            dispatch(getViewer())
+            dispatch({
+                type: viewerConstants.VIEWER_REGISTER_SUCCESS,
+                payload: {
+                    viewer: user
+                }
+            })
+
+            // set address billing
+            if (user.description) {
+                dispatch(initAddresses(user.description))
+            }
 
             dispatch({ type: customerConstants.SAVE_ADDRESSES_SUCCESS })
 

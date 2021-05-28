@@ -4,10 +4,13 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import Select from 'react-select'
 import { checkout } from "../../redux/actions/checout.actions";
+import { addNewAddress, editAddress } from "../../redux/actions/customer.actions";
 
 export default function UserAddressAddModal(props) {
   const dispatch = useDispatch()
+  const { isEdit, editId } = props
   const { customer } = useSelector(state => state.customer)
+  const { addresses, active } = useSelector(state => state.customer.address)
   const { viewer } = useSelector(state => state.viewer)
   const { region } = useSelector(state => state.local)
 
@@ -28,21 +31,32 @@ export default function UserAddressAddModal(props) {
 
   useEffect(() => {
     setSelectedState(
-      customer
+      isEdit
         ?
-        region.states.find(x => x.value === customer.billing.state)
+        addresses[editId]
+          ?
+          region.states.find(x => x.value === addresses[editId].state)
+          :
+          null
         :
         null
     )
+  }, [editId])
+
+  useEffect(() => {
 
     setSelectedCity(
-      customer
+      isEdit
         ?
-        selectedState
+        addresses[editId]
           ?
-          selectedState.cities.find(x => x.value === customer.billing.city)
+          selectedState
+            ?
+            selectedState.cities.find(x => x.value === addresses[editId].city)
+            :
+            (region.states.find(x => x.value === addresses[editId].state)).cities.find(x => x.value === addresses[editId].city)
           :
-          (region.states.find(x => x.value === customer.billing.state)).cities.find(x => x.value === customer.billing.city)
+          null
         :
         null
     )
@@ -53,9 +67,9 @@ export default function UserAddressAddModal(props) {
         selectedState.cities
         :
         (
-          customer
+          isEdit && addresses[editId]
             ?
-            (region.states.find(x => x.value === customer.billing.state)).cities
+            (region.states.find(x => x.value === addresses[editId].state)).cities
             :
             null
         )
@@ -64,25 +78,44 @@ export default function UserAddressAddModal(props) {
     if (customer) {
       setNewAddressForm({
         ...newAddressForm,
-        address1: customer.billing.address1,
-        address2: customer.billing.address2,
-        postcode: customer.billing.postcode,
-        phone: customer.billing.phone
+        address1: isEdit && addresses[editId] ? addresses[editId].address1 : null,
+        address2: isEdit && addresses[editId] ? addresses[editId].address2 : null,
+        postcode: isEdit && addresses[editId] ? addresses[editId].postcode : null,
+        phone: isEdit && addresses[editId] ? addresses[editId].phone : null
       })
     }
-  }, [])
+  }, [editId, selectedState])
 
   const submitAddress = () => {
     if (!selectedState) { setError('فیلد استان را پر کنید'); return false }
     if (!selectedCity) { setError('فیلد شهر را پر کنید'); return false }
 
-    dispatch(checkout({
-      billing: {
-        ...newAddressForm,
-        state: selectedState.value,
-        city: selectedCity.value
-      }
-    }))
+    if (isEdit) {
+      dispatch(
+        editAddress(editId, {
+          ...newAddressForm,
+          state: selectedState.value,
+          city: selectedCity.value
+        })
+      )
+    } else {
+      dispatch(
+        addNewAddress({
+          ...newAddressForm,
+          state: selectedState.value,
+          city: selectedCity.value
+        })
+      )
+    }
+
+    props.onHide()
+    // dispatch(checkout({
+    //   billing: {
+    //     ...newAddressForm,
+    //     state: selectedState.value,
+    //     city: selectedCity.value
+    //   }
+    // }))
   }
 
   const handleChangeState = selectedOption => {
