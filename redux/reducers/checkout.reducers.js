@@ -9,7 +9,7 @@ const initState = {
     },
     error: null,
     message: null,
-    loading: false
+    loadingCheckout: false
 }
 
 export default (state = initState, action) => {
@@ -17,21 +17,20 @@ export default (state = initState, action) => {
         case checkoutConstants.CHECKOUT_REQUEST:
             state = {
                 ...state,
-                loading: true
+                loadingCheckout: true
             }
             break;
         case checkoutConstants.CHECKOUT_SUCCESS:
             state = {
                 ...state,
-                loading: false,
-                checkout: action.payload.checkout,
+                loadingCheckout: false,
                 error: null
             }
             break;
         case checkoutConstants.CHECKOUT_FAILURE:
             state = {
                 ...state,
-                loading: false,
+                loadingCheckout: false,
                 error: action.payload.error,
                 message: null
             }
@@ -48,13 +47,13 @@ export default (state = initState, action) => {
         case checkoutConstants.CHANGE_BILLING_INPUT_REQUEST:
             state = {
                 ...state,
-                loading: true
+                loadingCheckout: true
             }
             break;
         case checkoutConstants.CHANGE_BILLING_INPUT_SUCCESS:
             state = {
                 ...state,
-                loading: false,
+                loadingCheckout: false,
                 input: {
                     ...state.input,
                     billing: action.payload.billing
@@ -65,7 +64,32 @@ export default (state = initState, action) => {
         case checkoutConstants.CHANGE_BILLING_INPUT_FAILURE:
             state = {
                 ...state,
-                loading: false,
+                loadingCheckout: false,
+                error: action.payload.error,
+                message: null
+            }
+            break;
+        case checkoutConstants.CHANGE_INPUT_REQUEST:
+            state = {
+                ...state,
+                loadingCheckout: true
+            }
+            break;
+        case checkoutConstants.CHANGE_INPUT_SUCCESS:
+            state = {
+                ...state,
+                loadingCheckout: false,
+                input: {
+                    ...state.input,
+                    ...action.payload.input
+                },
+                error: null
+            }
+            break;
+        case checkoutConstants.CHANGE_INPUT_FAILURE:
+            state = {
+                ...state,
+                loadingCheckout: false,
                 error: action.payload.error,
                 message: null
             }

@@ -6,7 +6,6 @@ import { getCustomer } from '../redux/actions/customer.actions'
 import UserHeader from '../components/userHeader/UserHeader'
 import LandingLoading from '../components/landingLoading/LandingLoading'
 import { checkout } from '../redux/actions/checout.actions'
-import { v4 } from 'uuid'
 
 
 const Account = ({ router }) => {

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { RadioGroup, RadioButton } from "react-radio-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { stringToNumber } from "../../functions";
 import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
 import ShippingBasket from "./ShippingBasket";
 import {getValueByKey} from "../../functions";
 import { setBillingInput } from "../../redux/actions/checout.actions";
+import ShippingDateTime from "./ShippingDateTime";
 
 export default function UserBasket(props) {
   const dispatch = useDispatch()
@@ -132,79 +132,7 @@ export default function UserBasket(props) {
       </div>
       <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />
       <ShippingBasket {...props} />
-      <div className="user-basket-box__transport-time">
-        <h1 className="user-basket-box__title">:انتخاب زمان ارسال</h1>
-        <div className="user-basket-box__transport-time__day">
-          <div className="user-basket-box__transport-time__day__label">
-            <span>.1</span>
-          </div>
-          <div className="user-basket-box__transport-time__day__btn-wrap">
-            <RadioGroup horizontal>
-              <RadioButton pointColor="red" rootColor="#000" value="d1">
-                <div className="user-basket-box__transport-time__day__box">
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="d2">
-                <div className="user-basket-box__transport-time__day__box">
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="d3">
-                <div className="user-basket-box__transport-time__day__box">
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="d4">
-                <div className="user-basket-box__transport-time__day__box">
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="user-basket-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-            </RadioGroup>
-          </div>
-        </div>
-        <div className="user-basket-box__transport-time__hour">
-          <div className="user-basket-box__transport-time__hour__label">
-            <span>.2</span>
-          </div>
-          <div className="user-basket-box__transport-time__hour__btn-wrap">
-            <RadioGroup horizontal>
-              <RadioButton pointColor="red" rootColor="#000" value="h1">
-                تایم
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="h2">
-                تایم
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="h3">
-                تایم
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="h4">
-                تایم
-              </RadioButton>
-            </RadioGroup>
-          </div>
-        </div>
-      </div>
+      <ShippingDateTime />
       <div className="user-basket-box__purchase">
         <h1 className="user-basket-box__title">:درگاه پرداخت</h1>
         <div className="user-basket-box__purchase__btn-wrap">

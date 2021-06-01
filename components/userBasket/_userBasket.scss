@@ -151,6 +151,7 @@
       margin: 10px 0;
       .user-basket-box__transport-time__day__btn-wrap {
         width: 95%;
+        direction: rtl;
       }
       .user-basket-box__transport-time__day__box {
         .user-basket-box__transport-time__day__box__text {
@@ -180,12 +181,7 @@
       text-align: center !important;
     }
 
-    .user-basket-box__transport-time__day__btn-wrap
-      > div
-      > div
-      > div
-      > div
-      + div {
+    .user-basket-box__transport-time__day__btn-wrap > div > div > div > div + div {
       display: none !important;
     }
 
@@ -199,6 +195,7 @@
 
     .user-basket-box__transport-time__hour__btn-wrap {
       width: 95%;
+      direction: rtl;
     }
 
     .user-basket-box__transport-time__hour__btn-wrap > div {
@@ -222,12 +219,7 @@
       text-align: center !important;
     }
 
-    .user-basket-box__transport-time__hour__btn-wrap
-      > div
-      > div
-      > div
-      > div
-      + div {
+    .user-basket-box__transport-time__hour__btn-wrap > div > div > div > div + div {
       display: none !important;
     }
   }
@@ -261,11 +253,7 @@
     height: 350px !important;
   }
 
-  .user-basket-box
-    .user-basket-box__transport-time
-    .user-basket-box__transport-time__day__btn-wrap
-    > div
-    > div {
+  .user-basket-box .user-basket-box__transport-time .user-basket-box__transport-time__day__btn-wrap > div > div {
     padding: 5px !important;
   }
 }

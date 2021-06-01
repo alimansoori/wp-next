@@ -20,7 +20,12 @@ export const checkout = (input) => {
 
             const { customer, order } = result.data.checkout
 
-            console.log('order', order)
+            dispatch({
+                type: checkoutConstants.CHECKOUT_SUCCESS,
+                payload: {
+                    input
+                }
+            })
 
             dispatch({
                 type: customerConstants.SET_CUSTOMER,
@@ -63,6 +68,32 @@ export const setBillingInput = () => {
         } catch (error) {
             dispatch({
                 type: checkoutConstants.CHANGE_BILLING_INPUT_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
+export const changeInputCheckout = (input) => {
+    return async dispatch => {
+        dispatch({
+            type: checkoutConstants.CHANGE_INPUT_REQUEST
+        })
+
+        try {
+
+            dispatch({
+                type: checkoutConstants.CHANGE_INPUT_SUCCESS,
+                payload: {
+                    input
+                }
+            })
+
+        } catch (error) {
+            dispatch({
+                type: checkoutConstants.CHANGE_INPUT_FAILURE,
                 payload: {
                     error: error.message
                 }
