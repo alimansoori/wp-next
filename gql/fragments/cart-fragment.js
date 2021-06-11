@@ -68,6 +68,7 @@ CartFragment.fragments = {
       totalTax
       feeTax
       feeTotal
+      isEmpty
       discountTax
       discountTotal
     }

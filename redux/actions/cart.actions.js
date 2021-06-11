@@ -4,6 +4,8 @@ import UPDATE_CART from "../../gql/mutations/update-cart";
 import CLEAR_CART_MUTATION from "../../gql/mutations/clear-cart";
 import GET_CART from "../../gql/queries/get-cart";
 import client from "../../components/ApolloClient";
+import APPLY_COUPON from "../../gql/mutations/apply-coupon";
+import { v4 } from "uuid";
 
 export const getCart = () => {
     return async dispatch => {
@@ -129,6 +131,43 @@ export const clearCart = (variables) => {
                 type: cartConstants.CLEAR_CART_FAILURE,
                 payload: {
                     error: error.message
+                }
+            });
+        }
+    }
+}
+
+export const applyCoupon = (code) => {
+    return async dispatch => {
+        dispatch({
+            type: cartConstants.APPLY_COUPON_REQUEST
+        });
+
+        try {
+            const result = await client.mutate({
+                mutation: APPLY_COUPON,
+                variables: {
+                    input: {
+                        clientMutationId: v4(),
+                        code
+                    }
+                },
+                fetchPolicy: 'no-cache'
+            });
+
+            const { cart } = result.data.applyCoupon;
+
+            dispatch({
+                type: cartConstants.APPLY_COUPON_SUCCESS,
+                payload: {
+                    cart
+                }
+            });
+        } catch (error) {
+            dispatch({
+                type: cartConstants.APPLY_COUPON_FAILURE,
+                payload: {
+                    error: error.response.data.message
                 }
             });
         }

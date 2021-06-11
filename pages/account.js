@@ -11,14 +11,16 @@ import { checkout } from '../redux/actions/checout.actions'
 const Account = ({ router }) => {
     const dispatch = useDispatch()
     const { authenticate, authenticating } = useSelector(state => state.auth)
+    const { cart } = useSelector(state => state.cart)
     const { input } = useSelector(state => state.checkout)
 
     const didMount = useRef(false);
     useEffect(() => {
-        if (didMount.current) {
+        if (didMount.current && !cart.isEmpty) {
+            console.log('CheckOUT')
             dispatch(checkout(input))
         } else didMount.current = true;
-    }, [input])
+    }, [input, cart])
 
     useEffect(() => {
         // !authenticate ? router.push('/404') : null

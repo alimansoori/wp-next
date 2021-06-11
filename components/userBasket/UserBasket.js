@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { stringToNumber } from "../../functions";
 import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
 import ShippingBasket from "./ShippingBasket";
-import {getValueByKey} from "../../functions";
+import { getValueByKey } from "../../functions";
 import { setBillingInput } from "../../redux/actions/checout.actions";
 import ShippingDateTime from "./ShippingDateTime";
+import ApplyCoupon from "./ApplyCoupon";
+import WalletCredit from "./WalletCredit";
 
 export default function UserBasket(props) {
   const dispatch = useDispatch()
@@ -69,52 +71,12 @@ export default function UserBasket(props) {
             </h2>
           </div>
           <div className="user-basket-box__header__content__wallet">
-            <div className="user-basket-box__header__content__wallet__discount">
-              <div className="user-basket-box__header__content__wallet__discount__input-wrap">
-                <input
-                  className="user-basket-box__header__content__wallet__discount__input"
-                  type="text"
-                  placeholder="اعمال کد تخفیف"
-                />
-              </div>
-              <button className="user-basket-box__header__content__wallet__discount__btn">
-                <img
-                  className="user-basket-box__header__content__wallet__discount__btn__icon"
-                  src={`/image/icon/Tik.png`}
-                  alt="tik"
-                />
-              </button>
-            </div>
-            <div className="user-basket-box__header__content__wallet__credit">
-              <div className="user-basket-box__header__content__wallet__credit__input-wrap">
-                <button className="user-basket-box__header__content__wallet__credit__plus">
-                  <img
-                    className="user-basket-box__header__content__wallet__credit__plus__icon"
-                    src={`/image/icon/PLUS.png`}
-                    alt="plus"
-                  />
-                </button>
-                <input
-                  className="user-basket-box__header__content__wallet__credit__input"
-                  type="text"
-                  placeholder=""
-                />
-                <button className="user-basket-box__header__content__wallet__credit__minus">
-                  <img
-                    className="user-basket-box__header__content__wallet__credit__minus__icon"
-                    src={`/image/icon/Rectangle 132.png`}
-                    alt="minus"
-                  />
-                </button>
-              </div>
-              <button className="user-basket-box__header__content__wallet__credit__btn">
-                <img
-                  className="user-basket-box__header__content__wallet__credit__btn__icon"
-                  src={`/image/icon/Group 137.png`}
-                  alt="wallet"
-                />
-              </button>
-            </div>
+            {
+              !cart.isEmpty ? <ApplyCoupon /> : null
+            }
+            {
+              !cart.isEmpty ? <WalletCredit /> : null
+            }
           </div>
         </div>
       </div>
@@ -134,10 +96,10 @@ export default function UserBasket(props) {
       <ShippingBasket {...props} />
       <ShippingDateTime />
       <div className="user-basket-box__purchase">
-        <h1 className="user-basket-box__title">:درگاه پرداخت</h1>
+        <h1 className="user-basket-box__title">پرداخت امن زرین پال</h1>
         <div className="user-basket-box__purchase__btn-wrap">
-          <button className="user-basket-box__purchase__btn" type="submit">
-            پرداخت
+          <button disabled={cart.isEmpty ? true : false} className="user-basket-box__purchase__btn" type="submit">
+            {cart.isEmpty ? 'سبد خرید شما خالی است' : 'پرداخت'}
           </button>
         </div>
       </div>

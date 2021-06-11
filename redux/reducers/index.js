@@ -6,6 +6,7 @@ import productReducer from './product.reducers';
 import searchReducer from './search.reducers';
 import localReducer from './local.reducers';
 import cartReducer from './cart.reducers';
+import orderReducer from './order.reducers';
 import viewerReducer from './viewer.reducers';
 import customerReducer from './customer.reducers';
 import checkoutReducer from './checkout.reducers';
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     search: searchReducer,
     local: localReducer,
     cart: cartReducer,
+    order: orderReducer,
 });
 
 export default rootReducer;

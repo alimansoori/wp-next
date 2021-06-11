@@ -5,16 +5,21 @@ import { getCart } from "./cart.actions";
 import { v4 } from "uuid";
 
 export const checkout = (input) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         dispatch({
             type: checkoutConstants.CHECKOUT_REQUEST
         })
 
         try {
+            const [viewer] = getState().viewer
+
             const result = await client.mutate({
                 mutation: CHECKOUT,
                 variables: {
-                    input: input,
+                    input: {
+                        ...input,
+                        clientMutationId: viewer.databaseId
+                    },
                 }
             })
 

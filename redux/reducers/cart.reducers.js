@@ -10,7 +10,8 @@ const initState = {
                 rates: []
             }
         ],
-        total: 0
+        total: 0,
+        isEmpty: true
     },
     loading: false,
     error: null,
@@ -99,6 +100,26 @@ export default (state = initState, action) => {
                 ...state,
                 clearCartError: action.payload.error,
                 clearCartProcessing: false
+            }
+            break;
+        case cartConstants.APPLY_COUPON_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case cartConstants.APPLY_COUPON_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                cart: action.payload.cart
+            }
+            break;
+        case cartConstants.APPLY_COUPON_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+                loading: false
             }
             break;
     }
