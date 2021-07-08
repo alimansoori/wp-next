@@ -5,6 +5,7 @@ import Custom404 from './404';
 import client from '../components/ApolloClient';
 import BasePage from '../components/BasePage'
 import GET_PAGE from '../gql/queries/get-page';
+import GET_VIEWER from '../gql/queries/get-viewer';
 
 // class Page extends React.Component {
 //   constructor(props) {
@@ -55,7 +56,7 @@ function Page(props) {
   // const { data, error, loading } = useSWR('tttt', getPageData(router.query) , pageData)
 
   useEffect(() => {
-    console.log(pageData)
+    console.log(props)
   }, [])
 
   return (
@@ -73,7 +74,7 @@ function Page(props) {
             </a>
           </Link>
         </BasePage>
-      ) : <Custom404/>}
+      ) : <Custom404 />}
     </>
   )
 }
@@ -93,7 +94,6 @@ export const getServerSideProps = async ({ query, params }) => {
   } catch (e) {
     console.error(e)
   }
-
   // let pageData = await getPageData(query)
 
   return {

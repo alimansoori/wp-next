@@ -5,8 +5,9 @@ import client from "../../components/ApolloClient";
 import { v4 } from "uuid";
 import REFRESH_TOKEN from "../../gql/mutations/refresh-token";
 import { getViewer } from "./viewer.actions";
-import { getCustomer, initAddresses } from "./customer.actions";
+import { getCustomer, initAddressesAndFavorites } from "./customer.actions";
 import { getCart } from "./cart.actions";
+import cookieCutter from 'cookie-cutter'
 
 export const loginUser = (loginForm = {}) => {
     return async dispatch => {
@@ -34,6 +35,7 @@ export const loginUser = (loginForm = {}) => {
             const { user, authToken, customer } = result.data.login
 
             localStorage.setItem('wp-next-token', authToken);
+            cookieCutter.set('wp-next-token', authToken);
             localStorage.setItem('user', JSON.stringify(user));
 
             dispatch({
@@ -52,7 +54,7 @@ export const loginUser = (loginForm = {}) => {
 
             // set address billing
             if (user.description) {
-                dispatch(initAddresses(user.description))
+                dispatch(initAddressesAndFavorites(user.description))
             }
 
 
@@ -108,6 +110,7 @@ export const isUserLoggedIn = () => {
                 const { authToken } = result.data.refreshJwtAuthToken
                 // const { viewer } = qry.data
                 localStorage.setItem('wp-next-token', authToken)
+                cookieCutter.set('wp-next-token', authToken)
                 // console.log('wp-next-token', authToken)
 
                 dispatch({

@@ -1,7 +1,13 @@
-import {viewerConstants} from "../actions/constants";
+import { viewerConstants } from "../actions/constants";
 
 const initState = {
     viewer: null,
+    favorite: {
+        favorites: [],
+        favoritesProducts:[],
+        loading: false,
+        error: null
+    },
     error: null,
     message: null,
     loading: false
@@ -32,6 +38,125 @@ export default (state = initState, action) => {
                 message: null
             }
             break;
+        case viewerConstants.INIT_FAVORITES_REQUEST:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: true
+                }
+            }
+            break;
+        case viewerConstants.INIT_FAVORITES_SUCCESS:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: false,
+                    favorites: action.payload.favorites
+                }
+            }
+            break;
+        case viewerConstants.INIT_FAVORITES_FAILURE:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: false,
+                    error: action.payload.error
+                }
+            }
+            break;
+        case viewerConstants.ADD_TO_FAVORITES_REQUEST:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: true
+                }
+            }
+            break;
+        case viewerConstants.ADD_TO_FAVORITES_SUCCESS:
+            if (!state.favorite.favorites.includes(action.payload.productId)) {
+                state = {
+                    ...state,
+                    favorite: {
+                        ...state.favorite,
+                        loading: false,
+                        favorites: [
+                            ...state.favorite.favorites,
+                            action.payload.productId
+                        ]
+                    }
+                }
+            }
+            break;
+        case viewerConstants.ADD_TO_FAVORITES_FAILURE:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: false,
+                    error: action.payload.error
+                }
+            }
+            break;
+        case viewerConstants.REMOVE_FROM_FAVORITES_REQUEST:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: true
+                }
+            }
+            break;
+        case viewerConstants.REMOVE_FROM_FAVORITES_SUCCESS:
+            const index = state.favorite.favorites.indexOf(action.payload.productId);
+            if (index > -1) {
+                state.favorite.favorites.splice(index, 1);
+            }
+            break;
+        case viewerConstants.REMOVE_FROM_FAVORITES_FAILURE:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: false,
+                    error: action.payload.error
+                }
+            }
+            break;
+        case viewerConstants.INIT_FAVORITES_PRODUCTS_REQUEST:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: true
+                }
+            }
+            break;
+        case viewerConstants.INIT_FAVORITES_PRODUCTS_SUCCESS:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: false,
+                    favoritesProducts: action.payload.products,
+                    error: action.payload.error
+                }
+            }
+            break;
+        case viewerConstants.INIT_FAVORITES_PRODUCTS_FAILURE:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: false,
+                    error: action.payload.error
+                }
+            }
+            break;
+
     }
 
     return state;

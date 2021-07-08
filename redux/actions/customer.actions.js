@@ -1,4 +1,4 @@
-import { authConstants, customerConstants } from "./constants";
+import { authConstants, customerConstants, viewerConstants } from "./constants";
 import client from "../../components/ApolloClient";
 import GET_CUSTOMER from "../../gql/queries/get-customer";
 import UPDATE_CUSTOMER from "../../gql/mutations/update-customer";
@@ -78,27 +78,46 @@ export const updateCustomer = (input) => {
     }
 }
 
-export const initAddresses = (addressesString) => {
+export const initAddressesAndFavorites = (addressesString) => {
     return async (dispatch, getState) => {
         dispatch({
             type: customerConstants.INIT_ADDRESSES_REQUEST
         })
+        dispatch({
+            type: viewerConstants.INIT_FAVORITES_REQUEST
+        })
+        
 
         try {
-            let addresses = JSON.parse(addressesString)
+            const {address, favorites} = JSON.parse(addressesString)
 
-            if (typeof addresses === "object" && addresses !== null) {
+            if (typeof address === "object" && address !== null) {
                 dispatch({
                     type: customerConstants.INIT_ADDRESSES_SUCCESS,
                     payload: {
-                        addresses
+                        addresses: { ...address }
                     }
                 })
-            } else throw "addresses is not json"
+            } else throw "address is not json"
+
+            if (Array.isArray(favorites) && favorites !== null) {
+                dispatch({
+                    type: viewerConstants.INIT_FAVORITES_SUCCESS,
+                    payload: {
+                        favorites
+                    }
+                })
+            } else throw "favorites is not array"
 
         } catch (error) {
             dispatch({
                 type: customerConstants.INIT_ADDRESSES_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+            dispatch({
+                type: viewerConstants.INIT_FAVORITES_FAILURE,
                 payload: {
                     error: error.message
                 }
@@ -126,7 +145,7 @@ export const setActiveAddress = (active = null) => {
                 }
             })
 
-            dispatch(saveAddresses())
+            dispatch(saveAddressesAndFavorites())
 
         } catch (error) {
             dispatch({
@@ -158,7 +177,7 @@ export const removeAddress = (key = null) => {
                 }
             })
 
-            dispatch(saveAddresses())
+            dispatch(saveAddressesAndFavorites())
 
         } catch (error) {
             dispatch({
@@ -180,10 +199,14 @@ export const addNewAddress = (newAddress) => {
         try {
             const { customer } = getState()
             const { addresses } = customer.address
-            if (!addresses) throw "آدرسی هنوز تنظیم نشده است"
 
             // last key
-            const key = parseInt((Object.keys(addresses))[Object.keys(addresses).length - 1] ) + 1
+            let key = 1
+            if (addresses !== null && typeof addresses === "object" && typeof addresses !== "undefined") {
+                if (Object.keys(addresses).length !== 0) {
+                    key = parseInt((Object.keys(addresses))[Object.keys(addresses).length - 1]) + 1
+                }
+            }
 
             dispatch({
                 type: customerConstants.ADD_NEW_ADDRESS_SUCCESS,
@@ -193,7 +216,7 @@ export const addNewAddress = (newAddress) => {
                 }
             })
 
-            dispatch(saveAddresses())
+            dispatch(saveAddressesAndFavorites())
 
         } catch (error) {
             dispatch({
@@ -227,7 +250,7 @@ export const editAddress = (editKey, editAddress) => {
                 }
             })
 
-            dispatch(saveAddresses())
+            dispatch(saveAddressesAndFavorites())
 
         } catch (error) {
             dispatch({
@@ -240,7 +263,7 @@ export const editAddress = (editKey, editAddress) => {
     }
 }
 
-export const saveAddresses = () => {
+export const saveAddressesAndFavorites = () => {
     return async (dispatch, getState) => {
         dispatch({
             type: customerConstants.SAVE_ADDRESSES_REQUEST
@@ -256,8 +279,11 @@ export const saveAddresses = () => {
                     input: {
                         id: viewer.viewer.id,
                         description: JSON.stringify({
-                            active,
-                            addresses
+                            address: {
+                                active,
+                                addresses
+                            },
+                            favorites: viewer.favorite.favorites
                         }),
                         clientMutationId: v4()
                     }
@@ -276,7 +302,7 @@ export const saveAddresses = () => {
 
             // set address billing
             if (user.description) {
-                dispatch(initAddresses(user.description))
+                dispatch(initAddressesAndFavorites(user.description))
             }
 
             dispatch({ type: customerConstants.SAVE_ADDRESSES_SUCCESS })

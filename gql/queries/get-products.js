@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const GET_PRODUCTS = gql` 
-query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelationInput], $offset: Int, $size: Int, $orderby: [ProductsOrderbyInput] ) {
-  products(where: {search: $search, orderby: $orderby, taxonomyFilter: $taxonomyFilter, offsetPagination: {offset: $offset, size: $size}}) {
+query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelationInput], $offset: Int, $size: Int, $orderby: [ProductsOrderbyInput], $include: [Int] ) {
+  products(where: {search: $search, include: $include, orderby: $orderby, taxonomyFilter: $taxonomyFilter, offsetPagination: {offset: $offset, size: $size}}) {
     edges {
       node {
         id

@@ -8,6 +8,7 @@ import { setBillingInput } from "../../redux/actions/checout.actions";
 import ShippingDateTime from "./ShippingDateTime";
 import ApplyCoupon from "./ApplyCoupon";
 import WalletCredit from "./WalletCredit";
+import axios from "axios";
 
 export default function UserBasket(props) {
   const dispatch = useDispatch()
@@ -60,6 +61,27 @@ export default function UserBasket(props) {
     dispatch(setBillingInput())
   }, [active])
 
+  const handlePayment = () => {
+    axios({
+      method: 'post',
+      url: "https://sandbox.zarinpal.com/pg/v4/payment/request.json",
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        merchant_id: "f19c638c-3bcc-11e6-9fe2-005056a205be",
+        amount: "10000",
+        callback_url: "https://projekt.ir",
+        description: "داستانا"
+      }
+    }).then(function (response) {
+      console.log(response)
+    }).catch(function (error) {
+      console.log(error)
+    })
+  }
+
   return (
     <div className="user-basket-box">
       <div className="user-basket-box__header">
@@ -85,12 +107,6 @@ export default function UserBasket(props) {
         <p className="user-basket-box__address__text">
           {address}
         </p>
-        <img
-          className="user-info-box__bot__title__icon"
-          onClick={() => setModalShow(true)}
-          src={`/image/icon/edit (1).png`}
-          alt="edit"
-        />
       </div>
       <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />
       <ShippingBasket {...props} />
@@ -98,7 +114,7 @@ export default function UserBasket(props) {
       <div className="user-basket-box__purchase">
         <h1 className="user-basket-box__title">پرداخت امن زرین پال</h1>
         <div className="user-basket-box__purchase__btn-wrap">
-          <button disabled={cart.isEmpty ? true : false} className="user-basket-box__purchase__btn" type="submit">
+          <button onClick={handlePayment} disabled={cart.isEmpty ? true : false} className="user-basket-box__purchase__btn" type="submit">
             {cart.isEmpty ? 'سبد خرید شما خالی است' : 'پرداخت'}
           </button>
         </div>
