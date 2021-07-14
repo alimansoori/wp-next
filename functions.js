@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { parseCookies } from 'nookies';
 
 /**
  * Extracts and returns float value from a string.
@@ -158,7 +159,8 @@ const isProductInCart = (existingProductsInCart, productId) => {
  */
 export const removeItemFromCart = (productId) => {
 
-	let existingCart = localStorage.getItem('wp-next-cart');
+	const cookies = parseCookies()
+	let existingCart = cookies['wp-next-cart'];
 	existingCart = JSON.parse(existingCart);
 
 	// If there is only one item in the cart, delete the cart.
@@ -377,6 +379,19 @@ export function stringToNumber(str = 0) {
 	});
 
 	return parseInt(splitStr.join("")).toLocaleString();
+}
+
+export function stringToNumber2(str = 0) {
+	if (typeof str == 'number') return str.toLocaleString();
+
+	
+	let splitStr = str.split(/(\d+)/);
+		
+	splitStr = splitStr.filter(item => {
+		return (item !== "£" && item !== 'تومان' && item !== '.' && item !== "" && item !== "00" && item !== ",");
+	});
+
+	return parseInt(splitStr.join(""));
 }
 
 export function getValueByKey(obj, key) {

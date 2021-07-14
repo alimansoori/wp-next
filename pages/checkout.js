@@ -15,7 +15,7 @@ import nookies from 'nookies'
 import { stringToNumber, stringToNumber2 } from '../functions';
 
 function Payment(props) {
-  // const { cart } = props
+  const { cart } = props
 
   useEffect(() => {
     console.log(props)
@@ -26,17 +26,8 @@ function Payment(props) {
   )
 }
 
-const isServer = () => {
-  if (typeof window === 'undefined') {
-    return true
-  }
-
-  return false
-}
-
 export const getServerSideProps = async (ctx) => {
   let cart = null;
-  let data = null
   let refreshJwtAuthToken = null
 
   const { req, res, query } = ctx
@@ -84,33 +75,36 @@ export const getServerSideProps = async (ctx) => {
     console.log(e)
   }
 
-  if (query['Status'] == 'OK') {
-    try {
-      const result = await axios({
-        method: 'POST',
-        url: "https://api.zarinpal.com/pg/v4/payment/verify.json",
-        data: {
-          merchant_id: "f19c638c-3bcc-11e6-9fe2-005056a205be",
-          amount: stringToNumber2(cart?.total + 0),
-          // amount: 10000,
-          authority: query['Authority'],
+  try {
+    const result = await axios({
+      method: 'post',
+      url: "https://api.zarinpal.com/pg/v4/payment/request.json",
+      data: {
+        merchant_id: "f19c638c-3bcc-11e6-9fe2-005056a205be",
+        amount: stringToNumber2(cart?.total + 0),
+        // amount: 10000,
+        callback_url: "http://localhost:3000/payment",
+        description: "داستانا"
+      }
+    })
+
+    if (result.data.data.code === 100) {
+      return {
+        redirect: {
+          destination: `https://www.zarinpal.com/pg/StartPay/${result.data.data.authority}`,
+          permanent: false
         }
-      })
-
-      console.log(result)
-      data = result.data
-
-    } catch (error) {
-      console.log(error.response.data)
-      data = error.response.data
+      }
     }
+
+  } catch (error) {
+    console.log(error)
   }
 
   return {
     props: {
       refreshJwtAuthToken,
-      cart,
-      data
+      cart
     },
     // redirect: {
     //   destination: '/shop',

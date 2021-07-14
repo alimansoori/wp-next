@@ -7,7 +7,8 @@ import REFRESH_TOKEN from "../../gql/mutations/refresh-token";
 import { getViewer } from "./viewer.actions";
 import { getCustomer, initAddressesAndFavorites } from "./customer.actions";
 import { getCart } from "./cart.actions";
-import cookieCutter from 'cookie-cutter'
+import jscookie from 'js-cookie'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 export const loginUser = (loginForm = {}) => {
     return async dispatch => {
@@ -34,9 +35,8 @@ export const loginUser = (loginForm = {}) => {
 
             const { user, authToken, customer } = result.data.login
 
-            localStorage.setItem('wp-next-token', authToken);
-            cookieCutter.set('wp-next-token', authToken);
-            localStorage.setItem('user', JSON.stringify(user));
+            setCookie(null, 'wp-next-token', authToken);
+            setCookie(null, 'user', JSON.stringify(user));
 
             dispatch({
                 type: authConstants.LOGIN_SUCCESS,
@@ -81,10 +81,11 @@ export const isUserLoggedIn = () => {
     return async dispatch => {
         dispatch({ type: authConstants.REFRESH_TOKEN_REQUEST });
 
-        const token = localStorage.getItem('wp-next-token');
+        const cookies = parseCookies()
+        const token = cookies['wp-next-token'];
 
         if (typeof token === undefined) {
-            localStorage.removeItem('wp-next-token');
+            destroyCookie(null, 'wp-next-token')
         }
 
 
@@ -109,8 +110,7 @@ export const isUserLoggedIn = () => {
 
                 const { authToken } = result.data.refreshJwtAuthToken
                 // const { viewer } = qry.data
-                localStorage.setItem('wp-next-token', authToken)
-                cookieCutter.set('wp-next-token', authToken)
+                setCookie(null, 'wp-next-token', authToken)
                 // console.log('wp-next-token', authToken)
 
                 dispatch({
@@ -148,7 +148,7 @@ export const isUserLoggedIn = () => {
 export const signout = () => {
     return async dispatch => {
         dispatch({ type: authConstants.LOGOUT_REQUEST });
-        localStorage.removeItem('wp-next-token');
+        destroyCookie(null, 'wp-next-token')
         dispatch({
             type: authConstants.LOGOUT_SUCCESS
         });
