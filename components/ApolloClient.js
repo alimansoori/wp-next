@@ -168,6 +168,7 @@ const client = new ApolloClient({
 
 // Apollo GraphQL SSR client.
 export const ssrClient = (ctx) => new ApolloClient({
+    ssrMode: true,
     link: ssrMiddleware(ctx).concat(
         ssrAfterware(ctx).concat(
             ssrAuthLink(ctx).concat(

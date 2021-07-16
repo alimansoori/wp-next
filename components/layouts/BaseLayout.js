@@ -5,6 +5,7 @@ import client from '../ApolloClient'
 import { getCart, isUserLoggedIn } from "../../redux/actions";
 import { useDispatch } from 'react-redux';
 import { getViewer } from '../../redux/actions/viewer.actions';
+import { getCustomer } from '../../redux/actions/customer.actions';
 
 export default function BaseLayout(props) {
     const dispatch = useDispatch()
@@ -12,6 +13,7 @@ export default function BaseLayout(props) {
     useEffect(() => {
         dispatch(isUserLoggedIn())
         dispatch(getCart());
+        dispatch(getCustomer());
     }, []);
 
     return (

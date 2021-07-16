@@ -18,6 +18,7 @@ export default function UserBasket(props) {
   const { customer } = useSelector(state => state.customer)
   const { addresses, active } = useSelector(state => state.customer.address)
   const { region } = useSelector(state => state.local)
+  const { input, loadingCheckout } = useSelector(state => state.checkout)
 
   useEffect(() => {
     if (!active) return false
@@ -62,24 +63,7 @@ export default function UserBasket(props) {
   }, [active])
 
   const handlePayment = () => {
-    axios({
-      method: 'post',
-      url: "https://sandbox.zarinpal.com/pg/v4/payment/request.json",
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: {
-        merchant_id: "f19c638c-3bcc-11e6-9fe2-005056a205be",
-        amount: "10000",
-        callback_url: "https://projekt.ir",
-        description: "داستانا"
-      }
-    }).then(function (response) {
-      console.log(response)
-    }).catch(function (error) {
-      console.log(error)
-    })
+
   }
 
   return (
@@ -110,7 +94,11 @@ export default function UserBasket(props) {
       </div>
       <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />
       <ShippingBasket {...props} />
-      <ShippingDateTime />
+      {
+        (input?.shippingMethod == 'WC_Courier_Method:4' && loadingCheckout == false) ?
+          <ShippingDateTime /> :
+          null
+      }
       <div className="user-basket-box__purchase">
         <h1 className="user-basket-box__title">پرداخت امن زرین پال</h1>
         <div className="user-basket-box__purchase__btn-wrap">

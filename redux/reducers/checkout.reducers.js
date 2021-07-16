@@ -4,7 +4,6 @@ import { checkoutConstants } from "../actions/constants";
 const initState = {
     checkout: null,
     input: {
-        clientMutationId: v4(),
         paymentMethod: "WC_ZPal",
     },
     error: null,

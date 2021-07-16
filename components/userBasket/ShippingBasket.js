@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { RadioGroup, RadioButton } from "react-radio-buttons"
-import { checkoutConstants } from "../../redux/actions/constants"
 import BeatLoader from 'react-spinners/BeatLoader'
-import { changeInputCheckout, checkout } from "../../redux/actions/checout.actions"
+import { changeInputCheckout } from "../../redux/actions/checout.actions"
+import { v4 } from "uuid"
 
 export default function ShippingBasket({ setInputCheckout, inputCheckout }) {
   const dispatch = useDispatch()
@@ -31,11 +31,27 @@ export default function ShippingBasket({ setInputCheckout, inputCheckout }) {
   }, [customer])
 
   const handleShippingMethodChange = (value) => {
+    console.log(value)
     dispatch(
       changeInputCheckout({
         shippingMethod: value
       })
     )
+  }
+
+  const shippingMethodValue = () => {
+    var t = null
+    cart.availableShippingMethods.map((shippingMethod) => {
+      if (shippingMethod.rates && shippingMethod.rates !== null) {
+        for (var i = 0; i < shippingMethod.rates.length; i++) {
+          if (cart.chosenShippingMethods !== undefined && shippingMethod.rates[i].id === cart.chosenShippingMethods[0]) {
+            t = shippingMethod.rates[i].id
+            break;
+          }
+        }
+      }
+    })
+    return t
   }
 
   return (
@@ -55,10 +71,10 @@ export default function ShippingBasket({ setInputCheckout, inputCheckout }) {
             {
               cart.availableShippingMethods.map((shippingMethod, index) => (
                 (shippingMethod.rates && shippingMethod.rates !== null) ? (
-                  <RadioGroup value={input.shippingMethod} onChange={(val) => handleShippingMethodChange(val)} key={index} horizontal>
+                  <RadioGroup value={shippingMethodValue()} onChange={(val) => handleShippingMethodChange(val)} key={index} horizontal>
                     {
                       shippingMethod.rates.map((rate, index2) => (
-                        <RadioButton key={index2} pointColor="red" rootColor="#000" value={rate.methodId}>
+                        <RadioButton key={index2} pointColor="red" rootColor="#000" value={rate.id}>
                           {rate.label}
                         </RadioButton>
                       ))

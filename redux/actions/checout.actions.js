@@ -10,15 +10,17 @@ export const checkout = (input) => {
             type: checkoutConstants.CHECKOUT_REQUEST
         })
 
-        try {
-            const [viewer] = getState().viewer
+        console.log(input)
 
+        try {
+            const {viewer} = (getState()).viewer
+            
             const result = await client.mutate({
                 mutation: CHECKOUT,
                 variables: {
                     input: {
                         ...input,
-                        clientMutationId: viewer.databaseId
+                        clientMutationId: "jjjjj"
                     },
                 }
             })

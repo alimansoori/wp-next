@@ -4,7 +4,7 @@ const initState = {
     viewer: null,
     favorite: {
         favorites: [],
-        favoritesProducts:[],
+        favoritesProducts: [],
         loading: false,
         error: null
     },
@@ -154,6 +154,12 @@ export default (state = initState, action) => {
                     loading: false,
                     error: action.payload.error
                 }
+            }
+            break;
+        case viewerConstants.SET_VIEWER:
+            state = {
+                ...state,
+                viewer: action.payload.viewer
             }
             break;
 

@@ -8,18 +8,25 @@ import { getViewer } from "./viewer.actions";
 import { v4 } from "uuid";
 
 export const getCustomer = () => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         dispatch({
             type: customerConstants.GET_CUSTOMER_REQUEST
         })
 
         try {
+            const { viewer } = (getState()).viewer
+            let variables = {}
+
+            if (viewer) {
+                variables = {
+                    customerId: viewer.databaseId,
+                    id: viewer.id
+                }
+            }
+
             const result = await client.query({
                 query: GET_CUSTOMER,
-                variables: {
-                    key: "number-address",
-                    multiple: true
-                },
+                variables: { ...variables },
                 fetchPolicy: 'network-only'
             })
 
@@ -43,16 +50,29 @@ export const getCustomer = () => {
 }
 
 export const updateCustomer = (input) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         dispatch({
             type: customerConstants.CUSTOMER_UPDATE_REQUEST
         })
 
         try {
+            const {viewer} = (getState()).viewer
+            let newInput = input
+
+            if (viewer) {
+                newInput = {
+                    ...input,
+                    id: viewer.id
+                }
+            }
+
             const result = await client.mutate({
                 mutation: UPDATE_CUSTOMER,
                 variables: {
-                    input,
+                    input: {
+                        ...newInput,
+                        clientMutationId: v4()
+                    }
                 },
                 fetchPolicy: "no-cache"
             })
@@ -86,10 +106,10 @@ export const initAddressesAndFavorites = (addressesString) => {
         dispatch({
             type: viewerConstants.INIT_FAVORITES_REQUEST
         })
-        
+
 
         try {
-            const {address, favorites} = JSON.parse(addressesString)
+            const { address, favorites } = JSON.parse(addressesString)
 
             if (typeof address === "object" && address !== null) {
                 dispatch({

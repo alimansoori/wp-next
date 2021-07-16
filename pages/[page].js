@@ -84,6 +84,7 @@ export const getServerSideProps = async ({ query, params }) => {
   const { page } = query
   const id = page ? page : query.id;
 
+
   try {
     const result = await client.query({
       query: GET_PAGE,

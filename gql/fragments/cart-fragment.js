@@ -7,6 +7,7 @@ function CartFragment() {
 CartFragment.fragments = {
   MyCart: gql`
     fragment MyCart on Cart {
+      chosenShippingMethods
       contents {
         nodes {
           key

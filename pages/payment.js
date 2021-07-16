@@ -1,18 +1,12 @@
 import axios from 'axios';
-import { useRouter, withRouter } from 'next/router';
+import { withRouter } from 'next/router';
 import React, { useEffect } from 'react'
-// import client from '../components/ApolloClient';
-import GET_VIEWER from '../gql/queries/get-viewer';
-import cookie, { serialize } from 'cookie';
-import jscookie from 'js-cookie';
-import ApolloClient from 'apollo-boost';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import GET_CART from '../gql/queries/get-cart';
 import REFRESH_TOKEN from '../gql/mutations/refresh-token';
 import { v4 } from 'uuid';
 import client, { ssrClient } from '../components/ApolloClient';
 import nookies from 'nookies'
-import { stringToNumber, stringToNumber2 } from '../functions';
+import { stringToNumber2 } from '../functions';
 
 function Payment(props) {
   // const { cart } = props
