@@ -37,6 +37,12 @@ export default (state = initState, action) => {
                 message: null
             }
             break;
+        case customerConstants.CUSTOMER_UPDATE_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
         case customerConstants.CUSTOMER_UPDATE_SUCCESS:
             state = {
                 ...state,
@@ -136,7 +142,7 @@ export default (state = initState, action) => {
                     loading: false,
                     addresses: {
                         ...state.address.addresses,
-                        [action.payload.key]: {...action.payload.newAddress}
+                        [action.payload.key]: { ...action.payload.newAddress }
                     }
                 }
             }

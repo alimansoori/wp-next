@@ -1,0 +1,261 @@
+.pay-details-box {
+  width: 80%;
+  margin: 0 auto;
+  text-align: right;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: $mainBoxShadow;
+  .pay-details-box__title {
+    margin: 0;
+    font-size: 18px;
+    direction: ltr;
+    color: #afafaf;
+  }
+
+  .pay-details-box__header {
+    padding: 10px 30px;
+    border-bottom: 1px solid #afafaf;
+    .pay-details-box__header__content {
+      margin: 10px 0 0 0;
+      direction: rtl;
+      @include flex-bet;
+      align-items: flex-start;
+      .pay-details-box__header__content__price {
+        .pay-details-box__header__content__price__text {
+          color: $mainCyan;
+          font-size: 20px;
+        }
+      }
+
+      .pay-details-box__header__content__wallet {
+        .pay-details-box__header__content__wallet__discount {
+          @include flex-bet-r;
+          margin-bottom: 10px;
+          .pay-details-box__header__content__wallet__discount__input-wrap {
+            .pay-details-box__header__content__wallet__discount__input {
+              width: 150px;
+              height: 30px;
+              margin-left: 10px;
+              text-align: center;
+              color: #000000;
+              background: #efefef;
+              border: 1px solid #c7c7c7;
+              border-radius: 20px;
+            }
+          }
+
+          .pay-details-box__header__content__wallet__discount__btn {
+            width: 30px;
+            height: 30px;
+            background: $mainCyan;
+            border-radius: 50%;
+            border: none;
+            .pay-details-box__header__content__wallet__discount__btn__icon {
+              width: 20px;
+            }
+          }
+        }
+
+        .pay-details-box__header__content__wallet__credit {
+          @include flex-bet-r;
+          margin-bottom: 10px;
+          .pay-details-box__header__content__wallet__credit__input-wrap {
+            @include flex-bet-r;
+            width: 150px;
+            height: 30px;
+            border: 1px solid #c7c7c7;
+            border-radius: 20px;
+
+            .pay-details-box__header__content__wallet__credit__plus,
+            .pay-details-box__header__content__wallet__credit__minus {
+              width: 20px;
+              height: 20px;
+              margin: 0 3px;
+              @include flex-org;
+              border: 1px solid #c7c7c7;
+              border-radius: 50%;
+            }
+
+            .pay-details-box__header__content__wallet__credit__input {
+              background: transparent;
+              width: 95px;
+              height: 30px;
+              border: none;
+              text-align: center;
+              color: #000000;
+            }
+          }
+
+          .pay-details-box__header__content__wallet__credit__btn {
+            width: 30px;
+            height: 30px;
+            background: #ffffff;
+            border: none;
+            .pay-details-box__header__content__wallet__credit__btn__icon {
+              width: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pay-details-box__address {
+    padding: 10px 30px;
+    border-bottom: 1px solid #afafaf;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    .pay-details-box__address__text {
+      direction: rtl;
+      margin: 0 5px 0 0;
+      font-size: 14px;
+    }
+  }
+
+  .pay-details-box__transport {
+    padding: 10px 30px;
+    border-bottom: 1px solid #afafaf;
+    .pay-details-box__transport__radio-btn-wrap {
+      margin: 10px 0;
+    }
+
+    .pay-details-box__transport__radio-btn-wrap > div > div {
+      border-radius: 20px !important;
+      background: #efefef !important;
+      border: none !important;
+      // &:first-child {
+      //   background: red !important;
+      // }
+    }
+
+    .pay-details-box__transport__radio-btn-wrap > div > div > div {
+      display: block !important;
+    }
+
+    .pay-details-box__transport__radio-btn-wrap > div > div > div > div {
+      text-align: center !important;
+    }
+
+    .pay-details-box__transport__radio-btn-wrap > div > div > div > div + div {
+      display: none !important;
+    }
+  }
+
+  .pay-details-box__transport-time {
+    padding: 10px 30px;
+    border-bottom: 1px solid #afafaf;
+    .pay-details-box__transport-time__day {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+      margin: 10px 0;
+      .pay-details-box__transport-time__day__btn-wrap {
+        width: 95%;
+        direction: rtl;
+      }
+      .pay-details-box__transport-time__day__box {
+        .pay-details-box__transport-time__day__box__text {
+          font-size: 10px;
+        }
+      }
+    }
+
+    .pay-details-box__transport-time__day__btn-wrap > div {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .pay-details-box__transport-time__day__btn-wrap > div > div {
+      border-radius: 20px !important;
+      background: #efefef !important;
+      flex: none !important;
+      padding: 10px !important;
+      border: none !important;
+    }
+
+    .pay-details-box__transport-time__day__btn-wrap > div > div > div {
+      display: block !important;
+    }
+
+    .pay-details-box__transport-time__day__btn-wrap > div > div > div > div {
+      text-align: center !important;
+    }
+
+    .pay-details-box__transport-time__day__btn-wrap > div > div > div > div + div {
+      display: none !important;
+    }
+
+    .pay-details-box__transport-time__hour {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+      margin: 10px 0;
+    }
+
+    .pay-details-box__transport-time__hour__btn-wrap {
+      width: 95%;
+      direction: rtl;
+    }
+
+    .pay-details-box__transport-time__hour__btn-wrap > div {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .pay-details-box__transport-time__hour__btn-wrap > div > div {
+      border-radius: 20px !important;
+      background: #efefef !important;
+      flex: none !important;
+      padding: 10px !important;
+      border: none !important;
+    }
+
+    .pay-details-box__transport-time__hour__btn-wrap > div > div > div {
+      display: block !important;
+    }
+
+    .pay-details-box__transport-time__hour__btn-wrap > div > div > div > div {
+      text-align: center !important;
+    }
+
+    .pay-details-box__transport-time__hour__btn-wrap > div > div > div > div + div {
+      display: none !important;
+    }
+  }
+
+  .pay-details-box__purchase {
+    padding: 10px 30px;
+    .pay-details-box__purchase__btn-wrap {
+      @include flex-org;
+      .pay-details-box__purchase__btn {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 20px;
+        color: #ffffff;
+        background: $mainBlue;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .pay-details-box__transport-time {
+    padding: 10px 5px !important;
+  }
+
+  .pay-details-box__header__content {
+    flex-direction: column;
+    align-items: center !important;
+  }
+
+  .user-history-box__list {
+    height: 350px !important;
+  }
+
+  .pay-details-box .pay-details-box__transport-time .pay-details-box__transport-time__day__btn-wrap > div > div {
+    padding: 5px !important;
+  }
+}

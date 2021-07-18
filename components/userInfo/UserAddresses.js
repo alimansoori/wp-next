@@ -1,6 +1,7 @@
 import React from "react"
 import { RadioGroup, RadioButton } from "react-radio-buttons"
 import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../redux/actions/cart.actions";
 import { removeAddress, setActiveAddress } from "../../redux/actions/customer.actions";
 import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
 
@@ -32,10 +33,15 @@ export default function UserAddresses() {
         )
     }
 
+    const handleChangeAddress = (value) => {
+        dispatch(setActiveAddress(value))
+        // dispatch(getCart())
+    }
+
     const RenderAddresses = () => {
         if (!loading && addresses && active) {
             return (
-                <RadioGroup value={active} onChange={(value) => dispatch(setActiveAddress(value))}>
+                <RadioGroup value={active} onChange={(value) => handleChangeAddress(value)}>
                     {
                         Object.keys(addresses).map((key) => (
                             <RadioButton key={key} pointColor="#26c7bf" rootColor="#000" value={key}>
@@ -47,7 +53,7 @@ export default function UserAddresses() {
             )
         } else if (!loading && addresses && !active) {
             return (
-                <RadioGroup  onChange={(value) => dispatch(setActiveAddress(value))}>
+                <RadioGroup onChange={(value) => handleChangeAddress(value)}>
                     {
                         Object.keys(addresses).map((key) => (
                             <RadioButton key={key} pointColor="#26c7bf" rootColor="#000" value={key}>

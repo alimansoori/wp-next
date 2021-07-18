@@ -8,16 +8,22 @@ import { setBillingInput } from "../../redux/actions/checout.actions";
 import ShippingDateTime from "./ShippingDateTime";
 import ApplyCoupon from "./ApplyCoupon";
 import WalletCredit from "./WalletCredit";
-import axios from "axios";
+import BeatLoader from 'react-spinners/BeatLoader'
+import { AlertNotifs } from "../alertNotifs/AlertNotifs";
+import { useRouter } from "next/router";
 
 export default function UserBasket(props) {
   const dispatch = useDispatch()
-  const { cart } = useSelector(state => state.cart)
+  const router = useRouter()
+  const { cart, loadingUpdateShippingCourierMethod } = useSelector(state => state.cart)
   const [modalShow, setModalShow] = React.useState(false);
+  const [errors, setErrors] = React.useState([]);
+  const [notifs, setNotifs] = React.useState([]);
   const [address, setAddress] = React.useState('');
-  const { customer } = useSelector(state => state.customer)
   const { addresses, active } = useSelector(state => state.customer.address)
   const { region } = useSelector(state => state.local)
+  const { customer, loading: loadingCustomer } = useSelector(state => state.customer)
+  const { loading: loadingCart, loadingUpdateShippingMethod } = useSelector(state => state.cart)
   const { input, loadingCheckout } = useSelector(state => state.checkout)
 
   useEffect(() => {
@@ -39,23 +45,6 @@ export default function UserBasket(props) {
 
   }, [active])
 
-  // const getData=()=>{
-  //   fetch('api/ir'
-  //   ,{
-  //     headers : { 
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json'
-  //      }
-  //   }
-  //   )
-  //     .then(function(response){
-  //       console.log(response)
-  //       return response.json();
-  //     })
-  //     .then(function(myJson) {
-  //       console.log(myJson);
-  //     });
-  // }
 
   useEffect(() => {
     if (!active) return false
@@ -63,11 +52,38 @@ export default function UserBasket(props) {
   }, [active])
 
   const handlePayment = () => {
+    if (cart.chosenShippingMethods.includes('WC_Courier_Method:4')) {
+      const shippingDate = customer?.metaData.find((m) => {
+        if (m.key === 'shippingDate' && m.value) {
+          return true
+        }
+      })
+      const shippingHour = customer?.metaData.find((m) => {
+        if (m.key === 'shippingHour' && m.value) {
+          return true
+        }
+      })
+      if (!shippingDate || !shippingHour) {
+        setNotifs(
+          notifs.concat([{
+            variant: 'danger',
+            title: 'لطفا زمان و ساعت ارسال خود را ثبت کنید!'
+          }])
+        )
+        return false
+      }
 
+      router.push('/checkout')
+      // console.log(shippingDate)
+      // console.log(customer?.metaData)
+      // console.log(errors)
+    }
   }
 
   return (
+
     <div className="user-basket-box">
+      <AlertNotifs notifs={notifs} setNotifs={setNotifs} />
       <div className="user-basket-box__header">
         <h1 className="user-basket-box__title">:جمع سبد خرید</h1>
         <div className="user-basket-box__header__content">
@@ -78,7 +94,7 @@ export default function UserBasket(props) {
           </div>
           <div className="user-basket-box__header__content__wallet">
             {
-              !cart.isEmpty ? <ApplyCoupon /> : null
+              !cart.isEmpty ? <ApplyCoupon notifs={notifs} setNotifs={setNotifs} /> : null
             }
             {
               !cart.isEmpty ? <WalletCredit /> : null
@@ -93,17 +109,29 @@ export default function UserBasket(props) {
         </p>
       </div>
       <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />
-      <ShippingBasket {...props} />
+      <ShippingBasket />
       {
-        (input?.shippingMethod == 'WC_Courier_Method:4' && loadingCheckout == false) ?
-          <ShippingDateTime /> :
-          null
+        loadingUpdateShippingCourierMethod ? (
+          <div style={{ textAlign: "center", marginBottom: "20px" }} className="user-basket-box__transport__radio-btn-wrap">
+            <BeatLoader
+              loading={true}
+              size={15}
+              color="#0072bb"
+            />
+          </div>
+        ) : (
+          (cart.chosenShippingMethods.length && cart.chosenShippingMethods[0] == 'WC_Courier_Method:4') ?
+            <ShippingDateTime /> :
+            null
+        )
       }
       <div className="user-basket-box__purchase">
         <h1 className="user-basket-box__title">پرداخت امن زرین پال</h1>
         <div className="user-basket-box__purchase__btn-wrap">
-          <button onClick={handlePayment} disabled={cart.isEmpty ? true : false} className="user-basket-box__purchase__btn" type="submit">
-            {cart.isEmpty ? 'سبد خرید شما خالی است' : 'پرداخت'}
+          <button style={{direction:'rtl'}} onClick={handlePayment} disabled={(cart.isEmpty || loadingCart || loadingUpdateShippingMethod || loadingCustomer) ? true : false} className="user-basket-box__purchase__btn" type="submit">
+            {cart.isEmpty ? 'سبد خرید شما خالی است' : (
+              (loadingCart || loadingUpdateShippingMethod || loadingCustomer) ? 'لطفا صبر کنید...' : 'پرداخت'
+            )}
           </button>
         </div>
       </div>

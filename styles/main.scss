@@ -43,7 +43,9 @@ h1 {
 @import '../components/userHeader/userHeader';
 @import '../components/signOut/signOut';
 @import '../components/userNav/userNav';
+@import '../components/payNav/payNav';
 @import '../components/userBasket/userBasket';
+@import '../components/payDetails/payDetails';
 @import '../components/userHistory/userHistory';
 @import '../components/userWallet/userWallet';
 @import '../components/userFavourites/userFavourites';
@@ -57,3 +59,4 @@ h1 {
 @import '../pages/product/product';
 @import '../pages/shop/searchResult';
 @import '../pages/account';
+@import '../pages/payment';

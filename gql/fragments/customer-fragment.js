@@ -23,6 +23,10 @@ CustomerFragment.fragments = {
       isVatExempt
       lastName
       orderCount
+      metaData {
+        key
+        value
+      }
       role
       sessionToken
       shipping {

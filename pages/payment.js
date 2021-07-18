@@ -7,8 +7,13 @@ import { v4 } from 'uuid';
 import client, { ssrClient } from '../components/ApolloClient';
 import nookies from 'nookies'
 import { stringToNumber2 } from '../functions';
+import LandingLoading from '../components/landingLoading/LandingLoading';
+import UserHeader from '../components/userHeader/UserHeader';
+import { useSelector } from 'react-redux';
+import PayNav from '../components/payNav/PayNav';
 
 function Payment(props) {
+  const { authenticate, authenticating } = useSelector(state => state.auth)
   // const { cart } = props
 
   useEffect(() => {
@@ -16,7 +21,15 @@ function Payment(props) {
   }, [])
 
   return (
-    <div>Test</div>
+    <>
+      <LandingLoading />
+      <UserHeader />
+      {authenticate ? (
+        <>
+          <PayNav/>
+        </>
+      ) : <div>Access Denied! ... Please Log in</div>}
+    </>
   )
 }
 

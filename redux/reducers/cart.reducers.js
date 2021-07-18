@@ -5,6 +5,7 @@ const initState = {
         contents: {
             nodes: []
         },
+        chosenShippingMethods: [],
         availableShippingMethods: [
             {
                 rates: []
@@ -14,7 +15,12 @@ const initState = {
         isEmpty: true
     },
     loading: false,
+    loadingCoupon: false,
+    loadingUpdateShippingMethod: false,
+    loadingUpdateShippingMethods: false,
+    loadingUpdateShippingCourierMethod: false,
     error: null,
+    errorCoupon: null,
     clearCartProcessing: false,
     clearCartError: null,
 }
@@ -32,6 +38,7 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 loading: false,
+                loadingUpdateShippingMethods: false,
                 cart: action.payload.cart
             }
             break;
@@ -105,21 +112,63 @@ export default (state = initState, action) => {
         case cartConstants.APPLY_COUPON_REQUEST:
             state = {
                 ...state,
-                loading: true
+                loading: true,
+                loadingCoupon: true,
             }
             break;
         case cartConstants.APPLY_COUPON_SUCCESS:
             state = {
                 ...state,
                 loading: false,
+                loadingCoupon: false,
                 cart: action.payload.cart
             }
             break;
         case cartConstants.APPLY_COUPON_FAILURE:
             state = {
                 ...state,
+                errorCoupon: action.payload.error,
+                loading: false,
+                loadingCoupon: false
+            }
+            break;
+        case cartConstants.UPDATE_SHIPPING_METHOD_REQUEST:
+            state = {
+                ...state,
+                loadingUpdateShippingMethod: true
+            }
+            break;
+        case cartConstants.UPDATE_SHIPPING_METHOD_SUCCESS:
+            state = {
+                ...state,
+                loadingUpdateShippingMethod: false,
+                loadingUpdateShippingCourierMethod: false,
+                cart: action.payload.cart
+            }
+            break;
+        case cartConstants.UPDATE_SHIPPING_METHOD_FAILURE:
+            state = {
+                ...state,
                 error: action.payload.error,
-                loading: false
+                loadingUpdateShippingMethod: false
+            }
+            break;
+        case cartConstants.EMPTY_SHIPPING_METHODS:
+            state = {
+                ...state,
+                chosenShippingMethods: []
+            }
+            break;
+        case cartConstants.UPDATE_SHIPPING_COURIER_METHOD_REQUEST:
+            state = {
+                ...state,
+                loadingUpdateShippingCourierMethod: true
+            }
+            break;
+        case cartConstants.SHIPPING_METHOD_REQUEST:
+            state = {
+                ...state,
+                loadingUpdateShippingMethods: true
             }
             break;
     }

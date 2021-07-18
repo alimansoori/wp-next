@@ -41,7 +41,7 @@ export const checkout = (input) => {
                 }
             })
 
-            dispatch(getCart())
+            // dispatch(getCart())
         } catch (error) {
             dispatch({
                 type: checkoutConstants.CHECKOUT_FAILURE,
@@ -71,7 +71,7 @@ export const setBillingInput = () => {
                 }
             })
 
-            dispatch(getCart())
+            // dispatch(getCart())
         } catch (error) {
             dispatch({
                 type: checkoutConstants.CHANGE_BILLING_INPUT_FAILURE,

@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import CartFragment from "../fragments/cart-fragment";
 
 /**
  * Update Cart
@@ -8,65 +9,10 @@ import gql from "graphql-tag";
  */
 const UPDATE_CART = gql`
 
-fragment cart on Cart {
-  contents {
-    nodes {
-      key
-      product {
-        node {
-          id
-          databaseId
-          name
-          description
-          type
-          onSale
-          slug
-          averageRating
-          reviewCount
-          image {
-            id
-            sourceUrl
-            srcSet
-            altText
-            title
-          }
-          galleryImages {
-            nodes {
-              id
-              sourceUrl
-              srcSet
-              altText
-              title
-            }
-          }
-          ... on SimpleProduct {
-            price
-            regularPrice
-          }
-        }
-      }
-      quantity
-      total
-      subtotal
-      subtotalTax
-    }
-  }
-  subtotal
-  subtotalTax
-  shippingTax
-  shippingTotal
-  total
-  totalTax
-  feeTax
-  feeTotal
-  discountTax
-  discountTotal
-}
-
 mutation ($input: UpdateItemQuantitiesInput!) {
   updateItemQuantities(input: $input) {
     cart {
-      ...cart
+      ...MyCart
     }
     items {
       key
@@ -158,6 +104,7 @@ mutation ($input: UpdateItemQuantitiesInput!) {
     }
   }
 }
+${CartFragment.fragments.MyCart}
 `;
 
 export default UPDATE_CART;

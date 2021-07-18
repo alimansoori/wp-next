@@ -1,4 +1,4 @@
-import { authConstants, customerConstants, viewerConstants } from "./constants";
+import { authConstants, cartConstants, customerConstants, viewerConstants } from "./constants";
 import client from "../../components/ApolloClient";
 import GET_CUSTOMER from "../../gql/queries/get-customer";
 import UPDATE_CUSTOMER from "../../gql/mutations/update-customer";
@@ -57,6 +57,7 @@ export const updateCustomer = (input) => {
 
         try {
             const {viewer} = (getState()).viewer
+            const {loading} = (getState()).customer
             let newInput = input
 
             if (viewer) {
@@ -78,15 +79,20 @@ export const updateCustomer = (input) => {
             })
 
             const { customer } = result.data.updateCustomer
-
+            
+            
             dispatch({
                 type: customerConstants.CUSTOMER_UPDATE_SUCCESS,
                 payload: {
                     customer
                 }
             })
-
+            
             dispatch(getCart())
+
+            if (!getState().customer.loading) {
+                
+            }
         } catch (error) {
             dispatch({
                 type: customerConstants.CUSTOMER_UPDATE_FAILURE,
@@ -164,6 +170,21 @@ export const setActiveAddress = (active = null) => {
                     active: active
                 }
             })
+
+            dispatch({
+                type: cartConstants.SHIPPING_METHOD_REQUEST
+            })
+
+            dispatch(
+                updateCustomer({
+                    billing: {
+                        ...addresses[active]
+                    },
+                    shipping: {
+                        ...addresses[active]
+                    }
+                })
+            )
 
             dispatch(saveAddressesAndFavorites())
 
