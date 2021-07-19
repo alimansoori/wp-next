@@ -1,138 +1,173 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { stringToNumber } from "../../functions";
-import UserAddressAddModal from "../userAddressModal/UserAddressAddModal";
-import ShippingBasket from "./ShippingBasket";
-import { getValueByKey } from "../../functions";
-import { setBillingInput } from "../../redux/actions/checout.actions";
-import ShippingDateTime from "./ShippingDateTime";
-import ApplyCoupon from "./ApplyCoupon";
-import WalletCredit from "./WalletCredit";
-import BeatLoader from 'react-spinners/BeatLoader'
-import { AlertNotifs } from "../alertNotifs/AlertNotifs";
 import { useRouter } from "next/router";
-import { RadioButton, RadioGroup } from "react-radio-buttons";
+import React, { useEffect } from "react";
+import { Alert } from "react-bootstrap";
+import { stringToNumber } from "../../functions";
 
 export default function PayDetails(props) {
+  const { data, order } = props
+
+  const router = useRouter()
+
+  const datePaid = (new Date(order?.datePaid)).toLocaleDateString('fa-IR', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  })
+
+  const RenderDateShipping = () => {
+    let text = ''
+    let shippingDate = order.metaData.find((meta) => (meta.key === 'shippingDate'))
+    let shippingHour = order.metaData.find((meta) => (meta.key === 'shippingHour'))
+
+    if (shippingDate) {
+      let parseDate = JSON.parse(shippingDate?.value)
+
+      text = text + parseDate?.shippingDate?.date + ' - ' + parseDate?.shippingDate?.day
+    }
+    if (shippingHour) {
+      text = text + ' -  ' + shippingHour?.value
+    }
+    return (
+      <>
+        {text}
+      </>
+    )
+  }
 
   return (
-
     <div className="pay-details-box">
-      <div className="pay-details-box__header">
+      {data?.data?.code === 100 && (
+        <Alert style={{ direction: 'rtl' }} variant={`success`}>
+          {`پرداخت شما با موفقیت انجام شد`}
+        </Alert>
+      )}
+      {data?.data?.code === 101 && (
+        <Alert style={{ direction: 'rtl' }} variant={`success`}>
+          {`پرداخت شما با موفقیت انجام شد. برای مشاهده جزئیات به حساب کاربری خود به بخش تاریخچه خرید مراجعه بفرمائید.`}
+        </Alert>
+      )}
+      {data?.errors?.code === -51 && (
+        <Alert style={{ direction: 'rtl' }} variant={`danger`}>
+          {`پرداخت ناموفق`}
+        </Alert>
+      )}
+      {data?.errors?.code === -50 && (
+        <Alert style={{ direction: 'rtl' }} variant={`danger`}>
+          {`مبلغ پرداخت شده با مقدار مبلغ در وریفای متفاوت است`}
+        </Alert>
+      )}
+      {data?.errors?.code === -52 && (
+        <Alert style={{ direction: 'rtl' }} variant={`danger`}>
+          {`خطای غیر منتظره با پشتیبانی تماس بگیرید`}
+        </Alert>
+      )}
+      {data?.errors?.code === -53 && (
+        <Alert style={{ direction: 'rtl' }} variant={`danger`}>
+          {`اتوریتی برای این مرچنت کد نیست`}
+        </Alert>
+      )}
+      {data?.errors?.code === -54 && (
+        <Alert style={{ direction: 'rtl' }} variant={`danger`}>
+          {`اتوریتی نامعتبر است`}
+        </Alert>
+      )}
+      {data?.errors?.code === -9 && (
+        <Alert style={{ direction: 'rtl' }} variant={`danger`}>
+          {`خطای اعتبار سنجی`}
+        </Alert>
+      )}
 
-        <div className="pay-details-box__header__content">
-          <h1 className="pay-details-box__title">:جمع سبد خرید</h1>
-          <div className="pay-details-box__header__content__price">
-            <h2 className="pay-details-box__header__content__price__text">
-              150/000 ت
-            </h2>
+      {order && (
+        <>
+          <div className="pay-details-box__top">
+            <div className="pay-details-box__top__row">
+              <div className="pay-details-box__top__row__box">
+                <div className="pay-details-box__top__row__box__title">
+                  <h3 className="pay-details-box__top__row__box__title__text">
+                    {`کد سفارش`}
+                  </h3>
+                </div>
+                <div className="pay-details-box__top__row__box__body">
+                  {order.orderNumber}
+                </div>
+              </div>
+              <div className="pay-details-box__top__row__box">
+                <div className="pay-details-box__top__row__box__title">
+                  <h3 className="pay-details-box__top__row__box__title__text">
+                    {`تاریخ ثبت سفارش`}
+                  </h3>
+                </div>
+                <div className="pay-details-box__top__row__box__body">
+                  {datePaid}
+                </div>
+              </div>
+            </div>
+            <div className="pay-details-box__top__row">
+              <div className="pay-details-box__top__row__box">
+                <div className="pay-details-box__top__row__box__title">
+                  <h3 className="pay-details-box__top__row__box__title__text">
+                    {`تحویل گیرنده`}
+                  </h3>
+                </div>
+                <div className="pay-details-box__top__row__box__body">
+                  {order.billing.firstName + ' ' + order.billing.lastName}
+                </div>
+              </div>
+              <div className="pay-details-box__top__row__box">
+                <div className="pay-details-box__top__row__box__title">
+                  <h3 className="pay-details-box__top__row__box__title__text">
+                    {`شماره تماس`}
+                  </h3>
+                </div>
+                <div className="pay-details-box__top__row__box__body">
+                  {order.billing.phone}
+                </div>
+              </div>
+            </div>
           </div>
+          <div className="pay-details-box__header">
 
-        </div>
-      </div>
-      <div className="pay-details-box__address">
-        <h1 className="pay-details-box__title">:ارسال به</h1>
-        <p className="pay-details-box__address__text">
-          ایران- تهران- خیابان- کوچه-پلاک
-        </p>
-      </div>
-      <div className="pay-details-box__transport">
-        <h1 className="pay-details-box__title">:روش ارسال</h1>
-        <div className="pay-details-box__transport__radio-btn-wrap">
-          <RadioGroup horizontal>
-            <RadioButton pointColor="white" rootColor="#000" value="سفارشی">
-              فوری
-            </RadioButton>
-            <RadioButton pointColor="red" rootColor="#000" value="پیشتاز">
-              پیشتاز
-            </RadioButton>
-            <RadioButton pointColor="red" rootColor="#000" value="فوری">
-              سفارشی
-            </RadioButton>
-            <RadioButton pointColor="red" rootColor="#000" value="پیک">
-              پیک
-            </RadioButton>
-          </RadioGroup>
-        </div>
-      </div>
-      <div className="pay-details-box__transport-time">
-        <h1 className="pay-details-box__title">:انتخاب زمان ارسال</h1>
-        <div className="pay-details-box__transport-time__day">
-          <div className="pay-details-box__transport-time__day__label">
-            <span>.1</span>
+            <div className="pay-details-box__header__content">
+              <h1 style={{ direction: 'rtl' }} className="pay-details-box__title">{`هزینه ارسال مرسوله:`}</h1>
+              <div className="pay-details-box__header__content__price">
+                <h2 className="pay-details-box__header__content__price__text">
+                  {stringToNumber(order.shippingTotal)} ت
+                </h2>
+              </div>
+            </div>
+            <div className="pay-details-box__header__content">
+              <h1 style={{ direction: 'rtl' }} className="pay-details-box__title">{`مبلغ کل:`}</h1>
+              <div className="pay-details-box__header__content__price">
+                <h2 className="pay-details-box__header__content__price__text">
+                  {stringToNumber(order.total)} ت
+                </h2>
+              </div>
+            </div>
           </div>
-          <div className="pay-details-box__transport-time__day__btn-wrap">
-            <RadioGroup horizontal>
-              <RadioButton pointColor="red" rootColor="#000" value="d1">
-                <div className="pay-details-box__transport-time__day__box">
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="d2">
-                <div className="pay-details-box__transport-time__day__box">
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="d3">
-                <div className="pay-details-box__transport-time__day__box">
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="d4">
-                <div className="pay-details-box__transport-time__day__box">
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    شنبه
-                  </div>
-                  <div className="pay-details-box__transport-time__day__box__text">
-                    1399/09/09
-                  </div>
-                </div>
-              </RadioButton>
-            </RadioGroup>
+          <div className="pay-details-box__address">
+            <h1 className="pay-details-box__title">:ارسال به</h1>
+            <p className="pay-details-box__address__text">
+              {'ایران' + '-' + order.billing.state + '-' + order.billing.city + '-' + order.billing.address1 + '-' + order.billing.address2}
+            </p>
           </div>
-        </div>
-        <div className="pay-details-box__transport-time__hour">
-          <div className="pay-details-box__transport-time__hour__label">
-            <span>.2</span>
+          <div className="pay-details-box__address">
+            <h1 className="pay-details-box__title">:روش ارسال</h1>
+            <p className="pay-details-box__address__text">
+              {order.shippingLines && (
+                <span>{order.shippingLines.nodes[0].methodTitle}</span>
+              )}
+            </p>
           </div>
-          <div className="pay-details-box__transport-time__hour__btn-wrap">
-            <RadioGroup horizontal>
-              <RadioButton pointColor="red" rootColor="#000" value="h1">
-                تایم
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="h2">
-                تایم
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="h3">
-                تایم
-              </RadioButton>
-              <RadioButton pointColor="red" rootColor="#000" value="h4">
-                تایم
-              </RadioButton>
-            </RadioGroup>
+          <div className="pay-details-box__address">
+            <h1 className="pay-details-box__title">:زمان تحویل مرسوله</h1>
+            <p className="pay-details-box__address__text">
+              <RenderDateShipping />
+            </p>
           </div>
-        </div>
-      </div>
+        </>
+      )}
       <div className="pay-details-box__purchase">
-        <h1 className="pay-details-box__title">:درگاه پرداخت</h1>
         <div className="pay-details-box__purchase__btn-wrap">
-          <button className="pay-details-box__purchase__btn" type="submit">
-            پرداخت
+          <button onClick={() => router.push('/')} className="pay-details-box__purchase__btn" type="submit">
+            {`رفتن به صفحه اصلی`}
           </button>
         </div>
       </div>

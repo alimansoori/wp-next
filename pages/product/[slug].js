@@ -51,7 +51,8 @@ export const getServerSideProps = async ({ query }) => {
             query: PRODUCT_BY_SLUG_QUERY,
             variables: { id },
             partialRefetch: true,
-            errorPolicy: 'all'
+            errorPolicy: 'all',
+            fetchPolicy: 'network-only'
         });
         productData = result.data.product
     } catch (e) {

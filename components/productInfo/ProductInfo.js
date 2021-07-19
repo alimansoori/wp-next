@@ -9,18 +9,18 @@ export default function ProductInfo({ product }) {
       <div className="p-info-box p-info-box--desktop">
         <img className="p-info-box__rect" src={`/image/Rectangle 54.png`} alt="rect" />
         <div className="p-info-box__tab-content">
-          <Tabs defaultActiveKey="خلاصه متن کتاب" id="uncontrolled-tab-example">
+          <Tabs defaultActiveKey="پاراگرافی از کتاب" id="uncontrolled-tab-example">
             <Tab eventKey="خلاصه متن کتاب" title="خلاصه متن کتاب">
               <div className="p-info-box__tab-content__box">
                 <h1 className="p-info-box__tab-content__box__title">
                   {`پاراگرافی از کتاب`}
                 </h1>
-                {/* <div
+                <div
                   dangerouslySetInnerHTML={{
-                    __html: product.extraFields.extraAbout,
+                    __html: product.shortDescription,
                   }}
                   className="p-info-box__tab-content__box__text"
-                /> */}
+                />
               </div>
             </Tab>
             <Tab eventKey="نظرات کاربران" title="نظرات کاربران">

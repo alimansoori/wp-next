@@ -1,7 +1,6 @@
-import { checkoutConstants, customerConstants } from "./constants";
+import { checkoutConstants, customerConstants, orderConstants } from "./constants";
 import client from "../../components/ApolloClient";
 import CHECKOUT from "../../gql/mutations/checkout";
-import { getCart } from "./cart.actions";
 import { v4 } from "uuid";
 
 export const checkout = (input) => {
@@ -10,17 +9,30 @@ export const checkout = (input) => {
             type: checkoutConstants.CHECKOUT_REQUEST
         })
 
-        console.log(input)
-
         try {
-            const {viewer} = (getState()).viewer
-            
+            const { customer: myCustomer, cart: myCart } = getState()
+
+            console.log('ddd', myCustomer.customer.billing);
+            let fillInput = {
+                ...input,
+                paymentMethod: "WC_ZPal",
+                billing: { ...myCustomer.customer.billing },
+                shipping: { ...myCustomer.customer.shipping },
+                clientMutationId: v4(),
+                shippingMethod: myCart.cart.chosenShippingMethods[0]
+            }
+
+            let metaData = myCustomer.customer.metaData.filter((meta) => (meta.key === 'shippingDate' || meta.key === 'shippingHour'))
+
+            if (metaData) {
+                fillInput.metaData = metaData
+            }
+
             const result = await client.mutate({
                 mutation: CHECKOUT,
                 variables: {
                     input: {
-                        ...input,
-                        clientMutationId: "jjjjj"
+                        ...fillInput
                     },
                 }
             })
@@ -33,13 +45,19 @@ export const checkout = (input) => {
                     input
                 }
             })
-
             dispatch({
-                type: customerConstants.SET_CUSTOMER,
+                type: orderConstants.SET_ORDER,
                 payload: {
-                    customer
+                    order
                 }
             })
+
+            // dispatch({
+            //     type: customerConstants.SET_CUSTOMER,
+            //     payload: {
+            //         customer
+            //     }
+            // })
 
             // dispatch(getCart())
         } catch (error) {

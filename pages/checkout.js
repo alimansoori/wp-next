@@ -13,6 +13,7 @@ import { v4 } from 'uuid';
 import client, { ssrClient } from '../components/ApolloClient';
 import nookies from 'nookies'
 import { stringToNumber, stringToNumber2 } from '../functions';
+import clientConfig from '../client-config';
 
 function Payment(props) {
   const { cart } = props
@@ -80,10 +81,10 @@ export const getServerSideProps = async (ctx) => {
       method: 'post',
       url: "https://api.zarinpal.com/pg/v4/payment/request.json",
       data: {
-        merchant_id: "f19c638c-3bcc-11e6-9fe2-005056a205be",
-        amount: stringToNumber2(cart?.total + 0),
-        // amount: 10000,
-        callback_url: "http://localhost:3000/payment",
+        merchant_id: clientConfig.merchantId,
+        // amount: stringToNumber2(cart?.total + 0),
+        amount: 10000,
+        callback_url: clientConfig.siteUrl + "payment",
         description: "داستانا"
       }
     })

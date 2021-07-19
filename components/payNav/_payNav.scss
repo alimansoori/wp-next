@@ -58,14 +58,14 @@
     }
 
     .pay-nav__content {
-      width: 80%;
+      // width: 80%;
       margin: 40px auto;
       @include flex-bet;
       justify-content:center;
       align-items: flex-start;
       .pay-nav__content__basket,
       .pay-nav__content__tabs {
-        width: 50%;
+        width: 60%;
       }
     }
   }

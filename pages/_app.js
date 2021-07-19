@@ -97,7 +97,7 @@ class App extends React.Component {
       <Provider store={store}>
         <Viewer viewer={viewer}>
           <BaseLayout>
-            <Component {...pageProps} />
+            <Component {...pageProps} viewer={viewer} />
           </BaseLayout>
         </Viewer>
       </Provider>

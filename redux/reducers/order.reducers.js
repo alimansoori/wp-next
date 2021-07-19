@@ -1,7 +1,8 @@
-import {orderConstants} from "../actions/constants";
+import { orderConstants } from "../actions/constants";
 
 const initState = {
     orders: [],
+    order: null,
     error: null,
     message: null,
     loading: false
@@ -29,6 +30,12 @@ export default (state = initState, action) => {
                 loading: false,
                 error: action.payload.error,
                 message: null
+            }
+            break;
+        case orderConstants.SET_ORDER:
+            state = {
+                ...state,
+                order: action.payload.order,
             }
             break;
     }

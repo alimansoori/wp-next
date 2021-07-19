@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import ClipLoader from "react-spinners/ClipLoader";
-import { initFavoritesProducts } from "../../redux/actions/viewer.actions";
+import { v4 } from "uuid";
+import { addToCart } from "../../redux/actions";
+import { initFavoritesProducts, removeFromFavorites } from "../../redux/actions/viewer.actions";
 
 export default function UserFavourites() {
   const { favorite } = useSelector(state => state.viewer)
@@ -13,6 +15,23 @@ export default function UserFavourites() {
       dispatch(initFavoritesProducts())
     }
   }, [favorites])
+
+  const handleDeleteFavorite = (dbId) => {
+    dispatch(
+      removeFromFavorites(dbId)
+    )
+  }
+  const handleAddToCart = (dbId) => {
+    dispatch(
+      addToCart({
+        clientMutationId: v4(),
+        productId: dbId,
+      })
+    )
+    dispatch(
+      removeFromFavorites(dbId)
+    )
+  }
 
   return (
     <div className="user-fav-box">
@@ -46,22 +65,23 @@ export default function UserFavourites() {
                           <h2 className="user-fav-box__list__item__box__desc__title">
                             {favorite.node.name}
                           </h2>
-                          <p className="user-fav-box__list__item__box__desc__text">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                            استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                            مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                            کاربردی می باشد.
-                          </p>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: favorite.node.description,
+                            }}
+                            className="user-fav-box__list__item__box__desc__text"
+                          />
                         </div>
                       </div>
                       <div className="user-fav-box__list__item__box__icon">
                         <img
+                          onClick={() => handleDeleteFavorite(favorite.node.databaseId)}
                           className="user-fav-box__list__item__box__icon__img"
                           src={`/image/icon/Path 82.png`}
                           alt="dlt"
                         />
                         <img
+                          onClick={() => handleAddToCart(favorite.node.databaseId)}
                           className="user-fav-box__list__item__box__icon__img"
                           src={`/image/icon/Send.png`}
                           alt="send"

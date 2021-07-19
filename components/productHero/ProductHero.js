@@ -1,7 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { v4 } from "uuid";
 import { stringToNumber } from "../../functions";
+import { addToCart } from "../../redux/actions";
+import { addToFavorites } from "../../redux/actions/viewer.actions";
 
 export default function ProductHero({ product }) {
+  const dispatch = useDispatch()
+
+  const productQryInput = {
+    clientMutationId: v4(), // Generate a unique id.
+    productId: product.databaseId,
+  };
 
   const RenderProductAttrs = ({ attrs }) => {
     const joinString = attrs.map(e => {
@@ -14,6 +24,16 @@ export default function ProductHero({ product }) {
     }).join(',')
 
     return joinString
+  }
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    dispatch(addToCart(productQryInput));
+  }
+  const handleAddToFavorites = () => {
+    dispatch(
+      addToFavorites(product.databaseId)
+    )
   }
 
   return (
@@ -41,7 +61,7 @@ export default function ProductHero({ product }) {
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4">
-                  <div className="p-hero-box__r-col__options__box">
+                  <div onClick={handleAddToFavorites} className="p-hero-box__r-col__options__box">
                     <img
                       className="p-hero-box__r-col__options__box__icon"
                       src={`/image/icon/save.svg`}
@@ -96,7 +116,7 @@ export default function ProductHero({ product }) {
               <div className="p-hero-box__l-col__purchase__price">
                 {stringToNumber(product.price) + ' ت'}
               </div>
-              <button className="p-hero-box__l-col__purchase__buy">
+              <button onClick={(e) => handleAddToCart(e)} className="p-hero-box__l-col__purchase__buy">
                 <div className="p-hero-box__l-col__purchase__buy__title">
                   افزودن به سبد خرید
                 </div>
@@ -116,35 +136,34 @@ export default function ProductHero({ product }) {
           <div className="p-hero-box__r-col__pic">
             <img
               className="p-hero-box__r-col__pic__img"
-              src={`/image/book picture.png`}
-              alt="book"
+              src={product.image ? product.image.sourceUrl : '/image/book picture.png'}
+              alt={product.image ? product.image.altText : null}
             />
           </div>
         </div>
         <div className="p-hero-box__l-col">
           <div className="p-hero-box__l-col__info">
-            <h1 className="p-hero-box__l-col__info_name">نام کتاب</h1>
-            <div className="p-hero-box__l-col__info__author">نویسنده</div>
-            <div className="p-hero-box__l-col__info__translator">مترجم</div>
-            <div className="p-hero-box__l-col__info__publisher">نشر</div>
-            <p className="p-hero-box__l-col__info__about">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-              استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
-              در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد
-              نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد،
-              کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان
-              جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای
-              طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان
-              فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری
-              موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد
-              نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل
-              دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-            </p>
+            <h1 className="p-hero-box__l-col__info_name">{product.name}</h1>
+            <div className="p-hero-box__l-col__info__author">
+              <RenderProductAttrs attrs={product.paWriters.nodes} />
+            </div>
+            <div className="p-hero-box__l-col__info__translator">
+              <RenderProductAttrs attrs={product.paTranslators.nodes} />
+            </div>
+            <div className="p-hero-box__l-col__info__publisher">
+              <RenderProductAttrs attrs={product.paPublishers.nodes} />
+            </div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: product.description,
+              }}
+              className="p-hero-box__l-col__info__about"
+            />
           </div>
           <div className="p-hero-box__l-col__purchase">
             <div className="p-hero-box__l-col__purchase-wrap">
               <div className="p-hero-box__l-col__purchase__price">29900 ت</div>
-              <button className="p-hero-box__l-col__purchase__buy">
+              <button onClick={(e) => handleAddToCart(e)} className="p-hero-box__l-col__purchase__buy">
                 <div className="p-hero-box__l-col__purchase__buy__title">
                   افزودن به سبد خرید
                 </div>
@@ -167,7 +186,7 @@ export default function ProductHero({ product }) {
               </div>
             </div>
             <div className="">
-              <div className="p-hero-box__r-col__options__box">
+              <div onClick={handleAddToFavorites} className="p-hero-box__r-col__options__box">
                 <img
                   className="p-hero-box__r-col__options__box__icon"
                   src={`/image/icon/save.svg`}

@@ -8,6 +8,7 @@ query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelat
         id
         databaseId
         name
+        description
         type
         slug
         image {

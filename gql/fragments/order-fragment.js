@@ -71,6 +71,13 @@ OrderFragment.fragments = {
         state
       }
       total
+      shippingTotal
+      shippingLines {
+        nodes {
+          total
+          methodTitle
+        }
+      }
       status
     }
   `,

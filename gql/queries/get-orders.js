@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 const GET_ORDERS = gql`
-  query GET_ORDERS {
-    orders {
+  query GET_ORDERS($where: RootQueryToOrderConnectionWhereArgs) {
+    orders(where: $where) {
       edges {
         cursor
         node {

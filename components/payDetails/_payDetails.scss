@@ -5,6 +5,40 @@
   background: #ffffff;
   border-radius: 16px;
   box-shadow: $mainBoxShadow;
+  .pay-details-box__top {
+    .pay-details-box__top__row {
+      @include flex-bet-r;
+      border-bottom: 1px solid #a7a7a7;
+      .pay-details-box__top__row__box {
+        width: 50%;
+        border-left: 1px solid #a7a7a7;
+        &:last-child {
+          border-left: none;
+        }
+
+        .pay-details-box__top__row__box__title {
+          margin: 10px;
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          .pay-details-box__top__row__box__title__text {
+            margin: 0 0 0 5px;
+            font-size: 16px;
+            color: #a7a7a7;
+          }
+        }
+
+        .pay-details-box__top__row__box__body {
+          display: flex;
+          justify-content: center;
+          padding: 20px 0;
+          margin: 10px;
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
   .pay-details-box__title {
     margin: 0;
     font-size: 18px;

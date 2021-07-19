@@ -11,6 +11,11 @@ export const getOrders = () => {
         try {
             const result = await client.query({
                 query: GET_ORDERS,
+                variables: {
+                    where: {
+                        statuses: 'COMPLETED'
+                    }
+                }
             })
 
             const { orders } = result.data
