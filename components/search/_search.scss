@@ -15,7 +15,7 @@
     align-items: center;
     z-index: 1001;
     .search-bar__box__input {
-      width: 85%;
+      width: 75%;
       text-align: right;
       border: none;
       padding: 5px;
@@ -104,6 +104,7 @@
           }
 
           .search-bar__suggestion__tab-content__box-wrap__price__num {
+            direction: rtl;
             font-size: 16px;
             font-weight: bold;
             color: $mainBlue;
@@ -113,6 +114,7 @@
 
       .search-bar__suggestion__tab-content-wrap {
         padding: 5px 0;
+        text-decoration: none;
         text-align: right;
         display: flex;
         flex-direction: row-reverse;

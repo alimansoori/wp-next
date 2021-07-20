@@ -55,37 +55,37 @@ class App extends React.Component {
 
     const cookies = nookies.get(ctx)
 
-    try {
-      const res = await ssrClient(ctx).mutate({
-        mutation: REFRESH_TOKEN,
-        variables: {
-          input: {
-            clientMutationId: v4(),
-            jwtRefreshToken: cookies['wp-next-token']
-          }
-        },
-        fetchPolicy: 'no-cache'
-      })
+    // try {
+    //   const res = await ssrClient(ctx).mutate({
+    //     mutation: REFRESH_TOKEN,
+    //     variables: {
+    //       input: {
+    //         clientMutationId: v4(),
+    //         jwtRefreshToken: cookies['wp-next-token']
+    //       }
+    //     },
+    //     fetchPolicy: 'no-cache'
+    //   })
 
-      refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
+    //   refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
 
-      const { authToken } = refreshJwtAuthToken
+    //   const { authToken } = refreshJwtAuthToken
 
-      nookies.set(ctx, 'wp-next-token', authToken)
-    } catch (e) {
-      refreshJwtAuthToken = null
-      nookies.destroy(ctx, 'wp-next-token')
-    }
+    //   nookies.set(ctx, 'wp-next-token', authToken)
+    // } catch (e) {
+    //   refreshJwtAuthToken = null
+    //   nookies.destroy(ctx, 'wp-next-token')
+    // }
 
-    try {
-      const result = await ssrClient(ctx).query({
-        query: GET_VIEWER
-      });
+    // try {
+    //   const result = await ssrClient(ctx).query({
+    //     query: GET_VIEWER
+    //   });
 
-      viewer = result?.data?.viewer
-    } catch (e) {
-      console.log(e)
-    }
+    //   viewer = result?.data?.viewer
+    // } catch (e) {
+    //   console.log(e)
+    // }
 
     return { pageProps, viewer }
   }

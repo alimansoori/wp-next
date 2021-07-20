@@ -33,6 +33,7 @@ query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelat
         }
         ... on SimpleProduct {
           price(format: RAW)
+          regularPrice(format: RAW)
         }
       }
     }

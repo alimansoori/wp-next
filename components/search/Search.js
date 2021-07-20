@@ -134,22 +134,33 @@ function Search() {
                         <RenderSearchResultItemImage img={product.image} />
                     </div>
                     <div className={`search-bar__suggestion__tab-content__box-wrap`}>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <strong>{product.name}</strong>
+                        <h2 className="search-bar__suggestion__tab-content__box-wrap__book">
+                            {product.name}
+                        </h2>
+                        <div className="search-bar__suggestion__tab-content__box-wrap__info">
+                            <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
+                                <SearchResultItemAttrs attrs={product.paWriters.nodes} />
+                            </div>
+                            <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
+                                |
+                            </div>
+                            <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
+                                <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
+                            </div>
+                            <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
+                                |
+                            </div>
+                            <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
+                                <SearchResultItemAttrs attrs={product.paPublishers.nodes} />
+                            </div>
                         </div>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <SearchResultItemAttrs attrs={product.paWriters.nodes} />
-                        </div>
-                    </div>
-                    <div className={`search-bar__suggestion__tab-content__box-wrap`}>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
-                        </div>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <SearchResultItemAttrs attrs={product.paPublishers.nodes} />
-                        </div>
-                        <div className={`search-bar__suggestion__tab-content__box`}>
-                            <small>{stringToNumber(product.price)}</small>
+                        <div className="search-bar__suggestion__tab-content__box-wrap__price">
+                            <div className="search-bar__suggestion__tab-content__box-wrap__price__num--discount">
+                                {(product.regularPrice !== product.price) ? stringToNumber(product.regularPrice) : null}
+                            </div>
+                            <div className="search-bar__suggestion__tab-content__box-wrap__price__num">
+                                {stringToNumber(product.price)} ت
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -168,7 +179,7 @@ function Search() {
             return nameRes
         }).join(',')
         return (
-            <small>{joinString}</small>
+            <small>{joinString ? joinString : '......'}</small>
         )
     }
 

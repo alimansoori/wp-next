@@ -73,16 +73,37 @@ const Home = (props) => {
           <div className={`landing-bottom__left`}>
             <div className={`landing-bottom__left__first`}>
               <div className={`landing-bottom__left__box`}>{`مشاوره`}</div>
-              <div className={`landing-bottom__left__box`}>
+              <Link
+                href='/shop/کودک-و-نوجوان'
+                shallow={true}
+              >
+                <a className='landing-bottom__left__box'>
                 {`کودک`} <br />{`و نوجـوان`}
-              </div>
+                </a>
+              </Link>
               <div className={`landing-bottom__left__box landing-bottom__left__box--disable`} >
                 {`هدیه`}
               </div>
             </div>
             <div className={`landing-bottom__left__second`}>
-              <div className={`landing-bottom__left__box`}>خرید کتاب</div>
-              <div className={`landing-bottom__left__box`}>زبان</div>
+              <Link
+                href='/shop'
+                shallow={true}
+              >
+                <a className='landing-bottom__left__box'>
+                  خرید کتاب
+                </a>
+              </Link>
+              <Link
+                href='/shop/زبان-انگلیسی'
+                shallow={true}
+              >
+                <a className='landing-bottom__left__box'>
+                  زبان
+                </a>
+              </Link>
+              {/* <div className={`landing-bottom__left__box`}>خرید کتاب</div> */}
+              {/* <div className={`landing-bottom__left__box`}></div> */}
               <div className={`landing-bottom__left__box landing-bottom__left__box--disable`}>
                 {`بلاگ`}
               </div>

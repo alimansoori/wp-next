@@ -277,8 +277,8 @@ export const getServerSideProps = async (ctx) => {
         url: "https://api.zarinpal.com/pg/v4/payment/verify.json",
         data: {
           merchant_id: clientConfig.merchantId,
-          // amount: stringToNumber2(cart?.total + 0),
-          amount: 10000,
+          amount: stringToNumber2(cart?.total + 0),
+          // amount: 10000,
           authority: query['Authority'],
         }
       })

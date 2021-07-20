@@ -49,7 +49,8 @@ export default function ProductItemBox({ product }) {
 
   return (
     <Link as={`/product/${product.slug}`}
-      href={`/product/[slug]`} >
+      href={`/product/[slug]`} 
+      shallow={true} >
       <a>
         <div className="p-sug-box__container__item">
           <div className="p-sug-box__container__item__book">

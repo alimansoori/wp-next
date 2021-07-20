@@ -38,6 +38,7 @@ query GET_PRODUCTS_FROM_PUBLISHERS($search: String, $first: Int) {
               }
               ... on SimpleProduct {
                 price(format: RAW)
+                regularPrice(format: RAW)
               }
             }
           }

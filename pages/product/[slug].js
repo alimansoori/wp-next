@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { withRouter } from 'next/router'
-import client from '../../components/ApolloClient'
+import client, { ssrClient } from '../../components/ApolloClient'
 import PRODUCT_BY_SLUG_QUERY from '../../gql/queries/product-by-slug';
 import BasePage from '../../components/BasePage';
 import ProductHeader from '../../components/productHeader/ProductHeader';
@@ -12,7 +12,7 @@ import ProductSidebar from '../../components/productSidebar/ProductSidebar';
 const Product = ({ productData, router }) => {
 
     useEffect(() => {
-        console.log(productData)
+        console.log('productData', productData)
     })
 
     return (
@@ -41,28 +41,42 @@ const Product = ({ productData, router }) => {
     )
 }
 
-export const getServerSideProps = async ({ query }) => {
+Product.getInitialProps = async (ctx) => {
     let productData = null;
-    const { slug } = query
-    const id = slug ? slug : query.id;
+    const { slug } = ctx.query
+    const id = slug ? slug : ctx.query.id;
+    console.log(id)
 
-    try {
-        const result = await client.query({
-            query: PRODUCT_BY_SLUG_QUERY,
-            variables: { id },
-            partialRefetch: true,
-            errorPolicy: 'all',
-            fetchPolicy: 'network-only'
-        });
-        productData = result.data.product
-    } catch (e) {
-        console.error(e)
+    if(typeof window === 'undefined') {
+        try {
+            const result = await ssrClient(ctx).query({
+                query: PRODUCT_BY_SLUG_QUERY,
+                variables: { id },
+                // partialRefetch: true,
+                // errorPolicy: 'all',
+                fetchPolicy: 'cache-and-network'
+            });
+            productData = result.data.product
+        } catch (e) {
+            console.error(e)
+        }
+    } else {
+        try {
+            const result = await client.query({
+                query: PRODUCT_BY_SLUG_QUERY,
+                variables: { id },
+                // partialRefetch: true,
+                // errorPolicy: 'all',
+                fetchPolicy: 'cache-first'
+            });
+            productData = result.data.product
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     return {
-        props: {
-            productData
-        }
+        productData
     }
 }
 
