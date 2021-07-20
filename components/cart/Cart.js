@@ -58,7 +58,7 @@ export default function Cart() {
                     </div>
                     <div className="cart__item__options">
                       <div className="cart__item__options__number">تعداد: {item.quantity}</div>
-                      <div onClick={(event) => handleRemoveProductClick(event, item.product.node.key, cart.contents.nodes)} className="cart__item__options__dlt">
+                      {/* <div onClick={(event) => handleRemoveProductClick(event, item.product.node.key, cart.contents.nodes)} className="cart__item__options__dlt"> */}
                         {/* <Spinner animation="border" role="status">
                           <span className="sr-only">Loading...</span>
                         </Spinner> */}
@@ -67,7 +67,7 @@ export default function Cart() {
                           src={`/image/icon/Path 82.png`}
                           alt="dlt"
                         /> */}
-                      </div>
+                      {/* </div> */}
                     </div>
                   </div>
                 </Dropdown.Item>

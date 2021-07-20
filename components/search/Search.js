@@ -8,7 +8,7 @@ import { searchConstants } from '../../redux/actions/constants'
 import { stringToNumber } from '../../functions'
 import Link from 'next/link'
 
-function Search() {
+export default function Search() {
     const dispatch = useDispatch()
     const router = useRouter()
     const searchValue = router.query.q
@@ -229,5 +229,3 @@ function Search() {
         </div>
     )
 }
-
-export default Search

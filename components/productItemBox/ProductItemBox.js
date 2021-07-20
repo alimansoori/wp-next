@@ -56,14 +56,14 @@ export default function ProductItemBox({ product }) {
 
   return (
     <Link as={`/product/${product.slug}`}
-      href={`/product/[slug]`} 
+      href={`/product/[slug]`}
       shallow={true} >
       <a>
         <div className="p-sug-box__container__item">
           <div className="p-sug-box__container__item__book">
             <RenderImageItem />
             <div className="p-sug-box__container__item__header__icon-wrap">
-              <div on onClick={(e) => handleAddToFavorites(e)} className="p-sug-box__container__item__header__icon">
+              <div onClick={(e) => handleAddToFavorites(e)} className="p-sug-box__container__item__header__icon">
                 {
                   loadingFavorite ? (
                     <BounceLoader
@@ -73,8 +73,8 @@ export default function ProductItemBox({ product }) {
                     />
                   ) : (
                     <img
-                    className="p-sug-box__container__item__header__icon__img"
-                    src={`/image/icon/Path 20.svg`}
+                      className="p-sug-box__container__item__header__icon__img"
+                      src={`/image/icon/Path 20.svg`}
                       alt="save"
                     />
                   )
