@@ -37,7 +37,7 @@ export default function ProductHeader() {
             <div className="product-header--res__box__top__logo">
               <img
                 className="product-header--res__box__top__logo__img"
-                src={`/image/logo-type2.png`}
+                src={`/image/logo-type2.svg`}
                 alt="logo"
               />
             </div>
