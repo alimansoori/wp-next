@@ -72,3 +72,13 @@
     }
   }
 }
+
+@media only screen and (min-width: 768px) {
+  .p-sug-box__container__item {
+    .p-sug-box__container__item__book {
+      .p-sug-box__container__item__book__pic {
+        height: 356px;
+      }
+    }
+  }
+}

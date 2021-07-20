@@ -10,7 +10,7 @@
     align-items: flex-start;
     .search__body__main {
       width: 70%;
-      margin: 0 10px 0 auto;
+      margin: 0 30px 0 auto;
       background: #ffffff;
       border-radius: 4px;
       // box-shadow: $mainBoxShadow;
@@ -34,6 +34,12 @@
             color: $mainBlue;
           }
         }
+
+        .search__body__main__header__filter {
+          .btn-primary {
+            background: $mainBlue;
+          }
+        }
       }
 
       .search__body__main__body {
@@ -45,7 +51,7 @@
       display: flex;
       justify-content: flex-end;
       .p-side-box-wrap {
-        width: 220px;
+        width: 250px;
       }
     }
   }

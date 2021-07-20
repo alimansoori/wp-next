@@ -99,7 +99,7 @@ const Shop = ({ productsData, catsData, catsData2, router }) => {
                     <div className="row" >
                         {
                             products.length ? products.map(product => (
-                                <div key={product.node.id + Math.random()} className="col-md-3">
+                                <div key={product.node.id + Math.random()} className="col-md-4">
                                     <ProductItemBox product={product.node} />
                                 </div>
                             )) : null

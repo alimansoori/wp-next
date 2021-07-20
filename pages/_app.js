@@ -7,7 +7,7 @@ import '../styles/main.scss'
 import { Provider, useDispatch } from 'react-redux'
 import store from '../redux/store'
 import nookies from 'nookies'
-import { ssrClient } from '../components/ApolloClient'
+import client, { ssrClient } from '../components/ApolloClient'
 import REFRESH_TOKEN from '../gql/mutations/refresh-token'
 import { v4 } from 'uuid'
 import GET_VIEWER from '../gql/queries/get-viewer'
@@ -55,37 +55,71 @@ class App extends React.Component {
 
     const cookies = nookies.get(ctx)
 
-    // try {
-    //   const res = await ssrClient(ctx).mutate({
-    //     mutation: REFRESH_TOKEN,
-    //     variables: {
-    //       input: {
-    //         clientMutationId: v4(),
-    //         jwtRefreshToken: cookies['wp-next-token']
-    //       }
-    //     },
-    //     fetchPolicy: 'no-cache'
-    //   })
-
-    //   refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
-
-    //   const { authToken } = refreshJwtAuthToken
-
-    //   nookies.set(ctx, 'wp-next-token', authToken)
-    // } catch (e) {
-    //   refreshJwtAuthToken = null
-    //   nookies.destroy(ctx, 'wp-next-token')
-    // }
-
-    // try {
-    //   const result = await ssrClient(ctx).query({
-    //     query: GET_VIEWER
-    //   });
-
-    //   viewer = result?.data?.viewer
-    // } catch (e) {
-    //   console.log(e)
-    // }
+    if (typeof window === 'undefined') {
+      try {
+        const res = await ssrClient(ctx).mutate({
+          mutation: REFRESH_TOKEN,
+          variables: {
+            input: {
+              clientMutationId: v4(),
+              jwtRefreshToken: cookies['wp-next-token']
+            }
+          },
+          fetchPolicy: 'no-cache'
+        })
+  
+        refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
+  
+        const { authToken } = refreshJwtAuthToken
+  
+        nookies.set(ctx, 'wp-next-token', authToken)
+      } catch (e) {
+        refreshJwtAuthToken = null
+        nookies.destroy(ctx, 'wp-next-token')
+      }
+  
+      try {
+        const result = await ssrClient(ctx).query({
+          query: GET_VIEWER
+        });
+  
+        viewer = result?.data?.viewer
+      } catch (e) {
+        console.log(e)
+      }
+    } else {
+      try {
+        const res = await client.mutate({
+          mutation: REFRESH_TOKEN,
+          variables: {
+            input: {
+              clientMutationId: v4(),
+              jwtRefreshToken: cookies['wp-next-token']
+            }
+          },
+          fetchPolicy: 'no-cache'
+        })
+  
+        refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
+  
+        const { authToken } = refreshJwtAuthToken
+  
+        nookies.set(ctx, 'wp-next-token', authToken)
+      } catch (e) {
+        refreshJwtAuthToken = null
+        nookies.destroy(ctx, 'wp-next-token')
+      }
+  
+      try {
+        const result = await client.query({
+          query: GET_VIEWER
+        });
+  
+        viewer = result?.data?.viewer
+      } catch (e) {
+        console.log(e)
+      }
+    }
 
     return { pageProps, viewer }
   }
