@@ -5,16 +5,23 @@ import { v4 } from "uuid";
 import { stringToNumber } from "../../functions";
 import { addToCart } from "../../redux/actions";
 import BounceLoader from 'react-spinners/BounceLoader'
+import { addToFavorites } from "../../redux/actions/viewer.actions";
 
 export default function ProductItemBox({ product }) {
 
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.cart)
+  const { loading: loadingFavorite } = useSelector(state => state.viewer.favorite)
 
   const productQryInput = {
     clientMutationId: v4(), // Generate a unique id.
     productId: product.databaseId,
   };
+
+  const handleAddToFavorites = (e) => {
+    e.preventDefault();
+    dispatch(addToFavorites(product.databaseId));
+  }
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -56,12 +63,22 @@ export default function ProductItemBox({ product }) {
           <div className="p-sug-box__container__item__book">
             <RenderImageItem />
             <div className="p-sug-box__container__item__header__icon-wrap">
-              <div className="p-sug-box__container__item__header__icon">
-                <img
-                  className="p-sug-box__container__item__header__icon__img"
-                  src={`/image/icon/save.svg`}
-                  alt="save"
-                />
+              <div on onClick={(e) => handleAddToFavorites(e)} className="p-sug-box__container__item__header__icon">
+                {
+                  loadingFavorite ? (
+                    <BounceLoader
+                      loading={true}
+                      size={25}
+                      color="#ffffff"
+                    />
+                  ) : (
+                    <img
+                    className="p-sug-box__container__item__header__icon__img"
+                    src={`/image/icon/Path 20.svg`}
+                      alt="save"
+                    />
+                  )
+                }
               </div>
               <div onClick={(e) => handleAddToCart(e)} className="p-sug-box__container__item__header__icon">
                 {
@@ -79,9 +96,6 @@ export default function ProductItemBox({ product }) {
                     />
                   )
                 }
-
-
-
               </div>
             </div>
           </div>

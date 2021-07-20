@@ -6,7 +6,7 @@ export default function (props) {
 
   return (
     <div className={authenticating ? "loading" : "hidden"}>
-      <img className="loading__logo" src={`/image/Group 2.png`} alt="logo" />
+      <img className="loading__logo" src={`/image/Scroll.svg`} alt="logo" />
     </div>
   )
 }

@@ -122,7 +122,7 @@ export default function ProductHero({ product }) {
                 </div>
                 <img
                   className="p-hero-box__l-col__purchase__buy__icon"
-                  src={`/image/icon/Group 119.png`}
+                  src={`/image/icon/Group 119.svg`}
                   alt="icon"
                 />
               </button>
@@ -169,7 +169,7 @@ export default function ProductHero({ product }) {
                 </div>
                 <img
                   className="p-hero-box__l-col__purchase__buy__icon"
-                  src={`/image/icon/Group 119.png`}
+                  src={`/image/icon/Group 119.svg`}
                   alt="icon"
                 />
               </button>

@@ -1,12 +1,34 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { Dropdown } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { randomString, stringToNumber } from '../../functions'
+import { Dropdown, Spinner } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { getUpdatedItems, randomString, removeItemFromCart, stringToNumber } from '../../functions'
+import BounceLoader from 'react-spinners/BounceLoader'
+import { updateCart } from "../../redux/actions";
+import { v4 } from "uuid";
 
 export default function Cart() {
 
+  const dispatch = useDispatch()
   const { cart, loading, error, clearCartProcessing, clearCartError } = useSelector(state => state.cart);
+
+  const handleRemoveProductClick = (vent, cartKey, products) => {
+    event.stopPropagation();
+
+    if (products.length) {
+
+      // By passing the newQty to 0 in updateCart Mutation, it will remove the item.
+      const newQty = 0;
+      const updatedItems = getUpdatedItems(products, newQty, cartKey);
+
+      dispatch(updateCart({
+        input: {
+          clientMutationId: v4(),
+          items: updatedItems
+        }
+      }));
+    }
+  }
 
   return (
     <div className="cart-btn-wrap">
@@ -36,12 +58,15 @@ export default function Cart() {
                     </div>
                     <div className="cart__item__options">
                       <div className="cart__item__options__number">تعداد: {item.quantity}</div>
-                      <div className="cart__item__options__dlt">
-                        <img
+                      <div onClick={(event) => handleRemoveProductClick(event, item.product.node.key, cart.contents.nodes)} className="cart__item__options__dlt">
+                        {/* <Spinner animation="border" role="status">
+                          <span className="sr-only">Loading...</span>
+                        </Spinner> */}
+                        {/* <img
                           className="cart__item__options__dlt__icon"
                           src={`/image/icon/Path 82.png`}
-                          alt="cart"
-                        />
+                          alt="dlt"
+                        /> */}
                       </div>
                     </div>
                   </div>

@@ -41,7 +41,7 @@ const Home = (props) => {
           <div className={`landing-hero__logo`}>
             <img
               className={`landing-hero__logo__img`}
-              src={`/image/LOGO TYPE 2.png`}
+              src={`/image/logo-type2.svg`}
               alt="landing"
             />
           </div>
@@ -52,7 +52,7 @@ const Home = (props) => {
             <img
               className={`landing-hero__to-bot__icon`}
               onClick={functionToBotHandler}
-              src={`/image/icon/Group 2.png`}
+              src={`/image/icon/Scroll.svg`}
               alt="toBot"
             />
           </div>

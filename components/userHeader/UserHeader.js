@@ -4,6 +4,7 @@ import Register from "../register/Register";
 import Search from "../search/Search";
 import Notification from "../notifications/Notifications";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 
 export default function UserHeader() {
@@ -18,10 +19,12 @@ export default function UserHeader() {
       </div>
       <div className="user-header__search">
         <Search />
-      </div>
-      <div className="user-header__logo">
-        <img className="user-header__logo__img" src={`/image/LOGO tiny.svg`} alt="logo" />
-      </div>
+      </div> 
+      <Link href={`/`} shallow={true} shallow={true} >
+          <a className="user-header__logo">
+            <img className="user-header__logo__img" src={`/image/LOGO tiny.svg`} alt="logo" />
+          </a>
+        </Link>
     </div>
   );
 }

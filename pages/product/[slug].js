@@ -45,7 +45,6 @@ Product.getInitialProps = async (ctx) => {
     let productData = null;
     const { slug } = ctx.query
     const id = slug ? slug : ctx.query.id;
-    console.log(id)
 
     if(typeof window === 'undefined') {
         try {
@@ -54,7 +53,7 @@ Product.getInitialProps = async (ctx) => {
                 variables: { id },
                 // partialRefetch: true,
                 // errorPolicy: 'all',
-                fetchPolicy: 'cache-and-network'
+                fetchPolicy: 'cache-first'
             });
             productData = result.data.product
         } catch (e) {

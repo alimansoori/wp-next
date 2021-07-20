@@ -27,7 +27,7 @@ export default function ProductHeader() {
         </div>
         <Link href={`/`} shallow={true} >
           <a className="product-header__logo">
-            <img className="product-header__logo__img" src={`/image/LOGO TYPE 2.png`} alt="logo" />
+            <img className="product-header__logo__img" src={`/image/logo-type2.svg`} alt="logo" />
           </a>
         </Link>
       </div>
@@ -37,7 +37,7 @@ export default function ProductHeader() {
             <div className="product-header--res__box__top__logo">
               <img
                 className="product-header--res__box__top__logo__img"
-                src={`/image/LOGO TYPE 2.png`}
+                src={`/image/logo-type2.png`}
                 alt="logo"
               />
             </div>

@@ -11,7 +11,7 @@ export default function ProductSuggestion({ products }) {
       <>
         {
           firstRelated.map(product => (
-            <div key={product.id} className="col-md-3">
+            <div key={product.id} className="col-md-4">
               <ProductItemBox product={product} />
             </div>
           ))

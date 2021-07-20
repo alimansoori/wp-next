@@ -10,12 +10,12 @@
         rgba(0, 0, 0, 0) 100%
       );
       .nav {
-        width: 70%;
+        width: 100%;
         margin: 0 auto;
         display: block;
         text-align: center;
-        overflow-x: scroll;
-        overflow-y: hidden;
+        // overflow-x: scroll;
+        // overflow-y: hidden;
         white-space: nowrap;
         &::-webkit-scrollbar {
           height: 10px;
