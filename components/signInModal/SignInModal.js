@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,11 +7,19 @@ import { loginUser } from '../../redux/actions/auth.actions'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 
 export default function SignInModal(props) {
+  const {onHide, redirectto} = props
   const router = useRouter()
   const dispatch = useDispatch()
   const { authenticate, loading, message, error } = useSelector(state => state.auth);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (authenticate && redirectto) {
+      onHide()
+      router.push(redirectto)
+    }
+  }, [authenticate])
 
   const userLogin = (e) => {
     e.preventDefault();

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import { stringToNumber } from "../../functions";
 import { addToCart } from "../../redux/actions";
@@ -7,6 +7,7 @@ import { addToFavorites } from "../../redux/actions/viewer.actions";
 
 export default function ProductHero({ product }) {
   const dispatch = useDispatch()
+  const { authenticate } = useSelector(state => state.auth);
 
   const productQryInput = {
     clientMutationId: v4(), // Generate a unique id.
@@ -61,13 +62,15 @@ export default function ProductHero({ product }) {
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4">
-                  <div onClick={handleAddToFavorites} className="p-hero-box__r-col__options__box">
+                  {authenticate && (
+                    <div onClick={handleAddToFavorites} className="p-hero-box__r-col__options__box">
                     <img
                       className="p-hero-box__r-col__options__box__icon"
                       src={`/image/icon/save.svg`}
                       alt="save"
                     />
                   </div>
+                  )}
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4">
                   <div className="p-hero-box__r-col__options__box">

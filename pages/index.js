@@ -72,15 +72,20 @@ const Home = (props) => {
         <div className={`landing-bottom-wrap`}>
           <div className={`landing-bottom__left`}>
             <div className={`landing-bottom__left__first`}>
-              <div className={`landing-bottom__left__box`}>{`مشاوره`}</div>
               <Link
-                href='/shop/کودک-و-نوجوان'
+                href='/shop/زبان-انگلیسی'
                 shallow={true}
               >
                 <a className='landing-bottom__left__box'>
-                {`کودک`} <br />{`و نوجـوان`}
+                  زبان
                 </a>
               </Link>
+              <Link href="http://dastanablog.ir/" passHref={true}>
+                <a className={`landing-bottom__left__box`}>
+                  {`بلاگ`}
+                </a>
+              </Link>
+
               <div className={`landing-bottom__left__box landing-bottom__left__box--disable`} >
                 {`هدیه`}
               </div>
@@ -94,19 +99,18 @@ const Home = (props) => {
                   خرید کتاب
                 </a>
               </Link>
+
+              {/* <div className={`landing-bottom__left__box`}>خرید کتاب</div> */}
+              {/* <div className={`landing-bottom__left__box`}></div> */}
               <Link
-                href='/shop/زبان-انگلیسی'
+                href='/shop/کودک-و-نوجوان'
                 shallow={true}
               >
                 <a className='landing-bottom__left__box'>
-                  زبان
+                  {`کودک`} <br />{`و نوجـوان`}
                 </a>
               </Link>
-              {/* <div className={`landing-bottom__left__box`}>خرید کتاب</div> */}
-              {/* <div className={`landing-bottom__left__box`}></div> */}
-              <div className={`landing-bottom__left__box landing-bottom__left__box--disable`}>
-                {`بلاگ`}
-              </div>
+              <div className={`landing-bottom__left__box landing-bottom__left__box--disable`}>{`مشاوره`}</div>
             </div>
           </div>
           <div className={`landing-bottom__right`}>

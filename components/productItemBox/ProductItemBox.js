@@ -12,6 +12,7 @@ export default function ProductItemBox({ product }) {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.cart)
   const { loading: loadingFavorite } = useSelector(state => state.viewer.favorite)
+  const { authenticate } = useSelector(state => state.auth);
 
   const productQryInput = {
     clientMutationId: v4(), // Generate a unique id.
@@ -63,23 +64,25 @@ export default function ProductItemBox({ product }) {
           <div className="p-sug-box__container__item__book">
             <RenderImageItem />
             <div className="p-sug-box__container__item__header__icon-wrap">
-              <div onClick={(e) => handleAddToFavorites(e)} className="p-sug-box__container__item__header__icon">
-                {
-                  loadingFavorite ? (
-                    <BounceLoader
-                      loading={true}
-                      size={25}
-                      color="#ffffff"
-                    />
-                  ) : (
-                    <img
-                      className="p-sug-box__container__item__header__icon__img"
-                      src={`/image/icon/Path 20.svg`}
-                      alt="save"
-                    />
-                  )
-                }
-              </div>
+              {authenticate && (
+                <div onClick={(e) => handleAddToFavorites(e)} className="p-sug-box__container__item__header__icon">
+                  {
+                    loadingFavorite ? (
+                      <BounceLoader
+                        loading={true}
+                        size={25}
+                        color="#ffffff"
+                      />
+                    ) : (
+                      <img
+                        className="p-sug-box__container__item__header__icon__img"
+                        src={`/image/icon/Path 20.svg`}
+                        alt="save"
+                      />
+                    )
+                  }
+                </div>
+              )}
               <div onClick={(e) => handleAddToCart(e)} className="p-sug-box__container__item__header__icon">
                 {
                   loading ? (

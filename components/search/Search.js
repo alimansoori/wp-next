@@ -11,10 +11,11 @@ import Link from 'next/link'
 export default function Search() {
     const dispatch = useDispatch()
     const router = useRouter()
+    const { asPath } = router
     const searchValue = router.query.q
     const { products, loading } = useSelector(state => state.search)
     const [value, setValue] = useState('')
-    const [activeKey, setActiveKey] = useState('topic')
+    const [activeKey, setActiveKey] = useState('all')
 
     // focus Search Input
     let searchInput = null
@@ -39,7 +40,7 @@ export default function Search() {
             //     });
             // }
 
-            dispatch(getProductsBySearchInput(value, 10, activeKey))
+            dispatch(getProductsBySearchInput(value, 10, activeKey, 'all'))
         } else didMount.current = true;
 
     }, [value, activeKey])
@@ -52,7 +53,10 @@ export default function Search() {
                         defaultActiveKey={activeKey} id="uncontrolled-tab-example"
                         onSelect={(selectedKey) => setActiveKey(selectedKey)}
                     >
-                        <Tab eventKey="topic" title="موضوع">
+                        <Tab eventKey="all" title="همه">
+                            {products.length ? <RenderResultItems /> : null}
+                        </Tab>
+                        <Tab eventKey="topic" title="عنوان">
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
                         <Tab eventKey="writer" title="نویسنده">
@@ -62,9 +66,6 @@ export default function Search() {
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
                         <Tab eventKey="publisher" title="ناشر">
-                            {products.length ? <RenderResultItems /> : null}
-                        </Tab>
-                        <Tab eventKey="all" title="همه">
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
                     </Tabs>
@@ -183,49 +184,115 @@ export default function Search() {
         )
     }
 
+    const handleSubmitSearch = (e) => {
+        e.preventDefault()
+        router.push({
+            pathname: "/shop/[[...slugs]]",
+            query: {
+                ...router.query,
+                q: value,
+            }
+        }, undefined, {shallow: true})
+    }
+
     return (
         <div className={`search-bar-wrap`}>
-            <Dropdown>
-                <Dropdown.Toggle as="div" id="dropdown-basic">
-                    <div className={`search-bar`}>
-                        <div className={`search-bar__box`}>
-                            {loading ? (
-                                <div className="search-data-loading">
-                                    <Spinner animation="border" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </Spinner>
+            {router.asPath == '/' ? (
+                <Dropdown show >
+                    <Dropdown.Toggle as="div" id="dropdown-basic">
+                        <form onSubmit={(e) => handleSubmitSearch(e)}>
+                            <div className={`search-bar`}>
+                                <div className={`search-bar__box`}>
+                                    {loading ? (
+                                        <div className="search-data-loading">
+                                            <Spinner animation="border" role="status">
+                                                <span className="sr-only">Loading...</span>
+                                            </Spinner>
+                                        </div>
+                                    ) : null}
+                                    {/* <form onSubmit={() => alert('jjj')}> */}
+                                    {/* <input
+                                    type="text"
+                                    ref={(input) => { searchInput = input }}
+                                    className={`search-bar__box__input`}
+                                    placeholder="جست و جو"
+                                    value={searchValue ? searchValue : value}
+                                    onChange={(e) => setValue(e.target.value)}
+                                /> */}
+                                    <DelayInput
+                                        minLength={2}
+                                        delayTimeout={500}
+                                        type="text"
+                                        inputRef={(input) => { searchInput = input }}
+                                        className={`search-bar__box__input`}
+                                        placeholder="جست و جو"
+                                        value={searchValue ? searchValue : value}
+                                        onChange={(e) => setValue(e.target.value)}
+                                    />
+                                    {/* </form> */}
+
+                                    <button className={`search-bar__box__icon`}>
+                                        <img
+                                            className={`search-bar__box__icon__img`}
+                                            src={`/image/icon/Magnifying glass.svg`}
+                                            alt="search"
+                                        />
+                                    </button>
                                 </div>
-                            ) : null}
-                            {/* <input
-                                type="text"
-                                ref={(input) => { searchInput = input }}
-                                className={`search-bar__box__input`}
-                                placeholder="جست و جو"
-                                value={searchValue ? searchValue : value}
-                                onChange={(e) => setValue(e.target.value)}
-                            /> */}
-                            <DelayInput
-                                minLength={2}
-                                delayTimeout={500}
-                                type="text"
-                                inputRef={(input) => { searchInput = input }}
-                                className={`search-bar__box__input`}
-                                placeholder="جست و جو"
-                                value={searchValue ? searchValue : value}
-                                onChange={(e) => setValue(e.target.value)}
-                            />
-                            <button className={`search-bar__box__icon`}>
-                                <img
-                                    className={`search-bar__box__icon__img`}
-                                    src={`/image/icon/Magnifying glass.svg`}
-                                    alt="search"
-                                />
-                            </button>
-                        </div>
-                    </div>
-                </Dropdown.Toggle>
-                <SearchResultBox />
-            </Dropdown>
+                            </div>
+                        </form>
+                    </Dropdown.Toggle>
+                    <SearchResultBox />
+                </Dropdown>
+            ) : (
+                <Dropdown >
+                    <Dropdown.Toggle as="div" id="dropdown-basic">
+                        <form onSubmit={handleSubmitSearch}>
+                            <div className={`search-bar`}>
+                                <div className={`search-bar__box`}>
+                                    {loading ? (
+                                        <div className="search-data-loading">
+                                            <Spinner animation="border" role="status">
+                                                <span className="sr-only">Loading...</span>
+                                            </Spinner>
+                                        </div>
+                                    ) : null}
+                                    {/* <form onSubmit={() => alert('jjj')}> */}
+                                    {/* <input
+                                    type="text"
+                                    ref={(input) => { searchInput = input }}
+                                    className={`search-bar__box__input`}
+                                    placeholder="جست و جو"
+                                    value={searchValue ? searchValue : value}
+                                    onChange={(e) => setValue(e.target.value)}
+                                /> */}
+                                    <DelayInput
+                                        minLength={2}
+                                        delayTimeout={500}
+                                        type="text"
+                                        inputRef={(input) => { searchInput = input }}
+                                        className={`search-bar__box__input`}
+                                        placeholder="جست و جو"
+                                        value={searchValue ? searchValue : value}
+                                        onChange={(e) => setValue(e.target.value)}
+                                    />
+                                    {/* </form> */}
+
+                                    <button className={`search-bar__box__icon`}>
+                                        <img
+                                            className={`search-bar__box__icon__img`}
+                                            src={`/image/icon/Magnifying glass.svg`}
+                                            alt="search"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </Dropdown.Toggle>
+                    <SearchResultBox />
+                </Dropdown>
+            )}
+
         </div>
     )
 }

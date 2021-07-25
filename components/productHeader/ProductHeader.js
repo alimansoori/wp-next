@@ -7,6 +7,7 @@ import Search from "../search/Search";
 import Credit from "../credit/Credit";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import ProfileHeader from "../profileHeader/ProfileHeader";
 
 
 export default function ProductHeader() {
@@ -19,6 +20,7 @@ export default function ProductHeader() {
       <div className="product-header-wrap">
         <div className="product-header__btns-wrap">
           <div className="product-header__btns">
+            {authenticate && <ProfileHeader />}
             {authenticate ? <SignOut /> : <Register />}
             {cart.contents.nodes.length ? <Cart /> : null}
             {/* <LightMode /> */}
@@ -42,6 +44,7 @@ export default function ProductHeader() {
               />
             </div>
             <div className="product-header--res__box__top__btns">
+              {authenticate && <ProfileHeader />}
               {authenticate ? <SignOut /> : <Register />}
               {cart.contents.nodes.length ? <Cart /> : null}
             </div>
