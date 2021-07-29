@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUpdatedItems, stringToNumber } from "../../functions";
 import { v4 } from "uuid";
 import { updateCart } from '../../redux/actions/cart.actions'
-import BounceLoader from 'react-spinners/BounceLoader'
+import PN from 'persian-number'
 
 export default function UserCartourites() {
   const dispatch = useDispatch()
@@ -153,7 +153,7 @@ export default function UserCartourites() {
             </div>
             <div className="user-cart-box__list__item__box__price">
               <strong className="user-cart-box__list__item__box__price__text">
-                {`ت ` + stringToNumber(item.total)}
+                {PN.convertEnToPe(stringToNumber(item.total))}
               </strong>
             </div>
           </div>

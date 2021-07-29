@@ -4,6 +4,7 @@ import { v4 } from "uuid";
 import { stringToNumber } from "../../functions";
 import { addToCart } from "../../redux/actions";
 import { addToFavorites } from "../../redux/actions/viewer.actions";
+import PN from 'persian-number'
 
 export default function ProductHero({ product }) {
   const dispatch = useDispatch()
@@ -117,7 +118,7 @@ export default function ProductHero({ product }) {
           <div className="p-hero-box__l-col__purchase">
             <div className="p-hero-box__l-col__purchase-wrap">
               <div className="p-hero-box__l-col__purchase__price">
-                {stringToNumber(product.price) + ' ت'}
+                {PN.convertEnToPe(stringToNumber(product.price))}
               </div>
               <button onClick={(e) => handleAddToCart(e)} className="p-hero-box__l-col__purchase__buy">
                 <div className="p-hero-box__l-col__purchase__buy__title">

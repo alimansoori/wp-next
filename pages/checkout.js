@@ -71,7 +71,7 @@ export const getServerSideProps = async (ctx) => {
     });
 
     cart = result?.data?.cart
-    console.log(stringToNumber2(cart?.total + 0))
+    // console.log(stringToNumber2(cart?.total + 0))
   } catch (e) {
     console.log(e)
   }

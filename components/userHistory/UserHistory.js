@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import { stringToNumber } from "../../functions";
 import { getOrders } from "../../redux/actions/order.actions";
+import PN from 'persian-number'
 
 export default function UserHistory() {
 
@@ -54,7 +55,7 @@ export default function UserHistory() {
                           </div>
                           <div className="user-history-box__list__item__box__options">
                             <div className="user-history-box__list__item__box__options__price">
-                              <div>قیمت کل سفارش: {stringToNumber(order.node.total)}</div>
+                              <div>قیمت کل سفارش: {PN.convertEnToPe(stringToNumber(order.node.total))}</div>
                             </div>
                             <div className="user-history-box__list__item__box__options__factor">
                               <div>مشاهده فاکتور</div>

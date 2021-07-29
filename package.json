@@ -23,6 +23,7 @@
     "next": "^11.0.1",
     "next-routes": "^1.4.2",
     "nookies": "^2.5.2",
+    "persian-number": "^1.5.1",
     "react": "^17.0.2",
     "react-apollo": "^3.0.1",
     "react-bootstrap": "^1.5.2",

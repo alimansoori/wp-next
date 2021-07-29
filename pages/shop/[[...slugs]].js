@@ -1,25 +1,24 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
+import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
 import {useRouter, withRouter} from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import ProductHeader from '../../components/productHeader/ProductHeader'
 import ProductItemBox from '../../components/productItemBox/ProductItemBox'
 import ProductSidebar from '../../components/productSidebar/ProductSidebar'
-import { Dropdown } from 'react-bootstrap'
+import {Dropdown} from 'react-bootstrap'
 import GET_PRODUCTS from '../../gql/queries/get-products'
 import GET_CATS from '../../gql/queries/get-categories'
 import client, {ssrClient} from '../../components/ApolloClient'
-import { categoryConstants, productConstants } from '../../redux/actions/constants'
+import {categoryConstants, productConstants} from '../../redux/actions/constants'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { getProducts } from '../../redux/actions/product.actions'
-import PRODUCT_BY_SLUG_QUERY from "../../gql/queries/product-by-slug";
+import {getProducts} from '../../redux/actions/product.actions'
 
-const Shop = ({ productsData, catsData, catsData2 }) => {
+const Shop = ({productsData, catsData, catsData2}) => {
     const dispatch = useDispatch()
     const router = useRouter()
-    const { slugs, q, sortby } = router.query
-    const { products, loading, pageInfo } = useSelector(state => state.product)
-    const { currentCategory } = useSelector(state => state.category)
+    const {slugs, q, sortby} = router.query
+    const {products, loading, pageInfo} = useSelector(state => state.product)
+    const {currentCategory} = useSelector(state => state.category)
     const [size, setSize] = useState(20)
     const [offset, setOffset] = useState(null)
     const [selectedKeySortBy, setSelectedKeySortBy] = useState(sortby)
@@ -27,16 +26,16 @@ const Shop = ({ productsData, catsData, catsData2 }) => {
         {
             key: 1,
             value: 'جدیدترین'
-        },{
+        }, {
             key: 2,
             value: 'قدیمی ترین'
-        },{
+        }, {
             key: 3,
             value: 'گران ترین'
-        },{
+        }, {
             key: 4,
             value: 'ارزان ترین'
-        },{
+        }, {
             key: 5,
             value: 'محبوب ترین'
         }
@@ -58,19 +57,24 @@ const Shop = ({ productsData, catsData, catsData2 }) => {
         });
     }, [])
 
-    const didMount = useRef(false);
+    // const didMount = useRef(false);
     useEffect(() => {
-        if (didMount.current) {
-            if (selectedKeySortBy !== undefined) {
-                router.push({
-                    pathname: "/shop/[[...slugs]]",
-                    query: {
-                        ...router.query,
-                        sortby: selectedKeySortBy,
-                    }
-                }, undefined, { shallow: true });
-            }
+        // if (didMount.current) {
+        if (selectedKeySortBy !== undefined) {
+            router.push({
+                pathname: "/shop/[[...slugs]]",
+                query: {
+                    ...router.query,
+                    sortby: selectedKeySortBy,
+                }
+            }, undefined, {shallow: true});
+        }
+        // } else didMount.current = true;
+    }, [selectedKeySortBy]);
 
+    const didMount2 = useRef(false);
+    useEffect(() => {
+        if (didMount2.current) {
             dispatch(getProducts(
                 q,
                 slugs,
@@ -78,8 +82,8 @@ const Shop = ({ productsData, catsData, catsData2 }) => {
                 size,
                 offset,
             ))
-        } else didMount.current = true;;
-    }, [selectedKeySortBy, slugs, q, offset, sortby]);
+        } else didMount2.current = true;
+    }, [slugs, q, offset, sortby]);
 
 
     const Loader = () => {
@@ -99,14 +103,14 @@ const Shop = ({ productsData, catsData, catsData2 }) => {
                 dataLength={products.length}
                 next={() => setOffset(offset + 20)}
                 hasMore={pageInfo ? pageInfo.offsetPagination.hasMore : true}
-                loader={<Loader />}
+                loader={<Loader/>}
             >
-                <div className="container-fluid" >
-                    <div className="row" >
+                <div className="container-fluid">
+                    <div className="row">
                         {
                             products.length ? products.map(product => (
                                 <div key={product.node.id + Math.random()} className="col-md-4">
-                                    <ProductItemBox product={product.node} />
+                                    <ProductItemBox product={product.node}/>
                                 </div>
                             )) : null
                         }
@@ -118,7 +122,7 @@ const Shop = ({ productsData, catsData, catsData2 }) => {
 
     return (
         <div className="search-wrap">
-            <ProductHeader />
+            <ProductHeader/>
             <div className="search__body">
                 <div className="search__body__main">
                     <div className="p-hero-box-wrap-fade"></div>
@@ -136,11 +140,11 @@ const Shop = ({ productsData, catsData, catsData2 }) => {
                         </div>
                         <div className="search__body__main__header__filter">
                             <Dropdown onSelect={(selectedKey) => setSelectedKeySortBy(selectedKey)}>
-                                <Dropdown.Toggle title={'hhh'} id="dropdown-basic">
+                                <Dropdown.Toggle id="dropdown-basic">
                                     {sortby ? (sortData.find(sort => sort.key == sortby)).value : 'فیلترها'}
                                 </Dropdown.Toggle>
 
-                                <Dropdown.Menu >
+                                <Dropdown.Menu>
                                     {
                                         sortData.map((sort, index) => (
                                             <Dropdown.Item key={index} eventKey={sort.key}>{sort.value}</Dropdown.Item>
@@ -150,12 +154,12 @@ const Shop = ({ productsData, catsData, catsData2 }) => {
                             </Dropdown>
                         </div>
                     </div>
-                    <div className="search__body__main__body" >
-                        {loading ? (<Loader />) : <RenderInfiniteScroll />}
+                    <div className="search__body__main__body">
+                        {loading ? (<Loader/>) : <RenderInfiniteScroll/>}
                     </div>
                 </div>
                 <div className="search__body__side">
-                    <ProductSidebar slugs={slugs} />
+                    <ProductSidebar slugs={slugs}/>
                 </div>
             </div>
         </div>
@@ -166,7 +170,7 @@ Shop.getInitialProps = async (ctx) => {
     let productsData = [];
     let catsData = [];
     let catsData2 = [];
-    const { slugs, q, sortby } = ctx.query
+    const {slugs, q, sortby} = ctx.query
     const cats = slugs ? slugs : ctx.query.id;
     const sortNum = sortby ? sortby : "1";
 

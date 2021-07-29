@@ -6,6 +6,7 @@ import { stringToNumber } from "../../functions";
 import { addToCart } from "../../redux/actions";
 import BounceLoader from 'react-spinners/BounceLoader'
 import { addToFavorites } from "../../redux/actions/viewer.actions";
+import PN from 'persian-number'
 
 export default function ProductItemBox({ product }) {
 
@@ -115,7 +116,7 @@ export default function ProductItemBox({ product }) {
               <RenderProductAttrs attrs={product.paPublishers.nodes} />
             </div>
             <strong className="p-sug-box__container__item__details__price">
-              {stringToNumber(product.price) + 'ت'}
+              {PN.convertEnToPe(stringToNumber(product.price))}
             </strong>
           </div>
         </div>

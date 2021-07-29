@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import { stringToNumber } from "../../functions";
+import PN from 'persian-number'
 
 export default function PayDetails(props) {
   const { data, order } = props
@@ -129,7 +130,7 @@ export default function PayDetails(props) {
               <h1 style={{ direction: 'rtl' }} className="pay-details-box__title">{`هزینه ارسال مرسوله:`}</h1>
               <div className="pay-details-box__header__content__price">
                 <h2 className="pay-details-box__header__content__price__text">
-                  {stringToNumber(order.shippingTotal)} ت
+                  {PN.convertEnToPe(stringToNumber(order.shippingTotal))}
                 </h2>
               </div>
             </div>
@@ -137,7 +138,7 @@ export default function PayDetails(props) {
               <h1 style={{ direction: 'rtl' }} className="pay-details-box__title">{`مبلغ کل:`}</h1>
               <div className="pay-details-box__header__content__price">
                 <h2 className="pay-details-box__header__content__price__text">
-                  {stringToNumber(order.total)} ت
+                  {PN.convertEnToPe(stringToNumber(order.total))}
                 </h2>
               </div>
             </div>

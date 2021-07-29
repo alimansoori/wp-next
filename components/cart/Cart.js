@@ -6,6 +6,7 @@ import { updateCart } from "../../redux/actions";
 import { v4 } from "uuid";
 import { useRouter } from "next/router";
 import SignInModal from '../signInModal/SignInModal';
+import PN from 'persian-number'
 
 export default function Cart() {
 
@@ -91,7 +92,7 @@ export default function Cart() {
                     </div>
                     <div className="cart__item__details">
                       <div className="cart__item__details__name">{item.product.node.name}</div>
-                      <div className="cart__item__details__price">{`ت ${stringToNumber(item.product.node.price)}`}</div>
+                      <div className="cart__item__details__price">{`${PN.convertEnToPe(stringToNumber(item.product.node.price))}`}</div>
                     </div>
                     <div className="cart__item__options">
                       <div className="cart__item__options__number">تعداد: {item.quantity}</div>
@@ -121,7 +122,7 @@ export default function Cart() {
           </div>
 
           <div className="cart__purchase">
-            <div className="cart__purchase__price">مبلغ کل: {stringToNumber(cart.total)} ت</div>
+            <div className="cart__purchase__price">مبلغ کل: {PN.convertEnToPe(stringToNumber(cart.total))}</div>
             <button onClick={handlePayCart} className="cart__purchase__buy">ادامه فرایند خرید</button>
           </div>
         </Dropdown.Menu>

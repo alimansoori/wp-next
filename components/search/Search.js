@@ -7,6 +7,7 @@ import { getProductsBySearchInput } from '../../redux/actions/search.actions'
 import { searchConstants } from '../../redux/actions/constants'
 import { stringToNumber } from '../../functions'
 import Link from 'next/link'
+import PN from 'persian-number'
 
 export default function Search() {
     const dispatch = useDispatch()
@@ -157,10 +158,10 @@ export default function Search() {
                         </div>
                         <div className="search-bar__suggestion__tab-content__box-wrap__price">
                             <div className="search-bar__suggestion__tab-content__box-wrap__price__num--discount">
-                                {(product.regularPrice !== product.price) ? stringToNumber(product.regularPrice) : null}
+                                {(product.regularPrice && product.regularPrice !== product.price) ? PN.convertEnToPe(stringToNumber(product.regularPrice)) : null}
                             </div>
                             <div className="search-bar__suggestion__tab-content__box-wrap__price__num">
-                                {stringToNumber(product.price)} ت
+                                {PN.convertEnToPe(stringToNumber(product.price))}
                             </div>
                         </div>
                     </div>
