@@ -1,7 +1,7 @@
-import { categoryConstants } from "./constants";
+import {categoryConstants} from "./constants";
 import SEARCH_CATEGORIES from '../../gql/queries/search-categories';
 import client from "../../components/ApolloClient";
-import { copy } from "../../functions";
+import {copy} from "../../functions";
 
 // function toTree(list, parent = 0) {
 //     var map = {}, node, roots = [], i, newList = {};
@@ -116,7 +116,7 @@ export const searchCategories = (filterQueries = {}) => {
         });
 
         try {
-            const { searchInput } = getState().category;
+            const {searchInput} = getState().category;
             const result = await client.query({
                 query: SEARCH_CATEGORIES,
                 variables: {
@@ -124,7 +124,7 @@ export const searchCategories = (filterQueries = {}) => {
                 }
             });
 
-            const { productCategories } = result.data;
+            const {productCategories} = result.data;
 
             dispatch({
                 type: categoryConstants.SEARCH_CATEGORY_SUCCESS,
@@ -148,10 +148,25 @@ export const catFilters = (slugs, categories) => {
 
         if (!categories.length) return false
 
+        let currentCategory = null
+
+        if (slugs === undefined) {
+            currentCategory = {
+                node: {
+                    title: 'همه کتاب ها'
+        }
+            }
+        } else if (slugs.length) {
+            currentCategory = categories.find(cat => {
+                return cat.node.slug === slugs[slugs.length - 1]
+            })
+        }
+
         dispatch({
             type: categoryConstants.CATEGORY_FILTERS_BY_SLUGS,
             payload: {
                 categoriesFilter: renderSlugs(slugs, categories),
+                currentCategory
             }
         });
     }
@@ -184,7 +199,9 @@ const recurciveCat = (list, slugs = [], activeCatId = null) => {
             .forEach(function (cat) {
                 if (!slugs.length && !cat.node.parent) {
                     var cd = cat;
-                    cd.child = list.filter(function (cat2) { return (cat2.node.parent ? cat2.node.parent.node.databaseId : 0) === cd.node.databaseId });
+                    cd.child = list.filter(function (cat2) {
+                        return (cat2.node.parent ? cat2.node.parent.node.databaseId : 0) === cd.node.databaseId
+                    });
                     return node.children.push(cd);
                 }
                 if (slugs.length > 0 && cat.node.parent && decodeURIComponent(cat.node.parent.node.slug) === slugs[slugs.length - 1]) {
@@ -199,7 +216,9 @@ const recurciveCat = (list, slugs = [], activeCatId = null) => {
                     return node.children.push(cd);
                 } else if (slugs.length > 0 && cat.node.parent && decodeURIComponent(cat.node.slug) === slugs[slugs.length - 1]) {
                     var cd = cat;
-                    cd.child = list.filter(function (cat2) { return (cat2.node.parent ? cat2.node.parent.node.databaseId : 0) === cd.node.databaseId });
+                    cd.child = list.filter(function (cat2) {
+                        return (cat2.node.parent ? cat2.node.parent.node.databaseId : 0) === cd.node.databaseId
+                    });
                     if (decodeURIComponent(cd.node.slug) === slugs[slugs.length - 1] && !cd.child.length) {
                         cd.active = true;
 
@@ -211,7 +230,8 @@ const recurciveCat = (list, slugs = [], activeCatId = null) => {
                     }
                 }
             })
-    } catch (e) { }
+    } catch (e) {
+    }
 
 
     return node;
@@ -262,8 +282,7 @@ const renderSlugs = (slugs, categories) => {
             catFind['children'] !== undefined &&
             typeof catFind['children'] === 'object' &&
             catFind.children.length
-        ) 
-        {
+        ) {
             node.push(catFind)
         } else {
             activeId = catFind.node.databaseId

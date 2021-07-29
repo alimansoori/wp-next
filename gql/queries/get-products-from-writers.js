@@ -18,7 +18,7 @@ query GET_PRODUCTS_FROM_WRITERS($search: String, $first: Int) {
               slug
               image {
                 altText
-                sourceUrl(size: SHOP_CATALOG)
+                sourceUrl(size: MEDIUM)
                 title
               }
               paPublishers {

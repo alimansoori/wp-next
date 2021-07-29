@@ -13,7 +13,7 @@ query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelat
         slug
         image {
           altText
-          sourceUrl(size: MEDIUM)
+          sourceUrl
           title
         }
         paPublishers {

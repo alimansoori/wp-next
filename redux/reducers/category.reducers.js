@@ -8,7 +8,7 @@ const initState = {
         node: []
     },
     parentId: 0,
-    currentCategory: {},
+    currentCategory: null,
     error: null,
     loading: false,
     searchInput: {
@@ -41,7 +41,8 @@ export default (state = initState, action) => {
         case categoryConstants.CATEGORY_FILTERS_BY_SLUGS:
             state = {
                 ...state,
-                categoriesFilter: action.payload.categoriesFilter
+                categoriesFilter: action.payload.categoriesFilter,
+                currentCategory: action.payload.currentCategory
             }
             break;
         case categoryConstants.CATEGORIES_INIT:

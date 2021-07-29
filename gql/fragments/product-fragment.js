@@ -14,7 +14,7 @@ ProductFragment.fragments = {
       slug
       image {
         altText
-        sourceUrl(size: SHOP_CATALOG)
+        sourceUrl(size: MEDIUM)
         title
       }
       paPublishers {

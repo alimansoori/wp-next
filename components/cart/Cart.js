@@ -50,10 +50,14 @@ export default function Cart() {
     setModalShow(false)
   }
 
+  const handleOnToggle = (isOpen) => {
+    setDropDownShow(isOpen)
+  }
+
   return (
     <div className="cart-btn-wrap">
-      <Dropdown show={dropDownShow} >
-        <Dropdown.Toggle onClick={() => setDropDownShow(!dropDownShow)} as="div" id="dropdown-cart">
+      <Dropdown show={dropDownShow} onToggle={handleOnToggle} >
+        <Dropdown.Toggle /*onClick={() => setDropDownShow(!dropDownShow)}*/ as="div" id="dropdown-cart">
           <button className="cart__btn">
             <img className="cart__btn__icon" src={`/image/icon/Basket.svg`} alt="cart" />
             <div className="cart__btn__title">سبد خرید</div>

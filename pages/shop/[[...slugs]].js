@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
-import { withRouter } from 'next/router'
+import {useRouter, withRouter} from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import ProductHeader from '../../components/productHeader/ProductHeader'
@@ -8,23 +8,41 @@ import ProductSidebar from '../../components/productSidebar/ProductSidebar'
 import { Dropdown } from 'react-bootstrap'
 import GET_PRODUCTS from '../../gql/queries/get-products'
 import GET_CATS from '../../gql/queries/get-categories'
-import client from '../../components/ApolloClient'
+import client, {ssrClient} from '../../components/ApolloClient'
 import { categoryConstants, productConstants } from '../../redux/actions/constants'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { getProducts } from '../../redux/actions/product.actions'
+import PRODUCT_BY_SLUG_QUERY from "../../gql/queries/product-by-slug";
 
-const Shop = ({ productsData, catsData, catsData2, router }) => {
+const Shop = ({ productsData, catsData, catsData2 }) => {
     const dispatch = useDispatch()
+    const router = useRouter()
     const { slugs, q, sortby } = router.query
     const { products, loading, pageInfo } = useSelector(state => state.product)
+    const { currentCategory } = useSelector(state => state.category)
     const [size, setSize] = useState(20)
     const [offset, setOffset] = useState(null)
     const [selectedKeySortBy, setSelectedKeySortBy] = useState(sortby)
+    const sortData = [
+        {
+            key: 1,
+            value: 'جدیدترین'
+        },{
+            key: 2,
+            value: 'قدیمی ترین'
+        },{
+            key: 3,
+            value: 'گران ترین'
+        },{
+            key: 4,
+            value: 'ارزان ترین'
+        },{
+            key: 5,
+            value: 'محبوب ترین'
+        }
+    ]
 
     useEffect(() => {
-        // console.log(productsData)
-        // console.log('catsData', catsData)
-        // console.log('catsData2', catsData2)
         dispatch({
             type: productConstants.PRODUCTS_INIT,
             payload: {
@@ -62,18 +80,6 @@ const Shop = ({ productsData, catsData, catsData2, router }) => {
             ))
         } else didMount.current = true;;
     }, [selectedKeySortBy, slugs, q, offset, sortby]);
-
-
-    // function fetchProductsMore()  {
-    //     setOffset(offset+20)
-    //     dispatch(getProducts(
-    //         q,
-    //         slugs,
-    //         sortby,
-    //         size,
-    //         offset + 20,
-    //     ))
-    // }
 
 
     const Loader = () => {
@@ -125,19 +131,21 @@ const Shop = ({ productsData, catsData, catsData2, router }) => {
                         />
                         <div className="search__body__main__header__title">
                             <h1 className="search__body__main__header__title__text">
-                                {`نام دسته بندی`}
+                                {currentCategory ? currentCategory.node.title : null}
                             </h1>
                         </div>
                         <div className="search__body__main__header__filter">
                             <Dropdown onSelect={(selectedKey) => setSelectedKeySortBy(selectedKey)}>
-                                <Dropdown.Toggle id="dropdown-basic">فیلتر ها</Dropdown.Toggle>
+                                <Dropdown.Toggle title={'hhh'} id="dropdown-basic">
+                                    {sortby ? (sortData.find(sort => sort.key == sortby)).value : 'فیلترها'}
+                                </Dropdown.Toggle>
 
-                                <Dropdown.Menu>
-                                    <Dropdown.Item eventKey="1">جدید ترین</Dropdown.Item>
-                                    <Dropdown.Item eventKey="2">قدیمی ترین</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3">گران ترین</Dropdown.Item>
-                                    <Dropdown.Item eventKey="4">ارزان ترین</Dropdown.Item>
-                                    <Dropdown.Item eventKey="5">محبوب ترین</Dropdown.Item>
+                                <Dropdown.Menu >
+                                    {
+                                        sortData.map((sort, index) => (
+                                            <Dropdown.Item key={index} eventKey={sort.key}>{sort.value}</Dropdown.Item>
+                                        ))
+                                    }
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
@@ -154,12 +162,12 @@ const Shop = ({ productsData, catsData, catsData2, router }) => {
     )
 }
 
-export const getServerSideProps = async ({ query }) => {
+Shop.getInitialProps = async (ctx) => {
     let productsData = [];
     let catsData = [];
     let catsData2 = [];
-    const { slugs, q, sortby } = query
-    const cats = slugs ? slugs : query.id;
+    const { slugs, q, sortby } = ctx.query
+    const cats = slugs ? slugs : ctx.query.id;
     const sortNum = sortby ? sortby : "1";
 
     var orderby = [];
@@ -221,7 +229,7 @@ export const getServerSideProps = async ({ query }) => {
     }
 
     try {
-        const result = await client.query({
+        const result = await ssrClient(ctx).query({
             query: GET_PRODUCTS,
             variables: {
                 search: q,
@@ -261,12 +269,10 @@ export const getServerSideProps = async ({ query }) => {
     }
 
     return {
-        props: {
-            productsData,
-            catsData,
-            catsData2
-        }
+        productsData,
+        catsData,
+        catsData2
     }
 }
 
-export default withRouter(Shop)
+export default Shop

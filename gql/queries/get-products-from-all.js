@@ -13,7 +13,7 @@ query GET_PRODUCTS_FROM_ALL($search: String, $first: Int) {
         slug
         image {
           altText
-          sourceUrl(size: SHOP_CATALOG)
+          sourceUrl(size: MEDIUM)
           title
         }
         paPublishers {
@@ -63,7 +63,7 @@ query GET_PRODUCTS_FROM_ALL($search: String, $first: Int) {
               slug
               image {
                 altText
-                sourceUrl(size: SHOP_CATALOG)
+                sourceUrl(size: MEDIUM)
                 title
               }
               paPublishers {
@@ -111,7 +111,7 @@ query GET_PRODUCTS_FROM_ALL($search: String, $first: Int) {
               slug
               image {
                 altText
-                sourceUrl(size: SHOP_CATALOG)
+                sourceUrl(size: MEDIUM)
                 title
               }
               paPublishers {
@@ -159,7 +159,7 @@ query GET_PRODUCTS_FROM_ALL($search: String, $first: Int) {
               slug
               image {
                 altText
-                sourceUrl(size: SHOP_CATALOG)
+                sourceUrl(size: MEDIUM)
                 title
               }
               paPublishers {
