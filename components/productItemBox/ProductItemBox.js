@@ -31,6 +31,7 @@ export default function ProductItemBox({ product }) {
   }
 
   const RenderProductAttrs = ({ attrs }) => {
+    if (!attrs.length) return '...'
     const joinString = attrs.map(e => {
       var name = e.name
       var split = name.split("|")
