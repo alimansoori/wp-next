@@ -9,6 +9,7 @@ import PN from 'persian-number'
 export default function ProductHero({product}) {
     const dispatch = useDispatch()
     const {authenticate} = useSelector(state => state.auth);
+    const {loading} = useSelector(state => state.cart);
 
     const productQryInput = {
         clientMutationId: v4(), // Generate a unique id.
@@ -160,7 +161,7 @@ export default function ProductHero({product}) {
                                 </div>
                                 <img
                                     className="p-hero-box__l-col__purchase__buy__icon"
-                                    src={`/image/icon/Group 119.svg`}
+                                    src={`/image/icon/${loading ? 'white-pinner.svg' : 'Group 119.svg'}`}
                                     alt="icon"
                                 />
                             </button>
