@@ -5,7 +5,7 @@ export default function UserWallet() {
   return (
     <div className="user-wallet-box">
       <div className="user-wallet-box__header">
-        <h1 className="user-wallet-box__header__title">:کیف پول</h1>
+        <h1 className="user-wallet-box__header__title">کیف پول</h1>
         <div className="fade-border-bot"></div>
       </div>
       <div className="user-wallet-box__body">

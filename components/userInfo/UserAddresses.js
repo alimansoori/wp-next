@@ -114,7 +114,7 @@ export default function UserAddresses() {
                     <img
                         className="user-info-box__bot__title__icon"
                         onClick={() => handleAddModal()}
-                        src={`/image/icon/edit (1).png`}
+                        src={`/image/icon/PLUS.png`}
                         alt="edit"
                     />
                 </div>

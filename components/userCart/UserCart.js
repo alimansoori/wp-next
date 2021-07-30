@@ -169,7 +169,7 @@ export default function UserCartourites() {
         <Tab eventKey="purchase" title="سبد خرید">
           <div className="user-cart-box user-cart-box--purchase">
             <div className="user-cart-box__header">
-              <h1 className="user-cart-box__header__title">:سبد خرید</h1>
+              <h1 className="user-cart-box__header__title">سبد خرید</h1>
               <div className="fade-border-bot"></div>
             </div>
             <div className="user-cart-box__list-wrap">

@@ -76,7 +76,7 @@ export default function ShippingBasket(props) {
 
   return (
     <div className="user-basket-box__transport">
-      <h1 className="user-basket-box__title">:روش ارسال</h1>
+      <h1 className="user-basket-box__title">روش ارسال</h1>
       {
         loadingUpdateShippingMethods ? (
           <div style={{ textAlign: "center", marginBottom: "20px" }} className="user-basket-box__transport__radio-btn-wrap">

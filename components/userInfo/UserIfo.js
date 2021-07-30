@@ -46,7 +46,7 @@ export default function UserIfo() {
           <div className="user-info-box__top__row__box">
             <div className="user-info-box__top__row__box__title">
               <h3 className="user-info-box__top__row__box__title__text">
-                شماره تلفن
+                شماره موبایل
               </h3>
               <img
                 className="user-info-box__top__row__box__title__icon"

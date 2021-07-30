@@ -11,6 +11,7 @@ import WalletCredit from "./WalletCredit";
 import BeatLoader from 'react-spinners/BeatLoader'
 import { AlertNotifs } from "../alertNotifs/AlertNotifs";
 import { useRouter } from "next/router";
+import PN from 'persian-number'
 
 export default function UserBasket(props) {
   const dispatch = useDispatch()
@@ -85,11 +86,11 @@ export default function UserBasket(props) {
     <div className="user-basket-box">
       <AlertNotifs notifs={notifs} setNotifs={setNotifs} />
       <div className="user-basket-box__header">
-        <h1 className="user-basket-box__title">:جمع سبد خرید</h1>
+        <h1 className="user-basket-box__title">جمع سبد خرید</h1>
         <div className="user-basket-box__header__content">
           <div className="user-basket-box__header__content__price">
             <h2 className="user-basket-box__header__content__price__text">
-              {stringToNumber(cart.total) + ' ت'}
+              {PN.convertEnToPe(stringToNumber(cart.total))}
             </h2>
           </div>
           <div className="user-basket-box__header__content__wallet">
@@ -103,7 +104,7 @@ export default function UserBasket(props) {
         </div>
       </div>
       <div className="user-basket-box__address">
-        <h1 className="user-basket-box__title">:آدرس</h1>
+        <h1 className="user-basket-box__title">آدرس</h1>
         <p className="user-basket-box__address__text">
           {address}
         </p>

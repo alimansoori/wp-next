@@ -36,7 +36,7 @@ export default function UserFavourites() {
   return (
     <div className="user-fav-box">
       <div className="user-fav-box__header">
-        <h1 className="user-fav-box__header__title">:علاقه‌مندی‌ها</h1>
+        <h1 className="user-fav-box__header__title">علاقه‌مندی‌ها</h1>
         <div className="fade-border-bot"></div>
       </div>
       <div className="user-fav-box__list-wrap">

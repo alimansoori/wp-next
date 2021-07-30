@@ -150,7 +150,7 @@ export default function PayDetails(props) {
             </p>
           </div>
           <div className="pay-details-box__address">
-            <h1 className="pay-details-box__title">:روش ارسال</h1>
+            <h1 className="pay-details-box__title">روش ارسال</h1>
             <p className="pay-details-box__address__text">
               {order.shippingLines && (
                 <span>{order.shippingLines.nodes[0].methodTitle}</span>

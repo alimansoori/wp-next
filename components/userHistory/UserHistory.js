@@ -18,7 +18,7 @@ export default function UserHistory() {
   return (
     <div className="user-history-box">
       <div className="user-history-box__header">
-        <h1 className="user-history-box__header__title">:تاریخچه خرید</h1>
+        <h1 className="user-history-box__header__title">تاریخچه خرید</h1>
         <div className="fade-border-bot"></div>
       </div>
       <div className="user-history-box__list-wrap">
