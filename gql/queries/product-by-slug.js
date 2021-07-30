@@ -64,6 +64,7 @@ query Product($id: ID!) {
 	  shortDescription
 	  extraFields {
 		extraAbout
+		extraentitle
 	  }
 	  seo {
         title
