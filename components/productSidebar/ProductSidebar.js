@@ -12,7 +12,8 @@ export default function ProductSidebar({ slugs }) {
   const { categories } = useSelector(state => state.category);
 
   useEffect(() => {
-    dispatch(catFilters(slugs, categories));
+    let cats = [...categories]
+    dispatch(catFilters(slugs, cats));
   }, [slugs, categories]);
 
   return (

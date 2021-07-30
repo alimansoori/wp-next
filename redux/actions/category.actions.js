@@ -166,7 +166,7 @@ export const catFilters = (slugs, categories) => {
             type: categoryConstants.CATEGORY_FILTERS_BY_SLUGS,
             payload: {
                 categoriesFilter: renderSlugs(slugs, categories),
-                currentCategory
+                currentCategory: currentCategory
             }
         });
     }
@@ -252,11 +252,10 @@ const recurciveCat = (list, slugs = [], activeCatId = null) => {
 
 const renderSlugs = (slugs, categories) => {
     const catToTree = toTree(categories)
-    // console.log(catToTree)
+
     var node = [];
     var activeId = null;
     var isRoot = false;
-
     if (typeof slugs === 'undefined' || !catToTree) {
         node = catToTree.filter((cat) => {
             return !cat.node.parentDatabaseId
@@ -313,7 +312,11 @@ const toTree = (list) => {
 
     for (i = 0; i < list.length; i += 1) {
         map[list[i].node.databaseId] = i; // initialize the map
-        list[i].children = []; // initialize the children
+        // Object.preventExtensions(list[i])
+        list[i] = {
+            ...list[i],
+            children: []
+        };
     }
 
     for (i = 0; i < list.length; i += 1) {

@@ -174,6 +174,14 @@ Shop.getInitialProps = async (ctx) => {
     const cats = slugs ? slugs : ctx.query.id;
     const sortNum = sortby ? sortby : "1";
 
+    var newClient = client;
+    if (typeof window === "undefined") {
+        newClient = ssrClient(ctx)
+        console.log('ssr')
+    } else {
+        console.log('ccr')
+    }
+
     var orderby = [];
 
     let taxonomyFilter = [];
@@ -233,7 +241,7 @@ Shop.getInitialProps = async (ctx) => {
     }
 
     try {
-        const result = await ssrClient(ctx).query({
+        const result = await newClient.query({
             query: GET_PRODUCTS,
             variables: {
                 search: q,
@@ -246,7 +254,7 @@ Shop.getInitialProps = async (ctx) => {
         });
         productsData = result.data.products
 
-        const catsResult = await client.query({
+        const catsResult = await newClient.query({
             query: GET_CATS,
             variables: {
                 first: 100
@@ -256,7 +264,7 @@ Shop.getInitialProps = async (ctx) => {
 
         catsData = catsResult.data.productCategories
 
-        const catsResult2 = await client.query({
+        const catsResult2 = await newClient.query({
             query: GET_CATS,
             variables: {
                 first: 100,
