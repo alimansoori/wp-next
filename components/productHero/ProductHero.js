@@ -100,7 +100,8 @@ export default function ProductHero({product}) {
                     <div className="p-hero-box__l-col__info">
                         <h1 className="p-hero-box__l-col__info_name">{product.name}</h1>
                         {product.extraFields.extraentitle && (
-                            <span className="p-hero-box__l-col__info_name--eng">{product.extraFields.extraentitle}</span>
+                            <span
+                                className="p-hero-box__l-col__info_name--eng">{product.extraFields.extraentitle}</span>
                         )}
 
                         <div className="p-hero-box__l-col__info__details">
