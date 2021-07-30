@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-import Head from 'next/head'
 import Link from 'next/link'
 import BasePage from '../components/BasePage'
 import GET_HOME_PAGE from '../gql/queries/get-home-page';

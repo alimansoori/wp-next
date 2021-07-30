@@ -13,7 +13,6 @@
 
     .p-sug-box__container__item__book__pic {
       width: 100%;
-      border-bottom-right-radius: 25px;
     }
 
     .p-sug-box__container__item__header__icon-wrap {
@@ -28,12 +27,26 @@
         width: 30px;
         height: 30px;
         margin-right: 5px;
-        background: $mainBlue;
+        background: rgb(0, 142, 230);
+        background: linear-gradient(
+                        0deg,
+                        rgba(0, 142, 230, 1) 0%,
+                        rgba(0, 114, 187, 1) 50%,
+                        rgba(0, 142, 230, 1) 100%
+        );
         border-radius: 10px;
         @include flex-org;
         cursor: pointer;
         .p-sug-box__container__item__header__icon__img {
           width: 15px;
+        }
+
+        .p-sug-box__container__item__header__icon__img--save {
+          width: 15px;
+        }
+
+        .p-sug-box__container__item__header__icon__img--bas {
+          width: 20px;
         }
       }
     }

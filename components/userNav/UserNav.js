@@ -54,7 +54,7 @@ export default function UserNav(props) {
                         alt="fav"
                       />
                       <h1 className="user-nav__tab-bar__item__title">
-                        علاقه مندی ها
+                        علاقه‌مندی‌ها
                       </h1>
                     </div>
                   </Nav.Link>

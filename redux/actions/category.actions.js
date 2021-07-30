@@ -153,7 +153,7 @@ export const catFilters = (slugs, categories) => {
         if (slugs === undefined) {
             currentCategory = {
                 node: {
-                    title: 'همه کتاب ها'
+                    title: 'همه کتاب‌ها'
         }
             }
         } else if (slugs.length) {

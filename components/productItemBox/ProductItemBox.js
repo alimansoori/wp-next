@@ -77,7 +77,7 @@ export default function ProductItemBox({ product }) {
                       />
                     ) : (
                       <img
-                        className="p-sug-box__container__item__header__icon__img"
+                        className="p-sug-box__container__item__header__icon__img p-sug-box__container__item__header__icon__img--save"
                         src={`/image/icon/Path 20.svg`}
                         alt="save"
                       />
@@ -95,7 +95,7 @@ export default function ProductItemBox({ product }) {
                     />
                   ) : (
                     <img
-                      className="p-sug-box__container__item__header__icon__img"
+                      className="p-sug-box__container__item__header__icon__img p-sug-box__container__item__header__icon__img--bas"
                       src={`/image/icon/Basket.svg`}
                       alt="basket"
                     />

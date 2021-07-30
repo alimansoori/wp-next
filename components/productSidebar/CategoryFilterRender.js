@@ -13,7 +13,7 @@ const CategoryFilterRender = (props) => {
     const RenderCatIsRoot = () => (
         <>
             <h2 className="p-side-box__list__title">
-                {`دسته بندی ها`}
+                {`دسته‌بندی‌ها`}
             </h2>
             <ul className="p-side-box__list">
                 {

@@ -12,6 +12,7 @@ import client, {ssrClient} from '../../components/ApolloClient'
 import {categoryConstants, productConstants} from '../../redux/actions/constants'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {getProducts} from '../../redux/actions/product.actions'
+import ScrollToTop from "react-scroll-to-top"
 
 const Shop = ({productsData, catsData, catsData2}) => {
     const dispatch = useDispatch()
@@ -124,6 +125,7 @@ const Shop = ({productsData, catsData, catsData2}) => {
         <div className="search-wrap">
             <ProductHeader/>
             <div className="search__body">
+                <ScrollToTop smooth />
                 <div className="search__body__main">
                     <div className="p-hero-box-wrap-fade"></div>
 
@@ -268,7 +270,7 @@ Shop.getInitialProps = async (ctx) => {
             query: GET_CATS,
             variables: {
                 first: 100,
-                after: "YXJyYXljb25uZWN0aW9uOjkw"
+                after: "YXJyYXljb25uZWN0aW9uOjY4"
             },
             notifyOnNetworkStatusChange: true
         });
