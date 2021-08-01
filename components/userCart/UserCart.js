@@ -84,6 +84,7 @@ export default function UserCartourites() {
         return (
             <>
                 <li className="user-cart-box__list__item">
+                    <h2 style={{fontSize:"1rem"}}>{item.product.node.name}</h2>
                     <div className="user-cart-box__list__item__box">
                         <div className="user-cart-box__list__item__box__items">
                             <div className="user-cart-box__list__item__box__items__pics">

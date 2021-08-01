@@ -67,11 +67,19 @@ export default function UserFavourites() {
                                             <div className="user-fav-box__list__item__box">
                                                 <div className="user-fav-box__list__item__box__items">
                                                     <div className="user-fav-box__list__item__box__items__pics">
-                                                        <img
-                                                            className="user-fav-box__list__item__box__items__pics__img"
-                                                            src={`/image/book picture.png`}
-                                                            alt="book"
-                                                        />
+                                                        {favorite.node.image ? (
+                                                            <img
+                                                                className="user-fav-box__list__item__box__items__pics__img"
+                                                                src={favorite.node.image.sourceUrl}
+                                                                alt={favorite.node.image.altText}
+                                                            />
+                                                        ) : (
+                                                            <img
+                                                                className="user-fav-box__list__item__box__items__pics__img"
+                                                                src={`/image/book picture.png`}
+                                                                alt="book"
+                                                            />
+                                                        )}
                                                     </div>
                                                 </div>
                                                 <div className="user-fav-box__list__item__box__desc">
