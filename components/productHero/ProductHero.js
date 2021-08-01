@@ -152,6 +152,12 @@ export default function ProductHero({product}) {
                     </div>
                     <div className="p-hero-box__l-col__purchase">
                         <div className="p-hero-box__l-col__purchase-wrap">
+                            {product.regularPrice !== product.price && (
+                                <div
+                                    className="p-hero-box__l-col__purchase__price p-hero-box__l-col__purchase__price--off">
+                                    {PN.convertEnToPe(stringToNumber(product.regularPrice))}
+                                </div>
+                            )}
                             <div className="p-hero-box__l-col__purchase__price">
                                 {PN.convertEnToPe(stringToNumber(product.price))}
                             </div>
