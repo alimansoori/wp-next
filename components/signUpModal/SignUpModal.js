@@ -6,6 +6,7 @@ import PropagateLoader from 'react-spinners/PropagateLoader'
 import { registerUser } from '../../redux/actions/user.actions';
 
 export default function SignUpModal(props) {
+  const {setislogin} = props
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -111,7 +112,7 @@ export default function SignUpModal(props) {
           </button>
         </Modal.Body>
         <Modal.Footer className="sign-up-modal__footer">
-          <button className="sign-up-modal__link">
+          <button onClick={() => setislogin(true)} className="sign-up-modal__link">
             قبلا ثبت نام کرده اید؟ / ورود
           </button>
         </Modal.Footer>

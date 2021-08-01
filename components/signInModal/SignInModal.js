@@ -7,7 +7,7 @@ import { loginUser } from '../../redux/actions/auth.actions'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 
 export default function SignInModal(props) {
-  const {onHide, redirectto} = props
+  const {onHide, redirectto, setislogin} = props
   const router = useRouter()
   const dispatch = useDispatch()
   const { authenticate, loading, message, error } = useSelector(state => state.auth);
@@ -92,7 +92,7 @@ export default function SignInModal(props) {
           </button>
         </Modal.Body>
         <Modal.Footer className="sign-in-modal__footer">
-          <button className="sign-in-modal__link">
+          <button onClick={() => setislogin(false)} className="sign-in-modal__link">
             ثبت نام نکرده اید؟ / ثبت نام
           </button>
         </Modal.Footer>
