@@ -79,10 +79,15 @@
 
     .p-sug-box__container__item__details__price {
       direction: rtl;
-      display: block;
+      display: flex;
+      align-items: center;
       font-size: 16px;
       color: $mainBlue;
       padding: 10px 0;
+      .p-sug-box__container__item__details__price__item {
+        //flex-grow: 1;
+        text-align: center;
+      }
     }
   }
 }
@@ -95,4 +100,26 @@
       }
     }
   }
+}
+
+.p-hero-box__l-col__purchase__price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000000;
+  direction: rtl;
+}
+
+.p-hero-box__l-col__purchase__price--off {
+  font-size: 14px;
+  color: #727272;
+  text-decoration: line-through;
+}
+
+.c-price__discount-oval {
+  background-color: #fb3449;
+  color: #fff;
+  border-radius: 20px;
+  padding: 4px 6px 1px;
+  letter-spacing: 0;
+  margin-bottom: 3px;
 }
