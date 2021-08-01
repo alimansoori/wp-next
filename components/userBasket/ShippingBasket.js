@@ -12,7 +12,7 @@ export default function ShippingBasket(props) {
   useEffect(() => {
     if (cart.chosenShippingMethods.length) {
 
-      if (cart.availableShippingMethods && cart.availableShippingMethods?.length && cart.availableShippingMethods[0].rates.length) {
+      if (cart?.availableShippingMethods && cart?.availableShippingMethods?.length && cart?.availableShippingMethods[0]?.rates?.length) {
         let findShippingMethod = cart.availableShippingMethods[0].rates.find((rate, i) => {
           if (rate.id == cart.chosenShippingMethods[0]) {
             return true

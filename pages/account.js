@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCustomer, updateCustomer } from '../redux/actions/customer.actions'
 import UserHeader from '../components/userHeader/UserHeader'
 import LandingLoading from '../components/landingLoading/LandingLoading'
-import { checkout } from '../redux/actions/checout.actions'
-
 
 const Account = ({ router }) => {
     const dispatch = useDispatch()

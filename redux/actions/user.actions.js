@@ -1,7 +1,8 @@
-import {userConstants} from "./constants";
+import {userConstants, viewerConstants} from "./constants";
 import client from "../../components/ApolloClient";
 import REGISTER_USER from "../../gql/mutations/register-user";
 import { v4 } from "uuid";
+import UPDATE_USER from "../../gql/mutations/update-user";
 
 export const signup = (user) => {
 
@@ -74,6 +75,52 @@ export const registerUser = (registerForm = {}) => {
         } catch (error) {
             dispatch({
                 type: userConstants.USER_REGISTER_FAILURE,
+                payload: {
+                    error: error.message
+                }
+            })
+        }
+    }
+}
+
+export const updateUser = (updateForm = {}) => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: userConstants.UPDATE_USER_REQUEST
+        })
+
+        const {viewer} = getState()
+
+        try {
+            const result = await client.mutate({
+                mutation: UPDATE_USER,
+                variables: {
+                    input: {
+                        clientMutationId: v4(),
+                        id: viewer.viewer.id,
+                        ...updateForm
+                    }
+                }
+            })
+
+            const {user} = result.data.updateUser
+
+            dispatch({
+                type: userConstants.UPDATE_USER_SUCCESS,
+                payload: {
+                    message: 'تغییرات با موفقیت انجام شد'
+                }
+            })
+
+            dispatch({
+                type: viewerConstants.VIEWER_REGISTER_SUCCESS,
+                payload: {
+                    viewer: user
+                }
+            })
+        } catch (error) {
+            dispatch({
+                type: userConstants.UPDATE_USER_FAILURE,
                 payload: {
                     error: error.message
                 }
