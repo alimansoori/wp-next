@@ -17,7 +17,8 @@ const Product = ({ productData, router }) => {
 
     return (
         <>
-            <BasePage
+            <div>page</div>
+            {/*<BasePage
                 product
                 className={`product-page`}
                 seo={productData.seo}
@@ -35,13 +36,13 @@ const Product = ({ productData, router }) => {
                         </div>
                     </div>
                 </div>
-            </BasePage>
+            </BasePage>*/}
         </>
 
     )
 }
 
-Product.getInitialProps = async (ctx) => {
+/*Product.getInitialProps = async (ctx) => {
     let productData = null;
     const { slug } = ctx.query
     const id = slug ? slug : ctx.query.id;
@@ -77,6 +78,22 @@ Product.getInitialProps = async (ctx) => {
     return {
         productData
     }
+}*/
+
+export async function getStaticProps(context) {
+    console.log(context)
+    return {
+        props: null,
+        // revalidate: 1
+    }
 }
 
+/*export async function getStaticPaths () {
+
+
+    return {
+        paths: [],
+        fallback: true
+    }
+}*/
 export default withRouter(Product)

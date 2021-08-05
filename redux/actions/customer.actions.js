@@ -6,6 +6,7 @@ import UPDATE_USER from "../../gql/mutations/update-user";
 import { getCart } from "./cart.actions";
 import { getViewer } from "./viewer.actions";
 import { v4 } from "uuid";
+import {initializeApollo} from "../../components/Apollo";
 
 export const getCustomer = () => {
     return async (dispatch, getState) => {
@@ -14,6 +15,8 @@ export const getCustomer = () => {
         })
 
         try {
+            const apolloClient = initializeApollo()
+
             const { viewer } = (getState()).viewer
             let variables = {}
 
@@ -24,10 +27,9 @@ export const getCustomer = () => {
                 }
             }
 
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: GET_CUSTOMER,
                 variables: { ...variables },
-                fetchPolicy: 'network-only'
             })
 
             const { customer } = result.data

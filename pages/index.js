@@ -33,7 +33,13 @@ const Home = (props) => {
       className={`home-page`}
       seo={homePageData.seo}
     >
+
       <div className={`landing`}>
+        <Link href={`/test`} shallow={true} >
+          <a className="product-header__logo">
+            HHHHHHHHH
+          </a>
+        </Link>
         {/* <LandingLoading /> */}
         <div className={`landing-hero`}>
           <Landingheader />

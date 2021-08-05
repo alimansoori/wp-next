@@ -1,221 +1,227 @@
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import Router from 'next/router'
 import BaseLayout from '../components/layouts/BaseLayout'
 import ProgressBar from "@badrap/bar-of-progress"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/main.scss'
-import { Provider, useDispatch } from 'react-redux'
+import {Provider, useDispatch} from 'react-redux'
 import store from '../redux/store'
-import nookies from 'nookies'
-import client, { ssrClient } from '../components/ApolloClient'
-import REFRESH_TOKEN from '../gql/mutations/refresh-token'
-import { v4 } from 'uuid'
-import GET_VIEWER from '../gql/queries/get-viewer'
-import { viewerConstants } from '../redux/actions/constants'
+import {viewerConstants} from '../redux/actions/constants'
+import {ApolloProvider} from "@apollo/client";
+import {ApolloProvider as ApolloHooksProvider} from '@apollo/react-hooks'
+import {useApollo} from "../components/Apollo";
+import GET_HOME_PAGE from "../gql/queries/get-home-page";
+import GET_CART from "../gql/queries/get-cart";
 
 const progress = new ProgressBar({
-  size: 4,
-  color: "#38a169",
-  className: "bar-of-progress",
-  delay: 100,
+    size: 4,
+    color: "#38a169",
+    className: "bar-of-progress",
+    delay: 100,
 });
 
 Router.events.on("routeChangeStart", progress.start);
 Router.events.on("routeChangeComplete", progress.finish);
 Router.events.on("routeChangeError", progress.finish);
 
-function Viewer({ children, viewer }) {
-  const dispatch = useDispatch()
+function Viewer({children, viewer}) {
+    const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch({
-      type: viewerConstants.SET_VIEWER,
-      payload: {
-        viewer
-      }
-    })
-  }, [])
+    useEffect(() => {
+        dispatch({
+            type: viewerConstants.SET_VIEWER,
+            payload: {
+                viewer
+            }
+        })
+    }, [])
 
-  return children
+    return children
 }
 
-class App extends React.Component {
+/*class App extends React.Component {
 
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {}
+    static async getInitialProps({Component, ctx}) {
+        let pageProps = {}
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
+        if (Component.getInitialProps) {
+            pageProps = await Component.getInitialProps(ctx)
+        }
+
+        let viewer = null
+        let refreshJwtAuthToken = null
+
+        const {req, res, query} = ctx
+
+        const cookies = nookies.get(ctx)
+
+        if (typeof window === 'undefined') {
+            try {
+                const res = await ssrClient(ctx).mutate({
+                    mutation: REFRESH_TOKEN,
+                    variables: {
+                        input: {
+                            clientMutationId: v4(),
+                            jwtRefreshToken: cookies['wp-next-token']
+                        }
+                    },
+                    fetchPolicy: 'no-cache'
+                })
+
+                refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
+
+                const {authToken} = refreshJwtAuthToken
+
+                nookies.set(ctx, 'wp-next-token', authToken)
+            } catch (e) {
+                refreshJwtAuthToken = null
+                nookies.destroy(ctx, 'wp-next-token')
+            }
+
+            try {
+                const result = await ssrClient(ctx).query({
+                    query: GET_VIEWER
+                });
+
+                viewer = result?.data?.viewer
+            } catch (e) {
+                console.log(e)
+            }
+        } else {
+            try {
+                const res = await client.mutate({
+                    mutation: REFRESH_TOKEN,
+                    variables: {
+                        input: {
+                            clientMutationId: v4(),
+                            jwtRefreshToken: cookies['wp-next-token']
+                        }
+                    },
+                    fetchPolicy: 'no-cache'
+                })
+
+                refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
+
+                const {authToken} = refreshJwtAuthToken
+
+                nookies.set(ctx, 'wp-next-token', authToken)
+            } catch (e) {
+                refreshJwtAuthToken = null
+                nookies.destroy(ctx, 'wp-next-token')
+            }
+
+            try {
+                const result = await client.query({
+                    query: GET_VIEWER
+                });
+
+                viewer = result?.data?.viewer
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        return {pageProps, viewer}
     }
 
-    let viewer = null
-    let refreshJwtAuthToken = null
+    render() {
+        const {Component, pageProps, viewer} = this.props
 
-    const { req, res, query } = ctx
-
-    const cookies = nookies.get(ctx)
-
-    if (typeof window === 'undefined') {
-      try {
-        const res = await ssrClient(ctx).mutate({
-          mutation: REFRESH_TOKEN,
-          variables: {
-            input: {
-              clientMutationId: v4(),
-              jwtRefreshToken: cookies['wp-next-token']
-            }
-          },
-          fetchPolicy: 'no-cache'
-        })
-  
-        refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
-  
-        const { authToken } = refreshJwtAuthToken
-  
-        nookies.set(ctx, 'wp-next-token', authToken)
-      } catch (e) {
-        refreshJwtAuthToken = null
-        nookies.destroy(ctx, 'wp-next-token')
-      }
-  
-      try {
-        const result = await ssrClient(ctx).query({
-          query: GET_VIEWER
-        });
-  
-        viewer = result?.data?.viewer
-      } catch (e) {
-        console.log(e)
-      }
-    } else {
-      try {
-        const res = await client.mutate({
-          mutation: REFRESH_TOKEN,
-          variables: {
-            input: {
-              clientMutationId: v4(),
-              jwtRefreshToken: cookies['wp-next-token']
-            }
-          },
-          fetchPolicy: 'no-cache'
-        })
-  
-        refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
-  
-        const { authToken } = refreshJwtAuthToken
-  
-        nookies.set(ctx, 'wp-next-token', authToken)
-      } catch (e) {
-        refreshJwtAuthToken = null
-        nookies.destroy(ctx, 'wp-next-token')
-      }
-  
-      try {
-        const result = await client.query({
-          query: GET_VIEWER
-        });
-  
-        viewer = result?.data?.viewer
-      } catch (e) {
-        console.log(e)
-      }
+        return (
+            <ApolloProvider client={client}>
+                <Provider store={store}>
+                    <Viewer viewer={viewer}>
+                        <BaseLayout>
+                            <Component {...pageProps} viewer={viewer}/>
+                        </BaseLayout>
+                    </Viewer>
+                </Provider>
+            </ApolloProvider>
+        )
     }
+}*/
 
-    return { pageProps, viewer }
-  }
+function App(props) {
+    const {Component, pageProps} = props
+    const client = useApollo(pageProps?.initialApolloState)
 
-  render() {
-    const { Component, pageProps, viewer } = this.props
+    // const dispatch = useDispatch()
+
+    // useEffect(() => {
+    //   dispatch({
+    //     type: viewerConstants.SET_VIEWER,
+    //     payload: {
+    //       viewer
+    //     }
+    //   })
+    // }, [])
 
     return (
-      <Provider store={store}>
-        <Viewer viewer={viewer}>
-          <BaseLayout>
-            <Component {...pageProps} viewer={viewer} />
-          </BaseLayout>
-        </Viewer>
-      </Provider>
+        <ApolloProvider client={client}>
+            <ApolloHooksProvider client={client}>
+                <Provider store={store}>
+                    <BaseLayout>
+                        <Component {...pageProps}/>
+                    </BaseLayout>
+                </Provider>
+            </ApolloHooksProvider>
+        </ApolloProvider>
     )
-  }
 }
 
-// function App(props) {
-//   const { Component, pageProps, viewer } = props
-
-//   console.log(props)
-//   // const dispatch = useDispatch()
-
-//   // useEffect(() => {
-//   //   dispatch({
-//   //     type: viewerConstants.SET_VIEWER,
-//   //     payload: {
-//   //       viewer
-//   //     }
-//   //   })
-//   // }, [])
-
-//   return (
-//     <Provider store={store}>
-//       <BaseLayout>
-//         <Component {...pageProps} />
-//       </BaseLayout>
-//     </Provider>
-//   )
-// }
-
-// export const getServerSideProps = async ({ Component, ctx }) => {
-//   let pageProps = {}
-
-//   if (Component.getInitialProps) {
-//     pageProps = await Component.getInitialProps(ctx)
-//   }
-
-//   let viewer = null
-//   let refreshJwtAuthToken = null
-
-//   const { req, res, query } = ctx
-
-//   const cookies = nookies.get(ctx)
-
-//   try {
-//     const res = await ssrClient(ctx).mutate({
-//       mutation: REFRESH_TOKEN,
-//       variables: {
-//         input: {
-//           clientMutationId: v4(),
-//           jwtRefreshToken: cookies['wp-next-token']
-//         }
-//       },
-//       fetchPolicy: 'no-cache'
-//     })
-
-//     refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
-
-//     const { authToken } = refreshJwtAuthToken
-
-//     nookies.set(ctx, 'wp-next-token', authToken)
-//   } catch (e) {
-//     refreshJwtAuthToken = null
-//     nookies.destroy(ctx, 'wp-next-token')
-//   }
-
-//   try {
-//     const result = await ssrClient(ctx).query({
-//       query: GET_VIEWER
-//     });
-
-//     viewer = result?.data?.viewer
-//   } catch (e) {
-//     console.log(e)
-//   }
-
-//   return {
-//     props: {
-//       Component,
-//       pageProps,
-//       viewer
+// export const getServerSideProps = async ({Component, ctx}) => {
+//     let pageProps = {}
+//
+//     if (Component.getInitialProps) {
+//         pageProps = await Component.getInitialProps(ctx)
 //     }
-//   }
+//
+//     let viewer = null
+//     let refreshJwtAuthToken = null
+//
+//     const {req, res, query} = ctx
+//
+//     const cookies = nookies.get(ctx)
+//
+//     try {
+//         const res = await ssrClient(ctx).mutate({
+//             mutation: REFRESH_TOKEN,
+//             variables: {
+//                 input: {
+//                     clientMutationId: v4(),
+//                     jwtRefreshToken: cookies['wp-next-token']
+//                 }
+//             },
+//             fetchPolicy: 'no-cache'
+//         })
+//
+//         refreshJwtAuthToken = res?.data?.refreshJwtAuthToken
+//
+//         const {authToken} = refreshJwtAuthToken
+//
+//         nookies.set(ctx, 'wp-next-token', authToken)
+//     } catch (e) {
+//         refreshJwtAuthToken = null
+//         nookies.destroy(ctx, 'wp-next-token')
+//     }
+//
+//     try {
+//         const result = await ssrClient(ctx).query({
+//             query: GET_VIEWER
+//         });
+//
+//         viewer = result?.data?.viewer
+//     } catch (e) {
+//         console.log(e)
+//     }
+//
+//     return {
+//         props: {
+//             Component,
+//             pageProps,
+//             viewer
+//         }
+//     }
 // }
 
 export default App

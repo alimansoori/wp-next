@@ -7,6 +7,7 @@ import client from "../../components/ApolloClient";
 import APPLY_COUPON from "../../gql/mutations/apply-coupon";
 import { v4 } from "uuid";
 import UPDATE_SHIPPING_METHOD from "../../gql/mutations/update-shipping-method";
+import {initializeApollo} from "../../components/Apollo";
 
 export const getCart = () => {
     return async dispatch => {
@@ -15,9 +16,10 @@ export const getCart = () => {
         });
 
         try {
-            const result = await client.query({
+            const apolloClient = initializeApollo()
+            const result = await apolloClient.query({
                 query: GET_CART,
-                fetchPolicy: 'no-cache'
+                // fetchPolicy: 'no-cache'
             });
 
             const { cart } = result.data;
