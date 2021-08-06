@@ -1,3 +1,4 @@
+/*
 import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
 import {useRouter, withRouter} from 'next/router'
 import {useDispatch, useSelector} from 'react-redux'
@@ -290,4 +291,4 @@ Shop.getInitialProps = async (ctx) => {
     }
 }
 
-export default Shop
+export default Shop*/
