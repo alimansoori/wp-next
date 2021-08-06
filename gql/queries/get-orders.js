@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 
 const GET_ORDERS = gql`
   query GET_ORDERS($where: RootQueryToOrderConnectionWhereArgs) {

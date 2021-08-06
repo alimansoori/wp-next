@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 import UserFragment from "../fragments/user-fragment";
 
 const GET_VIEWER = gql`

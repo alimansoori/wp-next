@@ -2,9 +2,11 @@ import React, { useRef, useEffect } from 'react'
 import Link from 'next/link'
 import BasePage from '../components/BasePage'
 import GET_HOME_PAGE from '../gql/queries/get-home-page';
-import client from '../components/ApolloClient'
 import Search from '../components/search/Search'
 import Landingheader from '../components/landingHeader/LandingHeader';
+import {initializeApollo} from "../components/Apollo";
+
+const client = initializeApollo()
 
 const Home = (props) => {
 
@@ -35,11 +37,6 @@ const Home = (props) => {
     >
 
       <div className={`landing`}>
-        <Link href={`/test`} shallow={true} >
-          <a className="product-header__logo">
-            HHHHHHHHH
-          </a>
-        </Link>
         {/* <LandingLoading /> */}
         <div className={`landing-hero`}>
           <Landingheader />
@@ -132,23 +129,24 @@ const Home = (props) => {
   )
 }
 
-export const getServerSideProps = async (context) => {
+export const getStaticProps = async (context) => {
   let homePageData = null;
 
   try {
     const result = await client.query({
       query: GET_HOME_PAGE,
-      partialRefetch: true
     });
     homePageData = result.data.homepage
   } catch (e) {
-    console.error(e)
+    console.error('HomePage Error', e)
   }
 
   return {
     props: {
-      homePageData
-    }
+      homePageData,
+      initialApolloState: client.cache.extract(),
+    },
+    revalidate: 1000
   }
 }
 

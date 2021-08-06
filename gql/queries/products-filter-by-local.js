@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 
 const PRODUCTS_FILTER_BY_LOCAL = gql` query ProductsByLocation($slugLocation: ID!, $search: String!) {
 	paLocation(idType: SLUG, id: $slugLocation) {

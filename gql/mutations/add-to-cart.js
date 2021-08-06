@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 import CartFragment from "../fragments/cart-fragment";
 
 const ADD_TO_CART = gql`

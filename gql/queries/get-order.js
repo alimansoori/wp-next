@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 
 const GET_ORDER = gql`
   query GET_ORDER($idType: OrderIdTypeEnum, $id: ID) {

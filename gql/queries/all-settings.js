@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 
 const ALL_SETTINGS = gql`
 query ALL_SETTINGS {

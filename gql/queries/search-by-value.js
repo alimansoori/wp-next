@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 
 const SEARCH_BY_VALUE = gql` query Products($search: String!, $first: Int! ) {
 	products(where: {search: $search}, first: $first) {

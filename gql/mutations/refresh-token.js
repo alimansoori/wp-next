@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import {gql} from '@apollo/client';
 
 const REFRESH_TOKEN = gql`
   mutation ($input: RefreshJwtAuthTokenInput!) {

@@ -17,6 +17,7 @@ const Test = (props) => {
 
     return (
         <div className="product-wrap">
+            RTTTS
             {/*{ JSON.stringify(data) }*/}
         </div>
     )
