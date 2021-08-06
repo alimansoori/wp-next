@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const apolloClient = initializeApollo()
 
-const Shop = ({products}) => {
+export default function Shop({products}) {
     const router = useRouter()
     const {asPath, locale} = router
     const {q, sort} = router.query
@@ -28,7 +28,7 @@ const Shop = ({products}) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
 
     const res = await apolloClient.query({
         query: GET_PRODUCTS,
@@ -47,5 +47,3 @@ export async function getStaticProps() {
         revalidate: 200
     }
 }
-
-export default Shop
