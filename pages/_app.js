@@ -13,7 +13,7 @@ import {useApollo} from "../components/Apollo";
 import GET_HOME_PAGE from "../gql/queries/get-home-page";
 import GET_CART from "../gql/queries/get-cart";
 
-/*const progress = new ProgressBar({
+const progress = new ProgressBar({
     size: 4,
     color: "#38a169",
     className: "bar-of-progress",
@@ -22,7 +22,7 @@ import GET_CART from "../gql/queries/get-cart";
 
 Router.events.on("routeChangeStart", progress.start);
 Router.events.on("routeChangeComplete", progress.finish);
-Router.events.on("routeChangeError", progress.finish);*/
+Router.events.on("routeChangeError", progress.finish);
 
 function Viewer({children, viewer}) {
     const dispatch = useDispatch()

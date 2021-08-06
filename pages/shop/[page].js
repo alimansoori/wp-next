@@ -13,6 +13,7 @@ import {categoryConstants, productConstants} from '../../redux/actions/constants
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {getProducts} from '../../redux/actions/product.actions'
 import ScrollToTop from "react-scroll-to-top"
+import PRODUCT_QUERY from "../../gql/queries/product-by-id";
 
 const Shop = ({productsData, catsData, catsData2}) => {
     const dispatch = useDispatch()
@@ -286,6 +287,64 @@ Shop.getInitialProps = async (ctx) => {
         productsData,
         catsData,
         catsData2
+    }
+}
+
+export const getStaticProps = async (context) => {
+    const {id, slug} = context.params
+
+    console.log('Slug', slug)
+    let product = null
+    if (!id) throw new Error("Parameter is invalid")
+
+    // console.log(parseInt(id))
+    try {
+        const res = await apolloClient.query({
+            query: PRODUCT_QUERY,
+            variables: {
+                id,
+                idType: 'DATABASE_ID'
+            }
+        })
+
+        product = await res.data.product
+
+        return {
+            props: {
+                product: product,
+                initialApolloState: apolloClient.cache.extract()
+            },
+            revalidate: 1
+        }
+
+    } catch (err) {
+        console.log(err)
+        return {
+            notFound: true
+        }
+    }
+}
+
+export const getStaticPaths = async () => {
+    const res = await apolloClient.query({
+        query: GET_PRODUCTS,
+        variables: {
+            size: 20
+        }
+    })
+
+    const {edges: products} = await res.data.products
+
+    const paths = products?.map((product) => ({
+        params: {
+            id: product?.node?.databaseId.toString(),
+            slug: decodeURI(product?.node?.slug),
+        }
+    }))
+
+    return {
+        paths,
+        fallback: false
     }
 }
 

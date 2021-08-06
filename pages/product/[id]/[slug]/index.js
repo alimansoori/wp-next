@@ -1,16 +1,22 @@
 import React, {useEffect} from 'react'
-import GET_PRODUCTS from "../../../gql/queries/get-products";
-import PRODUCT_QUERY from "../../../gql/queries/product-by-id";
-import {initializeApollo} from "../../../components/Apollo";
+import GET_PRODUCTS from "../../../../gql/queries/get-products";
+import PRODUCT_QUERY from "../../../../gql/queries/product-by-id";
+import {initializeApollo} from "../../../../components/Apollo";
+import {useRouter} from "next/router";
 
 const apolloClient = initializeApollo()
 
 const Product = ({product}) => {
 
+    const router = useRouter();
+
     useEffect(() => {
         console.log('product', product)
     }, [product])
 
+    if (router.isFallback) {
+        return <h1>Loading...</h1>
+    }
     return (
         <>
             <div>Product = {product.name}</div>
@@ -77,7 +83,9 @@ const Product = ({product}) => {
 }*/
 
 export const getStaticProps = async (context) => {
-    const {id} = context.params
+    const {id, slug} = context.params
+
+    console.log('Slug', slug)
     let product = null
     if (!id) throw new Error("Parameter is invalid")
 
@@ -113,7 +121,7 @@ export const getStaticPaths = async () => {
     const res = await apolloClient.query({
         query: GET_PRODUCTS,
         variables: {
-            size: 20
+            size: 10
         }
     })
 
@@ -122,13 +130,14 @@ export const getStaticPaths = async () => {
     const paths = products?.map((product) => ({
         params: {
             id: product?.node?.databaseId.toString(),
+            slug: decodeURI(product?.node?.slug),
         }
     }))
 
-
+    console.log(paths)
     return {
         paths,
-        fallback: false
+        fallback: true
     }
 }
 
