@@ -33,7 +33,7 @@ export async function getStaticProps(context) {
     const res = await apolloClient.query({
         query: GET_PRODUCTS,
         variables: {
-            size: 100
+            size: 5
         }
     })
 
