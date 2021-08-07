@@ -1,3 +1,4 @@
+/*
 import Shop, {getStaticProps} from './index'
 
 export default Shop
@@ -18,4 +19,4 @@ export const getStaticPaths = async () => {
             }
         ]
     }
-}
+}*/

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import GET_HOME_PAGE from "../gql/queries/get-home-page";
 // import {initializeApollo} from "../components/Apollo";
 import {useQuery} from "@apollo/client";
@@ -7,11 +7,21 @@ import {commonQueries} from "../components/apollo/ApolloCommonQueries";
 import GET_VIEWER from "../gql/queries/get-viewer";
 import {getSession} from "next-auth/client";
 import {initializeApollo} from "../components/Apollo";
+import GET_PRODUCTS_ID_SLUG from "../gql/queries/get-products-id-slug";
 
 const apolloClient = initializeApollo();
 
 const Test = (props) => {
 
+    const {loading, error, data} = useQuery(GET_PRODUCTS_ID_SLUG, {
+        variables: {
+            size: 200
+        }
+    })
+
+    useEffect(() => {
+        console.log(data?.products)
+    }, [data])
     // const {loading, error, data} = useQuery(GET_HOME_PAGE)
     // const {loading, error, data} = useQuery(GET_VIEWER)
 
