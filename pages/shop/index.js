@@ -5,6 +5,7 @@ import {useRouter} from "next/router";
 import Link from 'next/link'
 import GET_HOME_PAGE from "../../gql/queries/get-home-page";
 import {useQuery} from "@apollo/client";
+import LandingLoading from "../../components/landingLoading/LandingLoading";
 
 const apolloClient = initializeApollo()
 
@@ -16,10 +17,11 @@ export default function Shop() {
     const {loading, error, data} = useQuery(GET_PRODUCTS, {
         variables: {
             size: 10
-        }
+        },
+        fetchPolicy: "cache-and-network"
     })
 
-    if (loading) return <h1>Loading ...</h1>
+    if (loading) return <LandingLoading />
     if (error) return <h1>Errors: {error}</h1>
     const {products} = data
 

@@ -18,7 +18,8 @@ const Product = (props) => {
         variables: {
             id,
             idType: 'DATABASE_ID'
-        }
+        },
+        fetchPolicy: "cache-and-network"
     })
 
     if (loading) return <h1>Loading ...</h1>
@@ -136,7 +137,7 @@ Product.getInitialProps = async ({req, res, query}) => {
                 variables: {
                     id,
                     idType: 'DATABASE_ID'
-                }
+                },
             })
 
             product = await res.data.product
