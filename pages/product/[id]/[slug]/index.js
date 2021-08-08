@@ -85,11 +85,9 @@ const Product = ({product}) => {
 export const getStaticProps = async (context) => {
     const {id, slug} = context.params
 
-    console.log('Slug', slug)
     let product = null
     if (!id) throw new Error("Parameter is invalid")
 
-    // console.log(parseInt(id))
     try {
         const res = await apolloClient.query({
             query: PRODUCT_QUERY,
@@ -121,7 +119,7 @@ export const getStaticPaths = async () => {
     const res = await apolloClient.query({
         query: GET_PRODUCTS,
         variables: {
-            size: 10
+            size: 50
         }
     })
 
@@ -134,7 +132,6 @@ export const getStaticPaths = async () => {
         }
     }))
 
-    console.log(paths)
     return {
         paths,
         fallback: true

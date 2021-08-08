@@ -13,9 +13,15 @@ export default function Shop({products}) {
 
     return (
         <>
+            <div>DDD</div>
             <div>{products?.edges?.map((product) => (
                 <Fragment key={product.node.id}>
-                    <Link href={`/product/${product.node.databaseId}/${product.node.slug}`}>
+                    <Link
+                        prefetch={true}
+                        // shallow={true}
+                        href={`/product/[id]/[slug]`}
+                        as={`/product/${product.node.databaseId}/${product.node.slug}`}
+                    >
                         <a>
                             {product.node.name}
                         </a>
@@ -33,7 +39,7 @@ export async function getStaticProps(context) {
     const res = await apolloClient.query({
         query: GET_PRODUCTS,
         variables: {
-            size: 5
+            size: 100
         }
     })
 
