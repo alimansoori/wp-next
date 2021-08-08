@@ -3,23 +3,31 @@ import GET_PRODUCTS from "../../../../gql/queries/get-products";
 import PRODUCT_QUERY from "../../../../gql/queries/product-by-id";
 import {initializeApollo} from "../../../../components/Apollo";
 import {useRouter} from "next/router";
+import GET_PRODUCTS_ID_SLUG from "../../../../gql/queries/get-products-id-slug";
+import GET_HOME_PAGE from "../../../../gql/queries/get-home-page";
+import {useQuery} from "@apollo/client";
 
 const apolloClient = initializeApollo()
 
-const Product = ({product}) => {
+const Product = (props) => {
 
     const router = useRouter();
+    const {id, slug} = router.query
 
-    useEffect(() => {
-        console.log('product', product)
-    }, [product])
+    const {loading, error, data} = useQuery(PRODUCT_QUERY, {
+        variables: {
+            id,
+            idType: 'DATABASE_ID'
+        }
+    })
 
-    if (router.isFallback) {
-        return <h1>Loading...</h1>
-    }
+    if (loading) return <h1>Loading ...</h1>
+    if (error) return <h1>Errors: {error}</h1>
+    const {product} = data
+
     return (
         <>
-            <div>Product = {product.name}</div>
+            <h1>{JSON.stringify(product.name)}</h1>
             {/*<BasePage
                 product
                 className={`product-page`}
@@ -82,7 +90,7 @@ const Product = ({product}) => {
     }
 }*/
 
-export const getStaticProps = async (context) => {
+/*export const getStaticProps = async (context) => {
     const {id, slug} = context.params
 
     let product = null
@@ -113,11 +121,44 @@ export const getStaticProps = async (context) => {
             notFound: true
         }
     }
+}*/
+
+Product.getInitialProps = async ({req, res, query}) => {
+    let product = null
+    const {id, slug} = query
+
+    if (!id) throw new Error("Parameter is invalid")
+
+    if (typeof window === 'undefined') {
+        try {
+            const res = await apolloClient.query({
+                query: PRODUCT_QUERY,
+                variables: {
+                    id,
+                    idType: 'DATABASE_ID'
+                }
+            })
+
+            product = await res.data.product
+
+        } catch (err) {
+            return {
+                notFound: true
+            }
+        }
+    } else {
+
+    }
+
+    return {
+        product,
+        initialApolloState: apolloClient.cache.extract(),
+        notFound: false
+    }
 }
 
-export const getStaticPaths = async () => {
+/*export const getStaticPaths = async () => {
     const res = await apolloClient.query({
-        query: GET_PRODUCTS,
         variables: {
             size: 1000
         }
@@ -136,6 +177,6 @@ export const getStaticPaths = async () => {
         paths,
         fallback: true
     }
-}
+}*/
 
 export default Product

@@ -24,7 +24,7 @@ Router.events.on("routeChangeStart", progress.start);
 Router.events.on("routeChangeComplete", progress.finish);
 Router.events.on("routeChangeError", progress.finish);
 
-function Viewer({children, viewer}) {
+/*function Viewer({children, viewer}) {
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -37,7 +37,7 @@ function Viewer({children, viewer}) {
     }, [])
 
     return children
-}
+}*/
 
 /*class App extends React.Component {
 
