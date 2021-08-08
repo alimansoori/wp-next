@@ -104,7 +104,7 @@ export const getStaticProps = async (context) => {
                 product: product,
                 initialApolloState: apolloClient.cache.extract()
             },
-            revalidate: 1
+            revalidate: 60
         }
 
     } catch (err) {
@@ -119,7 +119,7 @@ export const getStaticPaths = async () => {
     const res = await apolloClient.query({
         query: GET_PRODUCTS,
         variables: {
-            size: 50
+            size: 1000
         }
     })
 

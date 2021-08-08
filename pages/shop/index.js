@@ -13,7 +13,7 @@ export default function Shop({products}) {
 
     return (
         <>
-            <div>DDD</div>
+            <div>RRR</div>
             <div>{products?.edges?.map((product) => (
                 <Fragment key={product.node.id}>
                     <Link
@@ -39,7 +39,7 @@ export async function getStaticProps(context) {
     const res = await apolloClient.query({
         query: GET_PRODUCTS,
         variables: {
-            size: 100
+            size: 1000
         }
     })
 
