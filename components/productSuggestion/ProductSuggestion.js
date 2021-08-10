@@ -23,7 +23,7 @@ export default function ProductSuggestion({ products }) {
 
 
   return (
-    <Accordion on defaultActiveKey="0">
+    <Accordion defaultActiveKey="0">
       <div className="p-sug-box-wrap">
         <div className="p-sug-box">
           <img className="p-sug-box__rect" src={`/image/Rectangle 54.png`} alt="rect" />

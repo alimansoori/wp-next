@@ -6,50 +6,54 @@ import {useRouter} from "next/router";
 import GET_PRODUCTS_ID_SLUG from "../../../../gql/queries/get-products-id-slug";
 import GET_HOME_PAGE from "../../../../gql/queries/get-home-page";
 import {useQuery} from "@apollo/client";
-
-const apolloClient = initializeApollo()
+import BasePage from "../../../../components/BasePage";
+import ProductHeader from "../../../../components/productHeader/ProductHeader";
+import ProductHero from "../../../../components/productHero/ProductHero";
+import ProductInfo from "../../../../components/productInfo/ProductInfo";
+import ProductSuggestion from "../../../../components/productSuggestion/ProductSuggestion";
+import ProductSidebar from "../../../../components/productSidebar/ProductSidebar";
+import LandingLoading from "../../../../components/landingLoading/LandingLoading";
 
 const Product = (props) => {
 
     const router = useRouter();
     const {id, slug} = router.query
 
-    const {loading, error, data} = useQuery(PRODUCT_QUERY, {
+    let product = {}
+
+    const {loading: loadingProduct, error, data} = useQuery(PRODUCT_QUERY, {
         variables: {
             id,
             idType: 'DATABASE_ID'
         },
-        fetchPolicy: "cache-and-network"
     })
 
-    if (loading) return <h1>Loading ...</h1>
+
+    // if (loading) return <h1>Loading ..</h1>
     if (error) return <h1>Errors: {error}</h1>
-    const {product} = data
+    product = data?.product ? data.product : product
 
     return (
-        <>
-            <h1>{JSON.stringify(product.name)}</h1>
-            {/*<BasePage
-                product
-                className={`product-page`}
-                seo={productData.seo}
-            >
-                <div className="product-wrap">
-                    <ProductHeader />
-                    <div className="product__body">
-                        <div className="product__body__main">
-                            <ProductHero product={productData} />
-                            <ProductInfo product={productData} />
-                            <ProductSuggestion products={productData.related.nodes} />
-                        </div>
-                        <div className="product__body__side">
-                            <ProductSidebar />
-                        </div>
+        <BasePage
+            product
+            className={`product-page`}
+            seo={product?.seo}
+        >
+            <div className="product-wrap">
+                <LandingLoading/>
+                <ProductHeader/>
+                <div className="product__body">
+                    <div className="product__body__main">
+                        <ProductHero product={product}/>
+                        <ProductInfo product={product}/>
+                        <ProductSuggestion products={product?.related?.nodes ? product?.related?.nodes : []}/>
+                    </div>
+                    <div className="product__body__side">
+                        <ProductSidebar/>
                     </div>
                 </div>
-            </BasePage>*/}
-        </>
-
+            </div>
+        </BasePage>
     )
 }
 
@@ -124,7 +128,9 @@ const Product = (props) => {
     }
 }*/
 
-Product.getInitialProps = async ({req, res, query}) => {
+Product.getInitialProps = async (ctx) => {
+    const apolloClient = initializeApollo(null, ctx)
+    const {req, res, query} = ctx
     let product = null
     const {id, slug} = query
 

@@ -86,7 +86,7 @@ export const myAuthLink = (ctx) => setContext((_, {headers}) => {
     }
 });
 
-/*function createApolloClient(ctx = null) {
+function createApolloClient(ctx = null) {
 
     return new ApolloClient({
         ssrMode: typeof window === "undefined",
@@ -102,9 +102,9 @@ export const myAuthLink = (ctx) => setContext((_, {headers}) => {
         ),
         cache: new InMemoryCache()
     })
-}*/
+}
 
-function createApolloClient(ctx = null) {
+/*function createApolloClient(ctx = null) {
     return new ApolloClient({
         ssrMode: typeof window === "undefined", // set to true for SSR
         link: new HttpLink({
@@ -112,7 +112,7 @@ function createApolloClient(ctx = null) {
         }),
         cache: new InMemoryCache(),
     });
-}
+}*/
 
 export function initializeApollo(initialState = null, ctx = null) {
     const _apolloClient = apolloClient ?? createApolloClient(ctx);

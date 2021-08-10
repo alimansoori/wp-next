@@ -19,16 +19,22 @@ query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelat
         paPublishers {
           nodes {
             name
+            slug
+            uri
           }
         }
         paTranslators {
           nodes {
             name
+            slug
+            uri
           }
         }
         paWriters {
           nodes {
             name
+            slug
+            uri
           }
         }
         ... on SimpleProduct {

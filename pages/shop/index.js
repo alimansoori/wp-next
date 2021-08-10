@@ -1,66 +1,114 @@
-import React, {Fragment, useEffect, useState} from 'react'
-import {initializeApollo} from "../../components/Apollo";
+import React, {Fragment, useEffect, useRef, useState} from 'react'
 import GET_PRODUCTS from "../../gql/queries/get-products";
-import {useRouter} from "next/router";
-import Link from 'next/link'
-import GET_HOME_PAGE from "../../gql/queries/get-home-page";
 import {useQuery} from "@apollo/client";
-import LandingLoading from "../../components/landingLoading/LandingLoading";
+import {initializeApollo} from "../../components/Apollo";
+import {useRouter} from "next/router";
+import ProductHeader from "../../components/productHeader/ProductHeader";
+import ShopBody from "../../components/shopBody/ShopBody";
+import {orderBy} from "../../functions";
 
-const apolloClient = initializeApollo()
 
 export default function Shop() {
     const router = useRouter()
-    const {asPath, locale} = router
-    const {q, sort} = router.query
+    const {q, orderby} = router.query
+    const [offset, setOffset] = useState(15);
+    const [size, setSize] = useState(15);
+    const [loadingFetchMore, setLoadingFetchMore] = useState(false);
+    const [sort, setSort] = useState(orderby);
+    const [search, setSearch] = useState(q);
 
-    const {loading, error, data} = useQuery(GET_PRODUCTS, {
+    let products = []
+
+    const {loading: loadingProducts, error, data, fetchMore, refetch} = useQuery(GET_PRODUCTS, {
         variables: {
-            size: 10
+            offset: 0,
+            size: size,
+            orderby: sort ? orderBy(sort) : orderBy(1),
+            search: search ? search : ''
         },
-        fetchPolicy: "cache-and-network"
     })
 
-    if (loading) return <LandingLoading />
-    if (error) return <h1>Errors: {error}</h1>
-    const {products} = data
+    if (error) {
+        return (<div>Errors: {error}</div>)
+    }
+
+    products = data?.products?.edges ? data?.products?.edges : []
+
+    // OnFetch
+    const onFetchMore = () => {
+        setLoadingFetchMore(true)
+        fetchMore({
+            variables: {
+                offset,
+                size,
+                orderby: sort ? orderBy(sort) : orderBy(1),
+                search: search ? search : ''
+            },
+            updateQuery: (previousResult, {fetchMoreResult}) => {
+                setLoadingFetchMore(false)
+                if (!fetchMoreResult) return previousResult;
+                return Object.assign({}, previousResult, {
+                    products: {
+                        ...fetchMoreResult.products,
+                        edges: [...previousResult.products.edges, ...fetchMoreResult.products.edges],
+                    }
+                })
+            }
+        })
+        setOffset(offset + size)
+    }
+
+    // Refetch when change sortby and search query
+    const didMount = useRef(false);
+    useEffect(() => {
+        if (didMount.current) {
+            router.push({
+                pathname: '/shop',
+                query: {
+                    ...router.query,
+                    q: search,
+                    orderby: sort
+                }
+            }, undefined, {
+                shallow: true,
+            })
+            refetch()
+        } else didMount.current = true;
+    }, [search, sort])
+
+    useEffect(() => {
+        console.log(products)
+    })
 
     return (
         <>
-            <Link
-                href={`/test`}
-            >
-                <a>
-                    Test
-                </a>
-            </Link>
-            <div>{products?.edges?.map((product) => (
-                <Fragment key={product.node.id}>
-                    <Link
-                        prefetch={true}
-                        shallow={true}
-                        href={`/product/[id]/[slug]`}
-                        as={`/product/${product.node.databaseId}/${product.node.slug}`}
-                    >
-                        <a>
-                            {product.node.name}
-                        </a>
-                    </Link>
-                    <br/>
-                </Fragment>
-            ))}
+            <div className="search-wrap">
+                <ProductHeader/>
+                <ShopBody
+                    products={products}
+                    loading={loadingProducts}
+                    loadingfetchmore={loadingFetchMore}
+                    onFetchMore={onFetchMore}
+                    setSort={setSort}
+                    sort={sort}
+                />
             </div>
         </>
     )
 }
 
-Shop.getInitialProps = async ({req, res}) => {
+Shop.getInitialProps = async (ctx) => {
+    const {q, orderby} = ctx.query
+    const apolloClient = initializeApollo(null, ctx)
 
     if (typeof window === 'undefined') {
         await apolloClient.query({
             query: GET_PRODUCTS,
             variables: {
-                size: 10
+                offset: 0,
+                size: 15,
+                orderby: orderby ? orderBy(orderby) : orderBy(1),
+                search: q ? q : ''
             }
         })
     }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {v4} from "uuid";
 import {stringToNumber} from "../../functions";
@@ -30,18 +30,23 @@ export default function ProductItemBox({product}) {
         dispatch(addToCart(productQryInput));
     }
 
-    const RenderProductAttrs = ({attrs}) => {
-        if (!attrs.length) return '...'
-        const joinString = attrs.map(e => {
-            var name = e.name
-            var split = name.split("|")
+    const RenderProductAttrs = ({attrs, label}) => {
+        if (!attrs.length) return <span style={{visibility: "hidden"}}>{label}</span>
+        const content = attrs.map(e => {
+            let name = e.name
+            let split = name.split("|")
 
-            var nameRes = split.length ? split[0] : e.name
+            let nameRes = split.length ? split[0] : e.name
 
-            return nameRes
-        }).join(',')
+            console.log(e)
+            return (
+                <Link href={`/${label}/${e.slug}`}>
+                    <a>{nameRes}</a>
+                </Link>
+            )
+        }).reduce((prev, curr) => [prev, ', ', curr])
 
-        return joinString
+        return content
     }
 
     const RenderImageItem = () => {
@@ -57,10 +62,13 @@ export default function ProductItemBox({product}) {
         )
     }
 
+    /*useEffect(() => {
+        console.log(product)
+    })*/
+
     return (
-        <Link as={`/product/${product.slug}`}
-              href={`/product/[slug]`}
-              shallow={true}>
+        <Link href={`/product/[id]/[slug]`}
+              as={`/product/${product.databaseId}/${product.slug}`}>
             <a>
                 <div className="p-sug-box__container__item">
                     <div className="p-sug-box__container__item__book">
@@ -113,10 +121,10 @@ export default function ProductItemBox({product}) {
                     </div>
                     <div className="p-sug-box__container__item__details">
                         <div className="p-sug-box__container__item__details__author">
-                            <RenderProductAttrs attrs={product.paWriters.nodes}/>
+                            <RenderProductAttrs label='writer' attrs={product.paWriters.nodes}/>
                         </div>
                         <div className="p-sug-box__container__item__details__publisher">
-                            <RenderProductAttrs attrs={product.paPublishers.nodes}/>
+                            <RenderProductAttrs label='publisher' attrs={product.paPublishers.nodes}/>
                         </div>
                         <div className="p-sug-box__container__item__details__price">
                             <strong style={{flexGrow: "5"}}
@@ -131,7 +139,7 @@ export default function ProductItemBox({product}) {
                                     </strong>
                                     <div style={{flexGrow: "4"}}
                                          className="p-sug-box__container__item__details__price__item p-hero-box__l-col__purchase__price p-hero-box__l-col__purchase__price--off">
-                                        {PN.convertEnToPe(stringToNumber(product.regularPrice))}
+                                        {/*{PN.convertEnToPe(stringToNumber(product.regularPrice))}*/}
                                     </div>
                                 </>
                             )}

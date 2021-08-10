@@ -152,7 +152,7 @@ export default function ProductInfo({ product }) {
             <Tab eventKey="درباره" title="درباره">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: product.extraFields.extraAbout,
+                  __html: product?.extraFields?.extraAbout,
                 }}
               />
             </Tab>

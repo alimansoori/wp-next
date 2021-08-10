@@ -369,7 +369,8 @@ export function copy(array) {
 }
 
 export function stringToNumber(str = 0) {
-	if (typeof str == 'number') return str.toLocaleString();
+	if (!str) return 0;
+	if (typeof str === 'number') return str.toLocaleString();
 
 	
 	let splitStr = str.split(/(\d+)/);
@@ -399,4 +400,49 @@ export function getValueByKey(obj, key) {
 		return obj[key]
 	}
 	return null;
+}
+
+export function orderBy(key = 1) {
+	let orderBy = []
+
+	switch (key) {
+		case "1":
+			orderBy.push({
+				'field': 'DATE',
+				'order': 'DESC'
+			})
+			break;
+		case "2":
+			orderBy.push({
+				'field': 'DATE',
+				'order': 'ASC'
+			})
+			break;
+		case "3":
+			orderBy.push({
+				'field': 'PRICE',
+				'order': 'DESC'
+			})
+			break;
+		case "4":
+			orderBy.push({
+				'field': 'PRICE',
+				'order': 'ASC'
+			})
+			break;
+		case "5":
+			orderBy.push({
+				'field': 'RATING',
+				'order': 'DESC'
+			})
+			break;
+
+		default:
+			orderBy.push({
+				'field': 'DATE',
+				'order': 'DESC'
+			})
+			break;
+	}
+	return orderBy
 }

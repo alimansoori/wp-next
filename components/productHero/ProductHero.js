@@ -13,11 +13,13 @@ export default function ProductHero({product}) {
 
     const productQryInput = {
         clientMutationId: v4(), // Generate a unique id.
-        productId: product.databaseId,
+        productId: product?.databaseId,
     };
 
     const RenderProductAttrs = ({attrs}) => {
-        const joinString = attrs.map(e => {
+        if (!attrs) return '';
+
+        const joinString = attrs?.map(e => {
             var name = e.name
             var split = name.split("|")
 
@@ -35,7 +37,7 @@ export default function ProductHero({product}) {
     }
     const handleAddToFavorites = () => {
         dispatch(
-            addToFavorites(product.databaseId)
+            addToFavorites(product?.databaseId)
         )
     }
 
@@ -47,8 +49,8 @@ export default function ProductHero({product}) {
                     <div className="p-hero-box__r-col__pic">
                         <img
                             className="p-hero-box__r-col__pic__img"
-                            src={product.image ? product.image.sourceUrl : '/image/book picture.png'}
-                            alt={product.image ? product.image.altText : null}
+                            src={product?.image ? product.image.sourceUrl : '/image/book picture.png'}
+                            alt={product?.image ? product.image.altText : null}
                         />
                     </div>
                     <div className="p-hero-box__r-col__options">
@@ -99,67 +101,67 @@ export default function ProductHero({product}) {
                 </div>
                 <div className="p-hero-box__l-col">
                     <div className="p-hero-box__l-col__info">
-                        <h1 className="p-hero-box__l-col__info_name">{product.name}</h1>
-                        {product.extraFields.extraentitle && (
+                        <h1 className="p-hero-box__l-col__info_name">{product?.name}</h1>
+                        {product?.extraFields?.extraentitle && (
                             <span
-                                className="p-hero-box__l-col__info_name--eng">{product.extraFields.extraentitle}</span>
+                                className="p-hero-box__l-col__info_name--eng">{product?.extraFields?.extraentitle}</span>
                         )}
 
                         <div className="p-hero-box__l-col__info__details">
                             <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__author">
                                     <strong>{`سایز: `}</strong>
-                                    <RenderProductAttrs attrs={product.paDimensions.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paDimensions?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__translator">
                                     <strong>{`سری چاپ: `}</strong>
-                                    <RenderProductAttrs attrs={product.paBookSeriesPrints.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`تعدا صفحه: `}</strong>
-                                    <RenderProductAttrs attrs={product.paNumberPages.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`سال: `}</strong>
-                                    <RenderProductAttrs attrs={product.paSolarPublishDates.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paSolarPublishDates?.nodes}/>
                                 </div>
                             </div>
                             <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__author">
                                     <strong>{`نویسنده: `}</strong>
-                                    <RenderProductAttrs attrs={product.paWriters.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paWriters?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__translator">
                                     <strong>{`مترجم: `}</strong>
-                                    <RenderProductAttrs attrs={product.paTranslators.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`نشر: `}</strong>
-                                    <RenderProductAttrs attrs={product.paPublishers.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`نوع جلد: `}</strong>
-                                    <RenderProductAttrs attrs={product.paCoverTypes.nodes}/>
+                                    <RenderProductAttrs attrs={product?.paCoverTypes?.nodes}/>
                                 </div>
                             </div>
                         </div>
                         <div
                             dangerouslySetInnerHTML={{
-                                __html: product.description,
+                                __html: product?.description,
                             }}
                             className="p-hero-box__l-col__info__about"
                         />
                     </div>
                     <div className="p-hero-box__l-col__purchase">
                         <div className="p-hero-box__l-col__purchase-wrap">
-                            {product.regularPrice !== product.price && (
+                            {product.regularPrice !== product?.price && (
                                 <div
                                     className="p-hero-box__l-col__purchase__price p-hero-box__l-col__purchase__price--off">
-                                    {PN.convertEnToPe(stringToNumber(product.regularPrice))}
+                                    {PN.convertEnToPe(stringToNumber(product?.regularPrice))}
                                 </div>
                             )}
                             <div className="p-hero-box__l-col__purchase__price">
-                                {PN.convertEnToPe(stringToNumber(product.price))}
+                                {PN.convertEnToPe(stringToNumber(product?.price))}
                             </div>
                             <button onClick={(e) => handleAddToCart(e)} className="p-hero-box__l-col__purchase__buy">
                                 <div className="p-hero-box__l-col__purchase__buy__title">
@@ -181,26 +183,26 @@ export default function ProductHero({product}) {
                     <div className="p-hero-box__r-col__pic">
                         <img
                             className="p-hero-box__r-col__pic__img"
-                            src={product.image ? product.image.sourceUrl : '/image/book picture.png'}
-                            alt={product.image ? product.image.altText : null}
+                            src={product?.image ? product?.image.sourceUrl : '/image/book picture.png'}
+                            alt={product?.image ? product?.image.altText : null}
                         />
                     </div>
                 </div>
                 <div className="p-hero-box__l-col">
                     <div className="p-hero-box__l-col__info">
-                        <h1 className="p-hero-box__l-col__info_name">{product.name}</h1>
+                        <h1 className="p-hero-box__l-col__info_name">{product?.name}</h1>
                         <div className="p-hero-box__l-col__info__author">
-                            <RenderProductAttrs attrs={product.paWriters.nodes}/>
+                            <RenderProductAttrs attrs={product?.paWriters?.nodes}/>
                         </div>
                         <div className="p-hero-box__l-col__info__translator">
-                            <RenderProductAttrs attrs={product.paTranslators.nodes}/>
+                            <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
                         </div>
                         <div className="p-hero-box__l-col__info__publisher">
-                            <RenderProductAttrs attrs={product.paPublishers.nodes}/>
+                            <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>
                         </div>
                         <div
                             dangerouslySetInnerHTML={{
-                                __html: product.description,
+                                __html: product?.description,
                             }}
                             className="p-hero-box__l-col__info__about"
                         />
