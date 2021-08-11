@@ -7,9 +7,11 @@ import {addToCart} from "../../redux/actions";
 import BounceLoader from 'react-spinners/BounceLoader'
 import {addToFavorites} from "../../redux/actions/viewer.actions";
 import PN from 'persian-number'
+import {useRouter} from "next/router";
 
 export default function ProductItemBox({product}) {
 
+    const router = useRouter()
     const dispatch = useDispatch();
     const {loading} = useSelector(state => state.cart)
     const {loading: loadingFavorite} = useSelector(state => state.viewer.favorite)
@@ -32,19 +34,29 @@ export default function ProductItemBox({product}) {
 
     const RenderProductAttrs = ({attrs, label}) => {
         if (!attrs.length) return <span style={{visibility: "hidden"}}>{label}</span>
-        const content = attrs.map(e => {
+
+        const handleAttrLink = (event, attr) => {
+            event.preventDefault()
+            router.push({
+                pathname: `/shop/${label}/[${label}]`,
+                query: {
+                    [label]: decodeURI(attr.slug)
+                }
+            }, undefined, {shallow: true})
+        }
+        let content = []
+        attrs.map((e, i) => {
             let name = e.name
             let split = name.split("|")
 
             let nameRes = split.length ? split[0] : e.name
 
-            console.log(e)
-            return (
-                <Link href={`/${label}/${e.slug}`}>
-                    <a>{nameRes}</a>
-                </Link>
+            content.push(
+                <span key={i} onClick={(event) => handleAttrLink(event,e)}>
+                    {nameRes}
+                </span>
             )
-        }).reduce((prev, curr) => [prev, ', ', curr])
+        })
 
         return content
     }
@@ -61,10 +73,6 @@ export default function ProductItemBox({product}) {
             />
         )
     }
-
-    /*useEffect(() => {
-        console.log(product)
-    })*/
 
     return (
         <Link href={`/product/[id]/[slug]`}
@@ -121,10 +129,10 @@ export default function ProductItemBox({product}) {
                     </div>
                     <div className="p-sug-box__container__item__details">
                         <div className="p-sug-box__container__item__details__author">
-                            <RenderProductAttrs label='writer' attrs={product.paWriters.nodes}/>
+                            <RenderProductAttrs label='writer' attrs={product?.paWriters?.nodes}/>
                         </div>
                         <div className="p-sug-box__container__item__details__publisher">
-                            <RenderProductAttrs label='publisher' attrs={product.paPublishers.nodes}/>
+                            <RenderProductAttrs label='publisher' attrs={product?.paPublishers?.nodes}/>
                         </div>
                         <div className="p-sug-box__container__item__details__price">
                             <strong style={{flexGrow: "5"}}
@@ -139,7 +147,7 @@ export default function ProductItemBox({product}) {
                                     </strong>
                                     <div style={{flexGrow: "4"}}
                                          className="p-sug-box__container__item__details__price__item p-hero-box__l-col__purchase__price p-hero-box__l-col__purchase__price--off">
-                                        {/*{PN.convertEnToPe(stringToNumber(product.regularPrice))}*/}
+                                        {PN.convertEnToPe(stringToNumber(product.regularPrice))}
                                     </div>
                                 </>
                             )}

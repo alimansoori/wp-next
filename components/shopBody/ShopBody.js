@@ -8,30 +8,7 @@ import Link from "next/link";
 import ProductItemBox from "../productItemBox/ProductItemBox";
 import ShopFilterDropDown from "./ShopFilterDropDawn";
 
-export default function ShopBody({products, loading, loadingfetchmore, onFetchMore, setSort, sort}) {
-
-    /*const RenderInfiniteScroll = () => {
-        return (
-            <InfiniteScroll
-                dataLength={products.length}
-                next={() => setOffset(offset + 20)}
-                hasMore={pageInfo ? pageInfo.offsetPagination.hasMore : true}
-                loader={<Loader/>}
-            >
-                <div className="container-fluid">
-                    <div className="row">
-                        {
-                            products.length ? products.map(product => (
-                                <div key={product.node.id + Math.random()} className="col-md-4">
-                                    <ProductItemBox product={product.node}/>
-                                </div>
-                            )) : null
-                        }
-                    </div>
-                </div>
-            </InfiniteScroll>
-        )
-    }*/
+export default function ShopBody({products, page_info, loading, loadingfetchmore, onFetchMore, setSort, sort}) {
 
     return (
         <div className="search__body">
@@ -59,22 +36,16 @@ export default function ShopBody({products, loading, loadingfetchmore, onFetchMo
                                 <div key={product.node.id} className="col-md-4">
                                     <ProductItemBox product={product.node} />
                                 </div>
-                                /*<Fragment key={product.node.id}>
-                                    <Link
-                                        prefetch={true}
-                                        shallow={true}
-                                        href={`/product/[id]/[slug]`}
-                                        as={`/product/${product.node.databaseId}/${product.node.slug}`}
-                                    >
-                                        <a>
-                                            {product.node.name}
-                                        </a>
-                                    </Link>
-                                    <br/>
-                                </Fragment>*/
                             ))}
                         </div>
-                        {(loading || loadingfetchmore) ? (<ShopListLoader/>) : <FetchMore onFetchMore={onFetchMore}/>}
+                        {(loading || loadingfetchmore) ?
+                            (<ShopListLoader/>) :
+                            (
+                                page_info?.offsetPagination?.hasMore ? (
+                                    <FetchMore onFetchMore={onFetchMore}/>
+                                ) : null
+                            )
+                        }
                     </div>
                 </div>
             </div>
