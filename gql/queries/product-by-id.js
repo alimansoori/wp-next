@@ -10,6 +10,12 @@ const PRODUCT_QUERY = gql`
       slug
       description
       shortDescription
+      productCategories {
+        nodes {
+         name
+         slug
+        }
+      }
       extraFields {
         extraAbout
         extraentitle

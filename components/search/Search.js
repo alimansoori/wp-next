@@ -12,39 +12,28 @@ import PN from 'persian-number'
 export default function Search() {
     const dispatch = useDispatch()
     const router = useRouter()
-    const { asPath } = router
     const searchValue = router.query.q
     const { products, loading } = useSelector(state => state.search)
     const [value, setValue] = useState('')
-    const [activeKey, setActiveKey] = useState('all')
+    const [activeKey, setActiveKey] = useState('a')
+    const [dropDownShow, setDropDownShow] = useState(false);
 
     // focus Search Input
     let searchInput = null
-
-    useEffect(() => {
-        // searchInput.click()
-        // searchInput.focus()
-    }, [searchInput])
 
     const didMount = useRef(false);
     useEffect(() => {
         if (didMount.current) {
             dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
 
-            // if (value.length > 0 && router.pathname == "/shop/[[...slugs]]") {
-            //     router.push({
-            //         pathname: "/shop/[[...slugs]]",
-            //         query: {
-            //             ...router.query,
-            //             q: value,
-            //         },
-            //     });
-            // }
-
-            dispatch(getProductsBySearchInput(value, 10, activeKey, 'all'))
+            dispatch(getProductsBySearchInput(value, 10, activeKey))
         } else didMount.current = true;
 
     }, [value, activeKey])
+
+    useEffect(() => {
+        if (loading) setDropDownShow(true)
+    }, [loading])
 
     const SearchResultBox = () => {
         return (
@@ -54,19 +43,19 @@ export default function Search() {
                         defaultActiveKey={activeKey} id="uncontrolled-tab-example"
                         onSelect={(selectedKey) => setActiveKey(selectedKey)}
                     >
-                        <Tab eventKey="all" title="همه">
+                        <Tab eventKey="a" title="همه">
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
-                        <Tab eventKey="topic" title="عنوان">
+                        <Tab eventKey="t" title="عنوان">
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
-                        <Tab eventKey="writer" title="نویسنده">
+                        <Tab eventKey="wr" title="نویسنده">
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
-                        <Tab eventKey="translator" title="مترجم">
+                        <Tab eventKey="tr" title="مترجم">
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
-                        <Tab eventKey="publisher" title="ناشر">
+                        <Tab eventKey="pu" title="ناشر">
                             {products.length ? <RenderResultItems /> : null}
                         </Tab>
                     </Tabs>
@@ -74,17 +63,18 @@ export default function Search() {
                         <Link
                             href={
                                 {
-                                    pathname: "/shop/[[...slugs]]",
+                                    pathname: "/shop",
                                     query: {
-                                        ...router.query,
+                                        // ...router.query,
                                         q: value,
+                                        t: activeKey
                                     },
                                 }
                             }
                             shallow={true}
                         >
                             <a>
-                                <button className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
+                                <button onClick={() => setDropDownShow(false)} className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
                             </a>
                         </Link>
                     ) : null}
@@ -97,9 +87,9 @@ export default function Search() {
 
         return (
             <div className={`search-bar__suggestion__tab-content`}>
-                {products.map((product) => {
+                {products.map((product, index) => {
                     return (
-                        <SearchResultItem key={product.node.id} product={product.node} />
+                        <SearchResultItem key={index} product={product.node} />
                     )
                 })}
             </div>
@@ -129,8 +119,8 @@ export default function Search() {
     const SearchResultItem = ({ product }) => {
         return (
 
-            <Link as={`/product/${product.slug}`}
-                href={`/product/[slug]`} >
+            <Link as={`/product/${product.databaseId}/${product.slug}`}
+                href={`/product/[id]/[slug]`} >
                 <a className={`search-bar__suggestion__tab-content-wrap`}>
                     <div className={`search-bar__suggestion__tab-content__pic`}>
                         <RenderSearchResultItemImage img={product.image} />
@@ -173,10 +163,10 @@ export default function Search() {
 
     const SearchResultItemAttrs = ({ attrs }) => {
         const joinString = attrs.map(e => {
-            var name = e.name
-            var split = name.split("|")
+            let name = e.name
+            let split = name.split("|")
 
-            var nameRes = split.length ? split[0] : e.name
+            let nameRes = split.length ? split[0] : e.name
 
             return nameRes
         }).join(',')
@@ -188,7 +178,7 @@ export default function Search() {
     const handleSubmitSearch = (e) => {
         e.preventDefault()
         router.push({
-            pathname: "/shop/[[...slugs]]",
+            pathname: "/shop",
             query: {
                 ...router.query,
                 q: value,
@@ -196,10 +186,14 @@ export default function Search() {
         }, undefined, {shallow: true})
     }
 
+    const handleOnToggle = (isOpen) => {
+        setDropDownShow(isOpen)
+    }
+
     return (
         <div className={`search-bar-wrap`}>
             {router.asPath == '/' ? (
-                <Dropdown show >
+                <Dropdown show={dropDownShow} onToggle={handleOnToggle}>
                     <Dropdown.Toggle as="div" id="dropdown-basic">
                         <form onSubmit={(e) => handleSubmitSearch(e)}>
                             <div className={`search-bar`}>
@@ -246,7 +240,7 @@ export default function Search() {
                     <SearchResultBox />
                 </Dropdown>
             ) : (
-                <Dropdown >
+                <Dropdown show={dropDownShow} onToggle={handleOnToggle}>
                     <Dropdown.Toggle as="div" id="dropdown-basic">
                         <form onSubmit={handleSubmitSearch}>
                             <div className={`search-bar`}>

@@ -1,14 +1,19 @@
-import React, { Fragment } from 'react'
+import React, {Fragment, useEffect} from 'react'
 import { randomString, uriToUse } from '../../functions'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { useRouter } from 'next/router'
+import {catFilters} from "../../redux/actions/category.actions";
 
-const CategoryFilterRender = (props) => {
+const CategoryFilterRender = ({cats, cat}) => {
     const router = useRouter();
+    const dispatch = useDispatch()
     const { categoriesFilter } = useSelector(state => state.category);
 
     // console.log('categoriesFilter', categoriesFilter)
+    useEffect(() => {
+        dispatch(catFilters(cat, cats?.productCategories?.edges));
+    }, [cat])
 
     const RenderCatIsRoot = () => (
         <>
@@ -41,10 +46,10 @@ const CategoryFilterRender = (props) => {
                             <h2 className="p-side-box__list__title">
                                 <Link
                                     href={{
-                                        pathname: "/shop/[[...slugs]]",
+                                        pathname: "/shop/category/[category]",
                                         query: {
                                             // ...router.query,
-                                            slugs: cat.node.parent ? uriToUse(cat.node.parent.node.uri) : [],
+                                            category: cat?.node?.slug,
                                         }
                                     }}
                                     shallow={true}
@@ -57,11 +62,7 @@ const CategoryFilterRender = (props) => {
                             </h2>
                             <Link
                                 href={{
-                                    pathname: "/shop/[[...slugs]]",
-                                    query: {
-                                        // ...router.query,
-                                        slugs: [],
-                                    }
+                                    pathname: "/shop",
                                 }}
                                 shallow={true}
                                 scroll= {false}
@@ -115,10 +116,10 @@ const CategoryFilterRender = (props) => {
             <Link
                 key={cat.node.id}
                 href={{
-                    pathname: "/shop/[[...slugs]]",
+                    pathname: "/shop/category/[category]",
                     query: {
                         // ...router.query,
-                        slugs: uriToUse(cat.node.uri),
+                        category: cat?.node?.slug,
                     }
                 }}
                 shallow={true}

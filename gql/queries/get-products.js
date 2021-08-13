@@ -1,14 +1,16 @@
 import { gql } from '@apollo/client';
 
 const GET_PRODUCTS = gql` 
-query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelationInput], $offset: Int, $size: Int, $orderby: [ProductsOrderbyInput], $include: [Int] ) {
-  products(where: {search: $search, include: $include, orderby: $orderby, taxonomyFilter: $taxonomyFilter, offsetPagination: {offset: $offset, size: $size}}) {
+query GET_PRODUCTS($after: String, $before: String, $first: Int, $last: Int, $where: RootQueryToProductConnectionWhereArgs) {
+  products(after: $after, before: $before, first: $first, last: $last, where: $where) {
     edges {
+      cursor
       node {
         id
         databaseId
+        averageRating
+        date
         name
-        description
         type
         slug
         image {
@@ -44,11 +46,10 @@ query GET_PRODUCTS($search: String, $taxonomyFilter: [ProductTaxonomyFilterRelat
       }
     }
     pageInfo {
-      offsetPagination {
-        hasMore
-        hasPrevious
-        total
-      }
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
     }
   }
 }

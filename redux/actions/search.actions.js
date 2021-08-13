@@ -6,8 +6,12 @@ import GET_PRODUCTS_FROM_WRITERS from "../../gql/queries/get-products-from-write
 import GET_PRODUCTS_FROM_TRANSLATORS from "../../gql/queries/get-products-from-translators";
 import GET_PRODUCTS_FROM_PUBLISHERS from "../../gql/queries/get-products-from-publishers";
 import GET_PRODUCTS_FROM_ALL from "../../gql/queries/get-products-from-all";
+import {getTaxonomyFilter, orderBy, sortByArray} from "../../functions";
+import {useQuery} from "@apollo/client";
+import {initializeApollo} from "../../components/Apollo";
+import GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH from "../../gql/queries/get-publisher-writer-translator-for-search";
 
-export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
+export const getProductsBySearchInput = (value, count, activeKey = 't') => {
     return async dispatch => {
         dispatch({
             type: searchConstants.SEARCH_REQUEST,
@@ -16,9 +20,120 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
             }
         });
 
+        const apolloClient = initializeApollo()
+
         try {
-            if (!value) value = "fkdfkasllfasdsfh";
-            var result = null
+            if (!value) {
+                dispatch({
+                    type: searchConstants.SEARCH_SUCCESS,
+                    payload: {
+                        products: [],
+                    }
+                });
+                return
+            }
+
+
+            const dataProductTopic = await apolloClient.query({
+                query: GET_PRODUCTS,
+                variables: {
+                    first: 5,
+                    where: {
+                        orderby: orderBy(1),
+                        search: value ? value : '',
+                    }
+                },
+            })
+
+            const dataGetPWT = await apolloClient.query({
+                query: GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH,
+                variables: {
+                    first: 5,
+                    search: value
+                },
+            })
+
+            const {paPublishers, paTranslators, paWriters} = dataGetPWT.data
+            const publisherSlugs = paPublishers?.nodes.map(elem => elem?.slug)
+            const writerSlugs = paWriters?.nodes.map(elem => elem?.slug)
+            const translatorSlugs = paTranslators?.nodes.map(elem => elem?.slug)
+
+            let taxFilter = []
+
+            if (publisherSlugs.length && (activeKey === 'pu' || activeKey === 'a')) {
+                taxFilter.push({
+                    operator: "IN",
+                    taxonomy: "PAPUBLISHER",
+                    terms: publisherSlugs
+                })
+            }
+            if (translatorSlugs.length && (activeKey === 'tr' || activeKey === 'a')) {
+                taxFilter.push({
+                    operator: "IN",
+                    taxonomy: "PATRANSLATOR",
+                    terms: translatorSlugs
+                })
+            }
+            if (writerSlugs.length && (activeKey === 'wr' || activeKey === 'a')) {
+                taxFilter.push({
+                    operator: "IN",
+                    taxonomy: "PAWRITER",
+                    terms: writerSlugs
+                })
+            }
+
+            if (!taxFilter.length) {
+                taxFilter = [{
+                    operator: "IN",
+                    taxonomy: "VISIBLEPRODUCT",
+                    terms: ["XXXYYY"]
+                }]
+            }
+
+            const dataProductKey = await apolloClient.query({
+                query: GET_PRODUCTS,
+                variables: {
+                    first: 5,
+                    where: {
+                        orderby: orderBy(1),
+                        taxonomyFilter: {
+                            filters: taxFilter,
+                            relation: "OR"
+                        }
+                    }
+                },
+            })
+
+            let dataFinish = {}
+
+            /*if (typeof activeKey === "undefined" || activeKey === 't') {
+                dataFinish = dataProductTopic.data
+            }*/
+            const tArray = ["a", "tr", "pu", "wr"]
+            if (typeof activeKey !== "undefined" && tArray.includes(activeKey)) {
+                if (activeKey === 'a') {
+                    dataFinish = Object.assign({}, dataProductTopic.data, {
+                        products: {
+                            edges: [...dataProductKey?.data?.products?.edges, ...dataProductKey?.data?.products?.edges],
+                        }
+                    })
+                } else if (activeKey === 'wr' || activeKey === 'tr' || activeKey === 'pu') {
+                    dataFinish = Object.assign({}, {
+                        products: {
+                            edges: [...dataProductKey?.data?.products?.edges],
+                        }
+                    })
+                }
+            }
+
+            dispatch({
+                type: searchConstants.SEARCH_SUCCESS,
+                payload: {
+                    products: dataFinish?.products?.edges ? dataFinish.products.edges : [],
+                }
+            })
+
+            /*let result = null
             var products = []
 
             switch (activeKey) {
@@ -114,14 +229,14 @@ export const getProductsBySearchInput = (value, count, activeKey = 'topic') => {
                 payload: {
                     products: products,
                 }
-            });
+            });*/
         } catch (error) {
-            // dispatch({
-            //     type: searchConstants.SEARCH_FAILURE,
-            //     payload: {
-            //         error: error.response.data.message
-            //     }
-            // });
+            dispatch({
+                type: searchConstants.SEARCH_FAILURE,
+                payload: {
+                    error: error.response.data.message
+                }
+            });
         }
     }
 }

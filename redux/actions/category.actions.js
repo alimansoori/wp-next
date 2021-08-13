@@ -143,25 +143,31 @@ export const searchCategories = (filterQueries = {}) => {
     }
 };
 
-export const catFilters = (slugs, categories) => {
+export const catFilters = (categorySlug, categories) => {
     return async (dispatch, getState) => {
 
         if (!categories.length) return false
 
         let currentCategory = null
 
-        if (slugs === undefined) {
+        if (!categorySlug) {
             currentCategory = {
                 node: {
-                    title: 'همه کتاب‌ها'
-        }
+                    title: 'همه کتاب‌ها',
+
+                }
             }
-        } else if (slugs.length) {
+        } else {
             currentCategory = categories.find(cat => {
-                return cat.node.slug === slugs[slugs.length - 1]
+                return cat.node.slug === categorySlug
             })
         }
 
+        let slugs = currentCategory?.node?.uri ? currentCategory.node.uri.split("/") : undefined
+
+        if (Array.isArray(slugs) && slugs.length) {
+            slugs = slugs.filter(e => (e !== "" && e !== "product-category"))
+        }
         dispatch({
             type: categoryConstants.CATEGORY_FILTERS_BY_SLUGS,
             payload: {
@@ -253,9 +259,9 @@ const recurciveCat = (list, slugs = [], activeCatId = null) => {
 const renderSlugs = (slugs, categories) => {
     const catToTree = toTree(categories)
 
-    var node = [];
-    var activeId = null;
-    var isRoot = false;
+    let node = [];
+    let activeId = null;
+    let isRoot = false;
     if (typeof slugs === 'undefined' || !catToTree) {
         node = catToTree.filter((cat) => {
             return !cat.node.parentDatabaseId
@@ -310,21 +316,23 @@ const renderSlugs = (slugs, categories) => {
 const toTree = (list) => {
     var map = {}, node, roots = [], i;
 
-    for (i = 0; i < list.length; i += 1) {
-        map[list[i].node.databaseId] = i; // initialize the map
+    let newList = [...list]
+
+    for (i = 0; i < newList.length; i += 1) {
+        map[newList[i].node.databaseId] = i; // initialize the map
         // Object.preventExtensions(list[i])
-        list[i] = {
-            ...list[i],
+        newList[i] = {
+            ...newList[i],
             children: []
         };
     }
 
-    for (i = 0; i < list.length; i += 1) {
-        node = list[i].node;
-        if (node.parentDatabaseId && list[map[node.parentDatabaseId]]) {
-            list[map[node.parentDatabaseId]].children.push(list[i]);
+    for (i = 0; i < newList.length; i += 1) {
+        node = newList[i].node;
+        if (node.parentDatabaseId && newList[map[node.parentDatabaseId]]) {
+            newList[map[node.parentDatabaseId]].children.push(newList[i]);
         }
-        roots.push(list[i]);
+        roots.push(newList[i]);
     }
     return roots;
 }

@@ -6,15 +6,14 @@ import { catFilters } from "../../redux/actions/category.actions";
 import { categoryConstants } from "../../redux/actions/constants";
 import CategoryFilterRender from "./CategoryFilterRender";
 
-export default function ProductSidebar({ slugs }) {
-  const router = useRouter();
+export default function ProductSidebar({ cat, cats, loading }) {
   const dispatch = useDispatch();
-  const { categories } = useSelector(state => state.category);
+  // const { categories } = useSelector(state => state.category);
 
-  useEffect(() => {
-    let cats = [...categories]
+  /*useEffect(() => {
+    // let cats = [...categories]
     dispatch(catFilters(slugs, cats));
-  }, [slugs, categories]);
+  }, [slugs, cats]);*/
 
   return (
     <div className="p-side-box-wrap">
@@ -83,7 +82,7 @@ export default function ProductSidebar({ slugs }) {
             src={`/image/Rectangle 78.png`}
             alt="side-icon"
           />
-          <CategoryFilterRender />
+          <CategoryFilterRender cats={cats} cat={cat} />
         </div>
       </div>
     </div>

@@ -6,118 +6,143 @@ import {useRouter} from "next/router";
 import ProductHeader from "../../components/productHeader/ProductHeader";
 import ShopBody from "../../components/shopBody/ShopBody";
 import {getTaxonomyFilter, orderBy} from "../../functions";
+import useQueryShopPage from "../../hooks/useQueryShopPage";
+import GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH from "../../gql/queries/get-publisher-writer-translator-for-search";
+import GET_CATS from "../../gql/queries/get-categories";
+import ProductSidebar from "../../components/productSidebar/ProductSidebar";
 
 
 export default function Shop() {
     const router = useRouter()
-    const {q, orderby, category, publisher, writer, translator} = router.query
-    const [offset, setOffset] = useState(15);
-    const [size, setSize] = useState(15);
-    const [loadingFetchMore, setLoadingFetchMore] = useState(false);
-    const [sort, setSort] = useState(orderby);
+    const {q, orderby, category} = router.query
+    const [sort, setSort] = useState(orderby ? orderby : 1);
     const [search, setSearch] = useState(q);
-    const [categoryState, setCategoryState] = useState(category);
-    const [publisherState, setPublisherState] = useState(publisher);
-    const [writerState, setWriterState] = useState(writer);
-    const [translatorState, setTranslatorState] = useState(translator);
 
-    let products = []
-    const taxonomyFilter = getTaxonomyFilter(categoryState, publisherState, writerState, translatorState)
+    const {
+        loading: loadingP,
+        error: errorP,
+        data,
+        onFetchMore,
+        loadingFetchMore
+    } = useQueryShopPage( router, search, sort, category)
 
-    const {loading: loadingProducts, error, data, fetchMore, refetch} = useQuery(GET_PRODUCTS, {
+    // Fetch Categories
+    const {loading: loadingCats, error: errorCats, data: dataCats} = useQuery(GET_CATS, {
         variables: {
-            offset: 0,
-            size: size,
-            orderby: sort ? orderBy(sort) : orderBy(1),
-            search: search ? search : '',
-            taxonomyFilter
+            first: 200,
         },
     })
 
-    if (error) {
-        return (<div>Errors: {error}</div>)
+
+    if (errorP) {
+        return (<div>Errors: {errorP}</div>)
     }
 
-    products = data?.products?.edges ? data?.products?.edges : []
-    const pageInfo = data?.products?.pageInfo ? data?.products?.pageInfo : {}
 
-    // OnFetch
-    const onFetchMore = () => {
-        setLoadingFetchMore(true)
-        fetchMore({
-            variables: {
-                offset,
-                size,
-                orderby: sort ? orderBy(sort) : orderBy(1),
-                search: search ? search : '',
-                taxonomyFilter
-            },
-            updateQuery: (previousResult, {fetchMoreResult}) => {
-                setLoadingFetchMore(false)
-                if (!fetchMoreResult) return previousResult;
-                return Object.assign({}, previousResult, {
-                    products: {
-                        ...fetchMoreResult.products,
-                        edges: [...previousResult.products.edges, ...fetchMoreResult.products.edges],
-                    }
-                })
-            }
-        })
-        setOffset(offset + size)
-    }
-
-    // Refetch when change sortby and search query
-    const didMount = useRef(false);
-    useEffect(() => {
-        if (didMount.current) {
-            router.push({
-                pathname: '/shop',
-                query: {
-                    ...router.query,
-                    q: search,
-                    orderby: sort
-                }
-            }, undefined, {
-                shallow: true,
-            })
-            refetch()
-        } else didMount.current = true;
-    }, [search, sort])
-
-    console.log(pageInfo)
     return (
         <div className="search-wrap">
             <ProductHeader/>
-            <ShopBody
-                products={products}
-                page_info={pageInfo}
-                loading={loadingProducts}
-                loadingfetchmore={loadingFetchMore}
-                onFetchMore={onFetchMore}
-                setSort={setSort}
-                sort={sort}
-            />
+            <div className="search__body">
+                <ShopBody
+                    products={data?.products?.edges ? data?.products?.edges : []}
+                    page_info={data?.products?.pageInfo ? data?.products?.pageInfo : {}}
+                    page_info2={data?.products?.pageInfo2 ? data?.products?.pageInfo2 : {}}
+                    loading={loadingP}
+                    loadingfetchmore={loadingFetchMore}
+                    onFetchMore={onFetchMore}
+                    setSort={setSort}
+                    sort={sort}
+                />
+                <div className="search__body__side">
+                    <ProductSidebar cats={dataCats} loading={loadingCats} cat={category}/>
+                </div>
+            </div>
         </div>
     )
 }
 
 Shop.getInitialProps = async (ctx) => {
-    const {q, orderby, category, publisher, writer, translator} = ctx.query
     const apolloClient = initializeApollo(null, ctx)
+
+    if (typeof window !== "undefined") {
+        return {
+            initialApolloState: apolloClient.cache.extract()
+        }
+    }
+
+    const {q, t, orderby, category, publisher, writer, translator} = ctx.query
     const taxonomyFilter = getTaxonomyFilter(category, publisher, writer, translator)
 
-    if (typeof window === 'undefined') {
-        await apolloClient.query({
-            query: GET_PRODUCTS,
-            variables: {
-                offset: 0,
-                size: 15,
+    // const tArray = ["a", "t", "tr", "p", "w"]
+    // if (typeof t !== "undefined" && tArray.includes(t)) {
+    const tSearch = await apolloClient.query({
+        query: GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH,
+        variables: {
+            first: 50,
+            search: q
+        }
+    })
+
+    const {paPublishers, paTranslators, paWriters} = await tSearch.data
+    const publisherSlugs = paPublishers?.nodes.map(elem => elem?.slug)
+    const writerSlugs = paWriters?.nodes.map(elem => elem?.slug)
+    const translatorSlugs = paTranslators?.nodes.map(elem => elem?.slug)
+
+    let taxFilter = []
+    if (publisherSlugs.length && (t === 'pu' || t === 'a')) {
+        taxFilter.push({
+            operator: "IN",
+            taxonomy: "PAPUBLISHER",
+            terms: publisherSlugs
+        })
+    }
+    if (translatorSlugs.length && (t === 'tr' || t === 'a')) {
+        taxFilter.push({
+            operator: "IN",
+            taxonomy: "PATRANSLATOR",
+            terms: translatorSlugs
+        })
+    }
+    if (writerSlugs.length && (t === 'wr' || t === 'a')) {
+        taxFilter.push({
+            operator: "IN",
+            taxonomy: "PAWRITER",
+            terms: writerSlugs
+        })
+    }
+
+    await apolloClient.query({
+        query: GET_PRODUCTS,
+        variables: {
+            first: 15,
+            where: {
+                orderby: orderby ? orderBy(orderby) : orderBy(1),
+                taxonomyFilter: {
+                    filters: taxFilter,
+                    relation: "OR"
+                }
+            }
+        }
+    })
+    // }
+
+    await apolloClient.query({
+        query: GET_PRODUCTS,
+        variables: {
+            first: 15,
+            where: {
                 orderby: orderby ? orderBy(orderby) : orderBy(1),
                 search: q ? q : '',
                 taxonomyFilter
             }
-        })
-    }
+        }
+    })
+    await apolloClient.query({
+        query: GET_CATS,
+        variables: {
+            first: 200,
+        }
+    })
 
     return {
         initialApolloState: apolloClient.cache.extract()

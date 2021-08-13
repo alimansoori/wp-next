@@ -448,61 +448,119 @@ export function orderBy(key = 1) {
     return orderBy
 }
 
-export function getTaxonomyFilter(category, publisher, writer, translator) {
-    let taxonomyFilter = []
+export function sortByArray(key = 1, array) {
+
+    switch (key) {
+        case "1":
+            array.sort(function (a, b) {
+                let c = new Date(a.node.date)
+                let d = new Date(b.node.date)
+                if (c < d) return 1;
+                if (c > d) return -1;
+                return 0;
+            })
+            break;
+        case "2":
+            array.sort(function (a, b) {
+                let c = new Date(a.node.date)
+                let d = new Date(b.node.date)
+                if (c < d) return -1;
+                if (c > d) return 1;
+                return 0;
+            })
+            break;
+        case "3":
+            array.sort(function (a, b) {
+                let c = parseInt(a.node.price)
+                let d = parseInt(b.node.price)
+                if (c < d) return 1;
+                if (c > d) return -1;
+                return 0;
+            })
+            break;
+        case "4":
+            array.sort(function (a, b) {
+                let c = parseInt(a.node.price)
+                let d = parseInt(b.node.price)
+                if (c < d) return -1;
+                if (c > d) return 1;
+                return 0;
+            })
+            break;
+        case "5":
+            array.sort(function (a, b) {
+                let c = parseInt(a.node.averageRating)
+                let d = parseInt(b.node.averageRating)
+                if (c < d) return 1;
+                if (c > d) return -1;
+                return 0;
+            })
+            break;
+
+        default:
+            array.sort(function (a, b) {
+                let c = new Date(a.node.date)
+                let d = new Date(b.node.date)
+                if (c < d) return 1;
+                if (c > d) return -1;
+                return 0;
+            })
+            break;
+    }
+    return array
+}
+
+export function getTaxonomyFilter(category=undefined, publisher=undefined, writer=undefined, translator=undefined) {
+    let taxonomyFilter = {}
 
     if (typeof category !== "undefined") {
-        taxonomyFilter = [
-            {
-                and: [
-                    {
-                        operator: "IN",
-                        taxonomy: "PRODUCTCATEGORY",
-                        terms: [category]
-                    }
-                ]
-            }
-        ]
+        taxonomyFilter = {
+            filters: [
+                {
+                    operator: "IN",
+                    taxonomy: "PRODUCTCATEGORY",
+                    terms: [category]
+                }
+            ],
+            relation: 'AND'
+        }
     }
 
     if (typeof publisher !== "undefined") {
-        taxonomyFilter = [
-            {
-                and: [
-                    {
-                        operator: "IN",
-                        taxonomy: "PAPUBLISHER",
-                        terms: [publisher]
-                    }
-                ]
-            }
-        ]
+        taxonomyFilter = {
+            filters: [
+                {
+                    operator: "IN",
+                    taxonomy: "PAPUBLISHER",
+                    terms: [publisher]
+                }
+            ],
+            relation: 'AND'
+        }
     }
     if (typeof writer !== "undefined") {
-        taxonomyFilter = [
-            {
-                and: [
-                    {
-                        operator: "IN",
-                        taxonomy: "PAWRITER",
-                        terms: [writer]
-                    }
-                ]
-            }
-        ]
+        taxonomyFilter = {
+            filters: [
+                {
+                    operator: "IN",
+                    taxonomy: "PAWRITER",
+                    terms: [writer]
+                }
+            ],
+            relation: 'AND'
+        }
     }
     if (typeof translator !== "undefined") {
-        taxonomyFilter = [
-            {
-                and: [
-                    {
-                        operator: "IN",
-                        taxonomy: "PATRANSLATOR",
-                        terms: [translator]
-                    }
-                ]
-            }
-        ]
+        taxonomyFilter = {
+            filters: [
+                {
+                    operator: "IN",
+                    taxonomy: "PATRANSLATOR",
+                    terms: [translator]
+                }
+            ],
+            relation: 'AND'
+        }
     }
 
     return taxonomyFilter

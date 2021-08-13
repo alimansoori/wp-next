@@ -13,6 +13,7 @@ import ProductInfo from "../../../../components/productInfo/ProductInfo";
 import ProductSuggestion from "../../../../components/productSuggestion/ProductSuggestion";
 import ProductSidebar from "../../../../components/productSidebar/ProductSidebar";
 import LandingLoading from "../../../../components/landingLoading/LandingLoading";
+import GET_CATS from "../../../../gql/queries/get-categories";
 
 const Product = (props) => {
 
@@ -25,6 +26,13 @@ const Product = (props) => {
         variables: {
             id,
             idType: 'DATABASE_ID'
+        },
+    })
+
+    // Fetch Categories
+    const {loading: loadingCats, error: errorCats, data: dataCats} = useQuery(GET_CATS, {
+        variables: {
+            first: 200,
         },
     })
 
@@ -49,7 +57,7 @@ const Product = (props) => {
                         <ProductSuggestion products={product?.related?.nodes ? product?.related?.nodes : []}/>
                     </div>
                     <div className="product__body__side">
-                        <ProductSidebar/>
+                        <ProductSidebar loading={loadingCats} cats={dataCats} cat={data?.product?.productCategories?.nodes.length ? ((data?.product?.productCategories?.nodes[data?.product?.productCategories?.nodes.length - 1]).slug)  : undefined}/>
                     </div>
                 </div>
             </div>
@@ -147,6 +155,13 @@ Product.getInitialProps = async (ctx) => {
             })
 
             product = await res.data.product
+
+            await apolloClient.query({
+                query: GET_CATS,
+                variables: {
+                    first: 200,
+                }
+            })
 
         } catch (err) {
             return {

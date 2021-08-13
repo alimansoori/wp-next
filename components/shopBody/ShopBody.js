@@ -7,11 +7,13 @@ import React, {Fragment} from "react";
 import Link from "next/link";
 import ProductItemBox from "../productItemBox/ProductItemBox";
 import ShopFilterDropDown from "./ShopFilterDropDawn";
+import {useSelector} from "react-redux";
 
-export default function ShopBody({products, page_info, loading, loadingfetchmore, onFetchMore, setSort, sort}) {
+export default function ShopBody({products, page_info, page_info2, loading, loadingfetchmore, onFetchMore, setSort, sort}) {
 
+    const {currentCategory} = useSelector(state => state.category)
     return (
-        <div className="search__body">
+        <>
             <ScrollToTop smooth/>
             <div className="search__body__main">
                 <div className="p-hero-box-wrap-fade"></div>
@@ -24,7 +26,7 @@ export default function ShopBody({products, page_info, loading, loadingfetchmore
                     />
                     <div className="search__body__main__header__title">
                         <h1 className="search__body__main__header__title__text">
-                            {/*{currentCategory ? currentCategory.node.title : null}*/}
+                            {currentCategory ? currentCategory.node.title : null}
                         </h1>
                     </div>
                     <ShopFilterDropDown sortby={sort} setSort={setSort} />
@@ -32,8 +34,8 @@ export default function ShopBody({products, page_info, loading, loadingfetchmore
                 <div className="search__body__main__body">
                     <div className="container-fluid">
                         <div className="row">
-                            {typeof products !== 'undefined' && products?.map((product) => (
-                                <div key={product.node.id} className="col-md-4">
+                            {typeof products !== 'undefined' && products?.map((product, index) => (
+                                <div key={index} className="col-md-4">
                                     <ProductItemBox product={product.node} />
                                 </div>
                             ))}
@@ -41,7 +43,7 @@ export default function ShopBody({products, page_info, loading, loadingfetchmore
                         {(loading || loadingfetchmore) ?
                             (<ShopListLoader/>) :
                             (
-                                page_info?.offsetPagination?.hasMore ? (
+                                (page_info?.hasNextPage || page_info2?.hasNextPage) ? (
                                     <FetchMore onFetchMore={onFetchMore}/>
                                 ) : null
                             )
@@ -49,9 +51,6 @@ export default function ShopBody({products, page_info, loading, loadingfetchmore
                     </div>
                 </div>
             </div>
-            <div className="search__body__side">
-                {/*<ProductSidebar slugs={slugs}/>*/}
-            </div>
-        </div>
+        </>
     )
 }
