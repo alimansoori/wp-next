@@ -145,12 +145,9 @@ export const searchCategories = (filterQueries = {}) => {
 
 export const catFilters = (categorySlug, categories) => {
     return async (dispatch, getState) => {
-
-        if (!categories.length) return false
-
         let currentCategory = null
 
-        if (!categorySlug) {
+        if (!categorySlug || (typeof categories !== "undefined" && !categories.length)) {
             currentCategory = {
                 node: {
                     title: 'همه کتاب‌ها',
@@ -171,7 +168,11 @@ export const catFilters = (categorySlug, categories) => {
         dispatch({
             type: categoryConstants.CATEGORY_FILTERS_BY_SLUGS,
             payload: {
-                categoriesFilter: renderSlugs(slugs, categories),
+                categoriesFilter: typeof categories !== "undefined" ? renderSlugs(slugs, categories) : {
+                    isRoot: false,
+                    activeId: null,
+                    node: []
+                },
                 currentCategory: currentCategory
             }
         });

@@ -6,14 +6,13 @@ import { useRouter } from 'next/router'
 import {catFilters} from "../../redux/actions/category.actions";
 
 const CategoryFilterRender = ({cats, cat}) => {
-    const router = useRouter();
     const dispatch = useDispatch()
     const { categoriesFilter } = useSelector(state => state.category);
 
     // console.log('categoriesFilter', categoriesFilter)
     useEffect(() => {
         dispatch(catFilters(cat, cats?.productCategories?.edges));
-    }, [cat])
+    }, [cats, cat])
 
     const RenderCatIsRoot = () => (
         <>

@@ -33,11 +33,9 @@ export default function Shop() {
         },
     })
 
-
     if (errorP) {
         return (<div>Errors: {errorP}</div>)
     }
-
 
     return (
         <div className="search-wrap">
