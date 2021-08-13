@@ -275,18 +275,18 @@ const renderSlugs = (slugs, categories) => {
         }
     }
 
-    for (var i = 0; i < slugs.length; i += 1) {
-        var catFind = catToTree.find((cat) => {
-            return decodeURIComponent(cat.node.slug) === slugs[i]
+    for (let i = 0; i < slugs.length; i += 1) {
+        let catFind = catToTree.find((cat) => {
+            return cat.node.slug === slugs[i]
         })
 
-        // if (slugs.length-1 !== i) {
-        //     continue
-        // }
+        if (typeof catFind === "undefined") {
+            continue
+        }
 
         if (
-            catFind['children'] !== undefined &&
-            typeof catFind['children'] === 'object' &&
+            typeof catFind.children !== "undefined" &&
+            typeof catFind.children === 'object' &&
             catFind.children.length
         ) {
             node.push(catFind)

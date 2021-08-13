@@ -5,6 +5,7 @@ import GET_HOME_PAGE from '../gql/queries/get-home-page';
 import Search from '../components/search/Search'
 import Landingheader from '../components/landingHeader/LandingHeader';
 import {initializeApollo} from "../components/Apollo";
+import Footer from "../components/footer/Footer";
 
 const client = initializeApollo()
 
@@ -124,7 +125,9 @@ const Home = (props) => {
             <img src={`/image/icon/Polygon 1.svg`} alt="arrow" />
           </button>
         </div>
+
       </div>
+      <Footer/>
     </BasePage>
   )
 }

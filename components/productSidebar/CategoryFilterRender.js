@@ -44,13 +44,8 @@ const CategoryFilterRender = ({cats, cat}) => {
                         <React.Fragment key={cat.node.databaseId + randomString()}>
                             <h2 className="p-side-box__list__title">
                                 <Link
-                                    href={{
-                                        pathname: "/shop/category/[category]",
-                                        query: {
-                                            // ...router.query,
-                                            category: cat?.node?.slug,
-                                        }
-                                    }}
+                                    as={`/shop/category/${cat?.node?.slug}`}
+                                    href={`/shop/category/[category]`}
                                     shallow={true}
                                     scroll= {false}
                                 >
@@ -60,9 +55,7 @@ const CategoryFilterRender = ({cats, cat}) => {
                                 </Link>
                             </h2>
                             <Link
-                                href={{
-                                    pathname: "/shop",
-                                }}
+                                href={`/shop`}
                                 shallow={true}
                                 scroll= {false}
                             >
@@ -113,14 +106,8 @@ const CategoryFilterRender = ({cats, cat}) => {
             className={`p-side-box__list__item`}
         >
             <Link
-                key={cat.node.id}
-                href={{
-                    pathname: "/shop/category/[category]",
-                    query: {
-                        // ...router.query,
-                        category: cat?.node?.slug,
-                    }
-                }}
+                as={`/shop/category/${cat?.node?.slug}`}
+                href={`/shop/category/[category]`}
                 shallow={true}
                 scroll= {false}
             >

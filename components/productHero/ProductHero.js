@@ -5,6 +5,8 @@ import {stringToNumber} from "../../functions";
 import {addToCart} from "../../redux/actions";
 import {addToFavorites} from "../../redux/actions/viewer.actions";
 import PN from 'persian-number'
+import ShowMore from "react-simple-show-more";
+import parse from 'html-react-parser';
 
 export default function ProductHero({product}) {
     const dispatch = useDispatch()

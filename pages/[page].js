@@ -10,6 +10,7 @@ import {Dropdown} from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import PageHero from "../components/page/PageHero";
 import PageSideBar from "../components/page/PageSideBar";
+import Footer from "../components/footer/Footer";
 
 const apolloClient = initializeApollo()
 
@@ -43,6 +44,7 @@ function Page(props) {
                             </div>
                         </div>
                     </div>
+                    <Footer/>
                 </BasePage>
             ) : <Custom404/>}
         </>

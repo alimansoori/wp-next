@@ -3,6 +3,7 @@ import Router, {useRouter} from 'next/router'
 import BaseLayout from '../components/layouts/BaseLayout'
 import ProgressBar from "@badrap/bar-of-progress"
 import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'mdbreact/dist/css/mdb.css';
 import '../styles/main.scss'
 import {Provider, useDispatch} from 'react-redux'
 import store from '../redux/store'

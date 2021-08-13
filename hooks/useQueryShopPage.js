@@ -143,7 +143,6 @@ function useQueryShopPage(router, search, sort = 1, category = undefined) {
     // Refetch when change sortby and search query
     const didMount = useRef(false);
     useEffect(() => {
-        console.log(category)
         if (didMount.current) {
             refetch()
             refetchP()
@@ -158,7 +157,16 @@ function useQueryShopPage(router, search, sort = 1, category = undefined) {
                 shallow: true,
             })
         } else didMount.current = true;
-    }, [search, sort, category])
+    }, [search, sort])
+
+    // Refetch when change sortby and search query
+    const didMountCat = useRef(false);
+    useEffect(() => {
+        if (didMountCat.current) {
+            refetch()
+            refetchP()
+        } else didMountCat.current = true;
+    }, [category])
 
     if (typeof t === "undefined" || t === 't') {
         dataFinish = data

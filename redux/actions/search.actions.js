@@ -106,9 +106,9 @@ export const getProductsBySearchInput = (value, count, activeKey = 't') => {
 
             let dataFinish = {}
 
-            /*if (typeof activeKey === "undefined" || activeKey === 't') {
+            if (typeof activeKey === "undefined" || activeKey === 't') {
                 dataFinish = dataProductTopic.data
-            }*/
+            }
             const tArray = ["a", "tr", "pu", "wr"]
             if (typeof activeKey !== "undefined" && tArray.includes(activeKey)) {
                 if (activeKey === 'a') {
