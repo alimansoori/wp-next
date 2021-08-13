@@ -9,6 +9,7 @@ import ProductHeader from "../components/productHeader/ProductHeader";
 import {Dropdown} from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import PageHero from "../components/page/PageHero";
+import PageSideBar from "../components/page/PageSideBar";
 
 const apolloClient = initializeApollo()
 
@@ -35,10 +36,10 @@ function Page(props) {
                         <ProductHeader/>
                         <div className="product__body">
                             <div className="product__body__main">
-                                <PageHero/>
+                                <PageHero page={page}/>
                             </div>
                             <div className="product__body__side">
-                                {/*<ProductSidebar/>*/}
+                                <PageSideBar/>
                             </div>
                         </div>
                     </div>
@@ -73,7 +74,8 @@ export async function getStaticPaths() {
             {params: {page: "about-us"}},
             {params: {page: "buy-shipping"}},
             {params: {page: "faq"}},
-            {params: {page: "terms-conditions"}}
+            {params: {page: "terms-conditions"}},
+            {params: {page: "privacy-policy"}}
         ],
         fallback: false // See the "fallback" section below
     };

@@ -75,7 +75,7 @@ const Home = (props) => {
           <div className={`landing-bottom__left`}>
             <div className={`landing-bottom__left__first`}>
               <Link
-                href='/shop/زبان-انگلیسی'
+                href='/shop/english-language'
                 shallow={true}
               >
                 <a className='landing-bottom__left__box'>
@@ -105,7 +105,7 @@ const Home = (props) => {
               {/* <div className={`landing-bottom__left__box`}>خرید کتاب</div> */}
               {/* <div className={`landing-bottom__left__box`}></div> */}
               <Link
-                href='/shop/کودک-و-نوجوان'
+                href='/shop/kids-teenagers'
                 shallow={true}
               >
                 <a className='landing-bottom__left__box'>

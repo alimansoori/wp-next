@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { catFilters } from "../../redux/actions/category.actions";
 import { categoryConstants } from "../../redux/actions/constants";
 import CategoryFilterRender from "./CategoryFilterRender";
+import HeaderSidebar from "./HeaderSidebar";
 
 export default function ProductSidebar({ cat, cats, loading }) {
   const dispatch = useDispatch();
@@ -20,61 +21,7 @@ export default function ProductSidebar({ cat, cats, loading }) {
       <div className="p-hero-box-wrap-fade"></div>
       <div className="p-side-box p-side-box--desktop">
         <div className="p-side-box__header">
-          <Accordion defaultActiveKey="0">
-            <div className="p-side-box__header__icon">
-              <Accordion.Toggle as="div" variant="link" eventKey="1">
-                <img
-                  className="p-side-box__header__icon__img"
-                  src={`/image/icon/Help icon.svg`}
-                  alt="side-icon"
-                />
-              </Accordion.Toggle>
-            </div>
-            <Accordion.Collapse eventKey="1">
-              <ul className="p-side-box__header__list">
-                <li className="p-side-box__header__list__item">
-                  <div className="p-side-box__header__list__item__box">
-                    <div className="p-side-box__header__list__item__box__short">
-                      م
-                    </div>
-                    <div className="p-side-box__header__list__item__box__long">
-                      مشاوره
-                    </div>
-                  </div>
-                </li>
-                <li className="p-side-box__header__list__item">
-                  <div className="p-side-box__header__list__item__box">
-                    <div className="p-side-box__header__list__item__box__short">
-                      خ
-                    </div>
-                    <div className="p-side-box__header__list__item__box__long">
-                      خرید
-                    </div>
-                  </div>
-                </li>
-                <li className="p-side-box__header__list__item">
-                  <div className="p-side-box__header__list__item__box">
-                    <div className="p-side-box__header__list__item__box__short">
-                      ز
-                    </div>
-                    <div className="p-side-box__header__list__item__box__long">
-                      زبان
-                    </div>
-                  </div>
-                </li>
-                <li className="p-side-box__header__list__item">
-                  <div className="p-side-box__header__list__item__box">
-                    <div className="p-side-box__header__list__item__box__short">
-                      ک
-                    </div>
-                    <div className="p-side-box__header__list__item__box__long p-side-box__header__list__item__box__long--lg-text">
-                      کودک و نوجوان
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </Accordion.Collapse>
-          </Accordion>
+          <HeaderSidebar/>
         </div>
         <div className="p-side-box__list-wrap">
           <img
