@@ -9,6 +9,7 @@ import { getCustomer, initAddressesAndFavorites } from "./customer.actions";
 import { getCart } from "./cart.actions";
 import jscookie from 'js-cookie'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import {initializeApollo} from "../../components/Apollo";
 
 export const loginUser = (loginForm = {}) => {
     return async dispatch => {
@@ -81,6 +82,7 @@ export const isUserLoggedIn = () => {
     return async dispatch => {
         dispatch({ type: authConstants.REFRESH_TOKEN_REQUEST });
 
+        const apolloClient = initializeApollo()
         const cookies = parseCookies()
         const token = cookies['wp-next-token'];
 
@@ -91,7 +93,7 @@ export const isUserLoggedIn = () => {
 
         try {
             if (token) {
-                const result = await client.mutate({
+                const result = await apolloClient.mutate({
                     mutation: REFRESH_TOKEN,
                     variables: {
                         input: {

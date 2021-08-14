@@ -19,13 +19,13 @@ export default function ProductHero({product}) {
     };
 
     const RenderProductAttrs = ({attrs}) => {
-        if (!attrs) return '';
+        if (!attrs) return '.....';
 
         const joinString = attrs?.map(e => {
-            var name = e.name
-            var split = name.split("|")
+            let name = e.name
+            let split = name.split("|")
 
-            var nameRes = split.length ? split[0] : e.name
+            let nameRes = split.length ? split[0] : e.name
 
             return nameRes
         }).join(',')
@@ -101,9 +101,9 @@ export default function ProductHero({product}) {
                         </div>
                     </div>
                 </div>
-                <div className="p-hero-box__l-col">
-                    <div className="p-hero-box__l-col__info">
-                        <h1 className="p-hero-box__l-col__info_name">{product?.name}</h1>
+                <div className="p-hero-box__l-col" >
+                    <div className="p-hero-box__l-col__info" style={{direction: "rtl"}}>
+                        <h1 className="p-hero-box__l-col__info_name">{product?.name ? product?.name : 'نام کتاب در حال بارگذاری ....'}</h1>
                         {product?.extraFields?.extraentitle && (
                             <span
                                 className="p-hero-box__l-col__info_name--eng">{product?.extraFields?.extraentitle}</span>

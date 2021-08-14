@@ -3,6 +3,7 @@ import client from "../../components/ApolloClient";
 import GET_VIEWER from "../../gql/queries/get-viewer";
 import GET_PRODUCTS from "../../gql/queries/get-products";
 import { initAddressesAndFavorites, saveAddressesAndFavorites } from "./customer.actions";
+import {initializeApollo} from "../../components/Apollo";
 
 export const getViewer = () => {
     return async dispatch => {
@@ -10,8 +11,9 @@ export const getViewer = () => {
             type: viewerConstants.VIEWER_REGISTER_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: GET_VIEWER,
             })
 
