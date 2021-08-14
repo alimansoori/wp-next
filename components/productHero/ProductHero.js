@@ -101,7 +101,7 @@ export default function ProductHero({product}) {
                         </div>
                     </div>
                 </div>
-                <div className="p-hero-box__l-col" >
+                <div className="p-hero-box__l-col">
                     <div className="p-hero-box__l-col__info" style={{direction: "rtl"}}>
                         <h1 className="p-hero-box__l-col__info_name">{product?.name ? product?.name : 'نام کتاب در حال بارگذاری ....'}</h1>
                         {product?.extraFields?.extraentitle && (
@@ -110,24 +110,6 @@ export default function ProductHero({product}) {
                         )}
 
                         <div className="p-hero-box__l-col__info__details">
-                            <div className="p-hero-box__l-col__info__details-wrap">
-                                <div className="p-hero-box__l-col__info__author">
-                                    <strong>{`سایز: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paDimensions?.nodes}/>
-                                </div>
-                                <div className="p-hero-box__l-col__info__translator">
-                                    <strong>{`سری چاپ: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
-                                </div>
-                                <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`تعدا صفحه: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
-                                </div>
-                                <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`سال: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paSolarPublishDates?.nodes}/>
-                                </div>
-                            </div>
                             <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__author">
                                     <strong>{`نویسنده: `}</strong>
@@ -144,6 +126,24 @@ export default function ProductHero({product}) {
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`نوع جلد: `}</strong>
                                     <RenderProductAttrs attrs={product?.paCoverTypes?.nodes}/>
+                                </div>
+                            </div>
+                            <div className="p-hero-box__l-col__info__details-wrap">
+                                <div className="p-hero-box__l-col__info__author">
+                                    <strong>{`سایز: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paDimensions?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__translator">
+                                    <strong>{`سری چاپ: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`تعدا صفحه: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`سال: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paSolarPublishDates?.nodes}/>
                                 </div>
                             </div>
                         </div>
@@ -191,16 +191,45 @@ export default function ProductHero({product}) {
                     </div>
                 </div>
                 <div className="p-hero-box__l-col">
-                    <div className="p-hero-box__l-col__info">
+                    <div className="p-hero-box__l-col__info" style={{direction: "rtl"}}>
                         <h1 className="p-hero-box__l-col__info_name">{product?.name}</h1>
-                        <div className="p-hero-box__l-col__info__author">
-                            <RenderProductAttrs attrs={product?.paWriters?.nodes}/>
-                        </div>
-                        <div className="p-hero-box__l-col__info__translator">
-                            <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
-                        </div>
-                        <div className="p-hero-box__l-col__info__publisher">
-                            <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>
+                        <div className="p-hero-box__l-col__info__details">
+                            <div className="p-hero-box__l-col__info__details-wrap">
+                                <div className="p-hero-box__l-col__info__author">
+                                    <strong>{`نویسنده: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paWriters?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__translator">
+                                    <strong>{`مترجم: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`نشر: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`نوع جلد: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paCoverTypes?.nodes}/>
+                                </div>
+                            </div>
+                            <div className="p-hero-box__l-col__info__details-wrap">
+                                <div className="p-hero-box__l-col__info__author">
+                                    <strong>{`سایز: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paDimensions?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__translator">
+                                    <strong>{`سری چاپ: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`تعدا صفحه: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`سال: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paSolarPublishDates?.nodes}/>
+                                </div>
+                            </div>
                         </div>
                         <div
                             dangerouslySetInnerHTML={{
@@ -211,14 +240,16 @@ export default function ProductHero({product}) {
                     </div>
                     <div className="p-hero-box__l-col__purchase">
                         <div className="p-hero-box__l-col__purchase-wrap">
-                            <div className="p-hero-box__l-col__purchase__price">29900 ت</div>
+                            <div className="p-hero-box__l-col__purchase__price">
+                                {PN.convertEnToPe(stringToNumber(product?.price))}
+                            </div>
                             <button onClick={(e) => handleAddToCart(e)} className="p-hero-box__l-col__purchase__buy">
                                 <div className="p-hero-box__l-col__purchase__buy__title">
                                     افزودن به سبد خرید
                                 </div>
                                 <img
                                     className="p-hero-box__l-col__purchase__buy__icon"
-                                    src={`/image/icon/Group 119.svg`}
+                                    src={`/image/icon/${loading ? 'white-pinner.svg' : 'Group 119.svg'}`}
                                     alt="icon"
                                 />
                             </button>
