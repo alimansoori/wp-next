@@ -131,17 +131,21 @@ export default function Search() {
                         </h2>
                         <div className="search-bar__suggestion__tab-content__box-wrap__info">
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
-                                <SearchResultItemAttrs attrs={product.paWriters.nodes} />
+                                <SearchResultItemAttrs attrs={product?.paWriters?.nodes} />
                             </div>
-                            <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
-                                |
-                            </div>
+                            {product?.paTranslators?.nodes.length ? (
+                                <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
+                                    |
+                                </div>
+                            ) : null}
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
-                                <SearchResultItemAttrs attrs={product.paTranslators.nodes} />
+                                <SearchResultItemAttrs attrs={product?.paTranslators?.nodes} />
                             </div>
-                            <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
-                                |
-                            </div>
+                            {product?.paPublishers?.nodes.length ? (
+                                <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
+                                    |
+                                </div>
+                            ) : null}
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
                                 <SearchResultItemAttrs attrs={product.paPublishers.nodes} />
                             </div>
@@ -162,17 +166,19 @@ export default function Search() {
     }
 
     const SearchResultItemAttrs = ({ attrs }) => {
-        const joinString = attrs.map(e => {
+        let joinString = []
+        attrs.map((e, i) => {
             let name = e.name
             let split = name.split("|")
 
             let nameRes = split.length ? split[0] : e.name
 
-            return nameRes
-        }).join(',')
-        return (
-            <small>{joinString ? joinString : '......'}</small>
-        )
+            joinString.push(<small>{nameRes}</small>)
+            if (attrs.length-1 !== i) {
+                joinString.push(<small>،</small>)
+            }
+        })
+        return joinString
     }
 
     const handleSubmitSearch = (e) => {
