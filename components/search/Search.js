@@ -188,6 +188,7 @@ export default function Search() {
             query: {
                 ...router.query,
                 q: value,
+                t: activeKey
             }
         }, undefined, {shallow: true})
     }
