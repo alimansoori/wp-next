@@ -89,7 +89,7 @@ export default function UserFavourites() {
                                                     <div className="p-hero-box__l-col__info__details">
                                                         <div className="p-hero-box__l-col__info__details-wrap">
                                                             <div className="p-hero-box__l-col__info__publisher">
-                                                                <strong>{`نشر: `}</strong>
+                                                                <strong>{`ناشر: `}</strong>
                                                                 <RenderProductAttrs attrs={favorite.node.paPublishers.nodes}/>
                                                             </div>
                                                         </div>

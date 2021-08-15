@@ -84,12 +84,9 @@ const Home = (props) => {
                                     زبان
                                 </a>
                             </Link>
-                            <Link href="http://dastanablog.ir/" passHref={true}>
-                                <a className={`landing-bottom__left__box`}>
-                                    {`بلاگ`}
-                                </a>
-                            </Link>
-
+                            <a target='_blank' href="http://dastanablog.ir/" className={`landing-bottom__left__box`}>
+                                {`بلاگ`}
+                            </a>
                             <div className={`landing-bottom__left__box landing-bottom__left__box--disable`}>
                                 {`هدیه`}
                             </div>

@@ -8,16 +8,16 @@ export default function ShopFilterDropDown({setSort, sortby}) {
             value: 'جدیدترین'
         }, {
             key: 2,
-            value: 'قدیمی ترین'
+            value: 'قدیمی‌ترین'
         }, {
             key: 3,
-            value: 'گران ترین'
+            value: 'گران‌ترین'
         }, {
             key: 4,
-            value: 'ارزان ترین'
+            value: 'ارزان‌ترین'
         }, {
             key: 5,
-            value: 'محبوب ترین'
+            value: 'محبوب‌ترین'
         }
     ]
 

@@ -120,30 +120,30 @@ export default function ProductHero({product}) {
                                     <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`نشر: `}</strong>
+                                    <strong>{`ناشر: `}</strong>
                                     <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>
                                 </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`تعداد صفحه: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
+                                </div>
+                            </div>
+                            <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`نوع جلد: `}</strong>
                                     <RenderProductAttrs attrs={product?.paCoverTypes?.nodes}/>
                                 </div>
-                            </div>
-                            <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__author">
-                                    <strong>{`سایز: `}</strong>
+                                    <strong>{`اندازه کتاب: `}</strong>
                                     <RenderProductAttrs attrs={product?.paDimensions?.nodes}/>
                                 </div>
-                                <div className="p-hero-box__l-col__info__translator">
-                                    <strong>{`سری چاپ: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
-                                </div>
                                 <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`تعدا صفحه: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
-                                </div>
-                                <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`سال: `}</strong>
+                                    <strong>{`سال چاپ: `}</strong>
                                     <RenderProductAttrs attrs={product?.paSolarPublishDates?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__translator">
+                                    <strong>{`نوبت چاپ: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
                                 </div>
                             </div>
                         </div>
@@ -204,30 +204,30 @@ export default function ProductHero({product}) {
                                     <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
                                 </div>
                                 <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`نشر: `}</strong>
+                                    <strong>{`ناشر: `}</strong>
                                     <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>
                                 </div>
+                                <div className="p-hero-box__l-col__info__publisher">
+                                    <strong>{`تعداد صفحه: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
+                                </div>
+                            </div>
+                            <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`نوع جلد: `}</strong>
                                     <RenderProductAttrs attrs={product?.paCoverTypes?.nodes}/>
                                 </div>
-                            </div>
-                            <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__author">
-                                    <strong>{`سایز: `}</strong>
+                                    <strong>{`اندازه کتاب: `}</strong>
                                     <RenderProductAttrs attrs={product?.paDimensions?.nodes}/>
                                 </div>
-                                <div className="p-hero-box__l-col__info__translator">
-                                    <strong>{`سری چاپ: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
-                                </div>
                                 <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`تعدا صفحه: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paNumberPages?.nodes}/>
-                                </div>
-                                <div className="p-hero-box__l-col__info__publisher">
-                                    <strong>{`سال: `}</strong>
+                                    <strong>{`سال چاپ: `}</strong>
                                     <RenderProductAttrs attrs={product?.paSolarPublishDates?.nodes}/>
+                                </div>
+                                <div className="p-hero-box__l-col__info__translator">
+                                    <strong>{`نوبت چاپ: `}</strong>
+                                    <RenderProductAttrs attrs={product?.paBookSeriesPrints?.nodes}/>
                                 </div>
                             </div>
                         </div>
