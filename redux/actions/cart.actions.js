@@ -15,11 +15,10 @@ export const getCart = () => {
             type: cartConstants.CART_REQUEST
         });
 
+        const apolloClient = initializeApollo()
         try {
-            const apolloClient = initializeApollo()
             const result = await apolloClient.query({
                 query: GET_CART,
-                // fetchPolicy: 'no-cache'
             });
 
             const { cart } = result.data;

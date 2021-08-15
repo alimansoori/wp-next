@@ -42,7 +42,7 @@ export default function Cart() {
         if (authenticate) {
             router.push('/account')
         } else {
-            // setRedirectTo('/account')
+            setRedirectTo('/account')
             setDropDownShow(false)
             setModalShow(true)
         }

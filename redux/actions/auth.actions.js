@@ -121,6 +121,7 @@ export const isUserLoggedIn = () => {
                 });
 
                 dispatch(getViewer())
+                dispatch(getCart())
                 dispatch(getCustomer())
                 // dispatch({
                 //     type: viewerConstants.VIEWER_REGISTER_SUCCESS,
