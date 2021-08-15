@@ -5,8 +5,8 @@ import {useEffect, useRef, useState} from "react";
 import GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH from "../gql/queries/get-publisher-writer-translator-for-search";
 import GET_CATS from "../gql/queries/get-categories";
 
-function useQueryShopPage(router, search, sort = 1, category = undefined) {
-    const {q, t, publisher, writer, translator} = router.query
+function useQueryShopPage(router, sort = 1, category=undefined, search, t) {
+    const {publisher, writer, translator} = router.query
     const [loadingFetchMore, setLoadingFetchMore] = useState(false);
     const [size, setSize] = useState(15);
     const [categoryState, setCategoryState] = useState(category);
@@ -30,37 +30,39 @@ function useQueryShopPage(router, search, sort = 1, category = undefined) {
     })
 
     let taxFilter = []
-    const {loading: loadingS, error: errorS, data: tSearch} = useQuery(GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH, {
-        variables: {first: 50, search: q}
+    const {loading: loadingS, error: errorS, data: tSearch, refetch: refetchS} = useQuery(GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH, {
+        variables: {first: 50, search: search}
     })
 
     if (!loadingS) {
-        const {paPublishers, paTranslators, paWriters} = tSearch
-        const publisherSlugs = paPublishers?.nodes.map(elem => elem?.slug)
-        const writerSlugs = paWriters?.nodes.map(elem => elem?.slug)
-        const translatorSlugs = paTranslators?.nodes.map(elem => elem?.slug)
+        if (typeof tSearch !== "undefined") {
+            const {paPublishers, paTranslators, paWriters} = tSearch
+            const publisherSlugs = paPublishers?.nodes.map(elem => elem?.slug)
+            const writerSlugs = paWriters?.nodes.map(elem => elem?.slug)
+            const translatorSlugs = paTranslators?.nodes.map(elem => elem?.slug)
 
 
-        if (publisherSlugs.length && (t === 'pu' || t === 'a')) {
-            taxFilter.push({
-                operator: "IN",
-                taxonomy: "PAPUBLISHER",
-                terms: publisherSlugs
-            })
-        }
-        if (translatorSlugs.length && (t === 'tr' || t === 'a')) {
-            taxFilter.push({
-                operator: "IN",
-                taxonomy: "PATRANSLATOR",
-                terms: translatorSlugs
-            })
-        }
-        if (writerSlugs.length && (t === 'wr' || t === 'a')) {
-            taxFilter.push({
-                operator: "IN",
-                taxonomy: "PAWRITER",
-                terms: writerSlugs
-            })
+            if (publisherSlugs.length && (t === 'pu' || t === 'a')) {
+                taxFilter.push({
+                    operator: "IN",
+                    taxonomy: "PAPUBLISHER",
+                    terms: publisherSlugs
+                })
+            }
+            if (translatorSlugs.length && (t === 'tr' || t === 'a')) {
+                taxFilter.push({
+                    operator: "IN",
+                    taxonomy: "PATRANSLATOR",
+                    terms: translatorSlugs
+                })
+            }
+            if (writerSlugs.length && (t === 'wr' || t === 'a')) {
+                taxFilter.push({
+                    operator: "IN",
+                    taxonomy: "PAWRITER",
+                    terms: writerSlugs
+                })
+            }
         }
 
         if (!taxFilter.length) {
@@ -145,8 +147,9 @@ function useQueryShopPage(router, search, sort = 1, category = undefined) {
     useEffect(() => {
         if (didMount.current) {
             refetch()
+            refetchS()
             refetchP()
-            let query = {...router.query}
+            /*let query = {...router.query}
             if (search) query.q = search
             if (sort) query.orderby = sort
 
@@ -155,7 +158,7 @@ function useQueryShopPage(router, search, sort = 1, category = undefined) {
                 query
             }, undefined, {
                 shallow: true,
-            })
+            })*/
         } else didMount.current = true;
     }, [search, sort])
 
@@ -164,6 +167,7 @@ function useQueryShopPage(router, search, sort = 1, category = undefined) {
     useEffect(() => {
         if (didMountCat.current) {
             refetch()
+            refetchS()
             refetchP()
         } else didMountCat.current = true;
     }, [category])
@@ -183,7 +187,6 @@ function useQueryShopPage(router, search, sort = 1, category = undefined) {
             })
 
             dataFinish.products.edges = sortByArray(sort, dataFinish.products.edges)
-            console.log(dataFinish)
         } else if (typeof dataP !== "undefined" && (t === 'wr' || t === 'tr' || t === 'pu')) {
             dataFinish = Object.assign({}, {
                 products: {

@@ -37,7 +37,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 't') => {
             const dataProductTopic = await apolloClient.query({
                 query: GET_PRODUCTS,
                 variables: {
-                    first: 5,
+                    first: 10,
                     where: {
                         orderby: orderBy(1),
                         search: value ? value : '',
@@ -48,7 +48,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 't') => {
             const dataGetPWT = await apolloClient.query({
                 query: GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH,
                 variables: {
-                    first: 5,
+                    first: 10,
                     search: value
                 },
             })
@@ -93,7 +93,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 't') => {
             const dataProductKey = await apolloClient.query({
                 query: GET_PRODUCTS,
                 variables: {
-                    first: 5,
+                    first: 10,
                     where: {
                         orderby: orderBy(1),
                         taxonomyFilter: {
@@ -114,7 +114,7 @@ export const getProductsBySearchInput = (value, count, activeKey = 't') => {
                 if (activeKey === 'a') {
                     dataFinish = Object.assign({}, dataProductTopic.data, {
                         products: {
-                            edges: [...dataProductKey?.data?.products?.edges, ...dataProductKey?.data?.products?.edges],
+                            edges: [...dataProductTopic?.data?.products?.edges, ...dataProductKey?.data?.products?.edges],
                         }
                     })
                 } else if (activeKey === 'wr' || activeKey === 'tr' || activeKey === 'pu') {

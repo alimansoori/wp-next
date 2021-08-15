@@ -45,7 +45,9 @@ const CategoryFilterRender = ({cats, cat}) => {
                             <h2 className="p-side-box__list__title">
                                 <Link
                                     as={`/shop/category/${cat?.node?.slug}`}
-                                    href={`/shop/category/[category]`}
+                                    href={{
+                                        pathname: `/shop/category/[category]`,
+                                    }}
                                     shallow={true}
                                     scroll= {false}
                                 >
@@ -55,7 +57,9 @@ const CategoryFilterRender = ({cats, cat}) => {
                                 </Link>
                             </h2>
                             <Link
-                                href={`/shop`}
+                                href={{
+                                    pathname: `/shop`,
+                                }}
                                 shallow={true}
                                 scroll= {false}
                             >

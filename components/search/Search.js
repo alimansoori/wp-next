@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/router'
-import { Dropdown, Spinner, Tab, Tabs } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import { DelayInput } from 'react-delay-input'
-import { getProductsBySearchInput } from '../../redux/actions/search.actions'
-import { searchConstants } from '../../redux/actions/constants'
-import { stringToNumber } from '../../functions'
+import React, {useEffect, useRef, useState} from 'react'
+import {useRouter} from 'next/router'
+import {Dropdown, Spinner, Tab, Tabs} from 'react-bootstrap'
+import {useDispatch, useSelector} from 'react-redux'
+import {DelayInput} from 'react-delay-input'
+import {getProductsBySearchInput} from '../../redux/actions/search.actions'
+import {searchConstants} from '../../redux/actions/constants'
+import {stringToNumber} from '../../functions'
 import Link from 'next/link'
 import PN from 'persian-number'
 
@@ -13,7 +13,7 @@ export default function Search() {
     const dispatch = useDispatch()
     const router = useRouter()
     const searchValue = router.query.q
-    const { products, loading } = useSelector(state => state.search)
+    const {products, loading} = useSelector(state => state.search)
     const [value, setValue] = useState('')
     const [activeKey, setActiveKey] = useState('a')
     const [dropDownShow, setDropDownShow] = useState(false);
@@ -24,7 +24,7 @@ export default function Search() {
     const didMount = useRef(false);
     useEffect(() => {
         if (didMount.current) {
-            dispatch({ type: searchConstants.SEARCH_BOX_CLEAR })
+            dispatch({type: searchConstants.SEARCH_BOX_CLEAR})
 
             dispatch(getProductsBySearchInput(value, 10, activeKey))
         } else didMount.current = true;
@@ -44,19 +44,19 @@ export default function Search() {
                         onSelect={(selectedKey) => setActiveKey(selectedKey)}
                     >
                         <Tab eventKey="a" title="همه">
-                            {products.length ? <RenderResultItems /> : null}
+                            {products.length ? <RenderResultItems/> : null}
                         </Tab>
                         <Tab eventKey="t" title="عنوان">
-                            {products.length ? <RenderResultItems /> : null}
+                            {products.length ? <RenderResultItems/> : null}
                         </Tab>
                         <Tab eventKey="wr" title="نویسنده">
-                            {products.length ? <RenderResultItems /> : null}
+                            {products.length ? <RenderResultItems/> : null}
                         </Tab>
                         <Tab eventKey="tr" title="مترجم">
-                            {products.length ? <RenderResultItems /> : null}
+                            {products.length ? <RenderResultItems/> : null}
                         </Tab>
                         <Tab eventKey="pu" title="ناشر">
-                            {products.length ? <RenderResultItems /> : null}
+                            {products.length ? <RenderResultItems/> : null}
                         </Tab>
                     </Tabs>
                     {products.length ? (
@@ -65,16 +65,16 @@ export default function Search() {
                                 {
                                     pathname: "/shop",
                                     query: {
-                                        // ...router.query,
                                         q: value,
                                         t: activeKey
                                     },
                                 }
                             }
-                            shallow={true}
+                            // shallow={true}
                         >
                             <a>
-                                <button onClick={() => setDropDownShow(false)} className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
+                                <button onClick={() => setDropDownShow(false)}
+                                        className={`search-bar__suggestion__show-result`}>{`نمایش همه نتایج`}</button>
                             </a>
                         </Link>
                     ) : null}
@@ -89,14 +89,14 @@ export default function Search() {
             <div className={`search-bar__suggestion__tab-content`}>
                 {products.map((product, index) => {
                     return (
-                        <SearchResultItem key={index} product={product.node} />
+                        <SearchResultItem key={index} product={product.node}/>
                     )
                 })}
             </div>
         )
     }
 
-    const RenderSearchResultItemImage = ({ img }) => {
+    const RenderSearchResultItemImage = ({img}) => {
         return (
             <>
                 {img ? (
@@ -116,14 +116,14 @@ export default function Search() {
         )
     }
 
-    const SearchResultItem = ({ product }) => {
+    const SearchResultItem = ({product}) => {
         return (
 
             <Link as={`/product/${product.databaseId}/${product.slug}`}
-                href={`/product/[id]/[slug]`} >
+                  href={`/product/[id]/[slug]`}>
                 <a className={`search-bar__suggestion__tab-content-wrap`}>
                     <div className={`search-bar__suggestion__tab-content__pic`}>
-                        <RenderSearchResultItemImage img={product.image} />
+                        <RenderSearchResultItemImage img={product.image}/>
                     </div>
                     <div className={`search-bar__suggestion__tab-content__box-wrap`}>
                         <h2 className="search-bar__suggestion__tab-content__box-wrap__book">
@@ -131,7 +131,7 @@ export default function Search() {
                         </h2>
                         <div className="search-bar__suggestion__tab-content__box-wrap__info">
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
-                                <SearchResultItemAttrs attrs={product?.paWriters?.nodes} />
+                                <SearchResultItemAttrs attrs={product?.paWriters?.nodes}/>
                             </div>
                             {product?.paTranslators?.nodes.length ? (
                                 <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
@@ -139,7 +139,7 @@ export default function Search() {
                                 </div>
                             ) : null}
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
-                                <SearchResultItemAttrs attrs={product?.paTranslators?.nodes} />
+                                <SearchResultItemAttrs attrs={product?.paTranslators?.nodes}/>
                             </div>
                             {product?.paPublishers?.nodes.length ? (
                                 <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
@@ -147,7 +147,7 @@ export default function Search() {
                                 </div>
                             ) : null}
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
-                                <SearchResultItemAttrs attrs={product.paPublishers.nodes} />
+                                <SearchResultItemAttrs attrs={product.paPublishers.nodes}/>
                             </div>
                         </div>
                         <div className="search-bar__suggestion__tab-content__box-wrap__price">
@@ -165,7 +165,7 @@ export default function Search() {
         )
     }
 
-    const SearchResultItemAttrs = ({ attrs }) => {
+    const SearchResultItemAttrs = ({attrs}) => {
         let joinString = []
         attrs.map((e, i) => {
             let name = e.name
@@ -173,10 +173,10 @@ export default function Search() {
 
             let nameRes = split.length ? split[0] : e.name
 
-            joinString.push(<small>{nameRes}</small>)
-            if (attrs.length-1 !== i) {
-                joinString.push(<small>،</small>)
-            }
+            joinString.push(<React.Fragment key={i}>
+                <small>{nameRes}</small>
+                {attrs.length - 1 !== i ? (<small>،</small>) : null}
+            </React.Fragment>)
         })
         return joinString
     }
@@ -186,11 +186,10 @@ export default function Search() {
         router.push({
             pathname: "/shop",
             query: {
-                ...router.query,
                 q: value,
                 t: activeKey
             }
-        }, undefined, {shallow: true})
+        })
     }
 
     const handleOnToggle = (isOpen) => {
@@ -199,21 +198,20 @@ export default function Search() {
 
     return (
         <div className={`search-bar-wrap`}>
-            {router.asPath == '/' ? (
-                <Dropdown show={dropDownShow} onToggle={handleOnToggle}>
-                    <Dropdown.Toggle as="div" id="dropdown-basic">
-                        <form onSubmit={(e) => handleSubmitSearch(e)}>
-                            <div className={`search-bar`}>
-                                <div className={`search-bar__box`}>
-                                    {loading ? (
-                                        <div className="search-data-loading">
-                                            <Spinner animation="border" role="status">
-                                                <span className="sr-only">Loading...</span>
-                                            </Spinner>
-                                        </div>
-                                    ) : null}
-                                    {/* <form onSubmit={() => alert('jjj')}> */}
-                                    {/* <input
+            <Dropdown show={dropDownShow} onToggle={handleOnToggle}>
+                <Dropdown.Toggle as="div" id="dropdown-basic">
+                    <form onSubmit={(e) => handleSubmitSearch(e)}>
+                        <div className={`search-bar`}>
+                            <div className={`search-bar__box`}>
+                                {loading ? (
+                                    <div className="search-data-loading">
+                                        <Spinner animation="border" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </Spinner>
+                                    </div>
+                                ) : null}
+                                {/* <form onSubmit={() => alert('jjj')}> */}
+                                {/* <input
                                     type="text"
                                     ref={(input) => { searchInput = input }}
                                     className={`search-bar__box__input`}
@@ -221,80 +219,33 @@ export default function Search() {
                                     value={searchValue ? searchValue : value}
                                     onChange={(e) => setValue(e.target.value)}
                                 /> */}
-                                    <DelayInput
-                                        minLength={2}
-                                        delayTimeout={500}
-                                        type="text"
-                                        inputRef={(input) => { searchInput = input }}
-                                        className={`search-bar__box__input`}
-                                        placeholder="جست و جو"
-                                        value={searchValue ? searchValue : value}
-                                        onChange={(e) => setValue(e.target.value)}
-                                    />
-                                    {/* </form> */}
-
-                                    <button className={`search-bar__box__icon`}>
-                                        <img
-                                            className={`search-bar__box__icon__img`}
-                                            src={`/image/icon/Magnifying glass.svg`}
-                                            alt="search"
-                                        />
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </Dropdown.Toggle>
-                    <SearchResultBox />
-                </Dropdown>
-            ) : (
-                <Dropdown show={dropDownShow} onToggle={handleOnToggle}>
-                    <Dropdown.Toggle as="div" id="dropdown-basic">
-                        <form onSubmit={handleSubmitSearch}>
-                            <div className={`search-bar`}>
-                                <div className={`search-bar__box`}>
-                                    {loading ? (
-                                        <div className="search-data-loading">
-                                            <Spinner animation="border" role="status">
-                                                <span className="sr-only">Loading...</span>
-                                            </Spinner>
-                                        </div>
-                                    ) : null}
-                                    {/* <form onSubmit={() => alert('jjj')}> */}
-                                    {/* <input
+                                <DelayInput
+                                    minLength={2}
+                                    delayTimeout={500}
                                     type="text"
-                                    ref={(input) => { searchInput = input }}
+                                    inputRef={(input) => {
+                                        searchInput = input
+                                    }}
                                     className={`search-bar__box__input`}
                                     placeholder="جست و جو"
-                                    value={searchValue ? searchValue : value}
+                                    value={value}
                                     onChange={(e) => setValue(e.target.value)}
-                                /> */}
-                                    <DelayInput
-                                        minLength={2}
-                                        delayTimeout={500}
-                                        type="text"
-                                        inputRef={(input) => { searchInput = input }}
-                                        className={`search-bar__box__input`}
-                                        placeholder="جست و جو"
-                                        value={searchValue ? searchValue : value}
-                                        onChange={(e) => setValue(e.target.value)}
+                                />
+                                {/* </form> */}
+
+                                <button className={`search-bar__box__icon`}>
+                                    <img
+                                        className={`search-bar__box__icon__img`}
+                                        src={`/image/icon/Magnifying glass.svg`}
+                                        alt="search"
                                     />
-                                    {/* </form> */}
-
-                                    <button className={`search-bar__box__icon`}>
-                                        <img
-                                            className={`search-bar__box__icon__img`}
-                                            src={`/image/icon/Magnifying glass.svg`}
-                                            alt="search"
-                                        />
-                                    </button>
-                                </div>
+                                </button>
                             </div>
-                        </form>
-                    </Dropdown.Toggle>
-                    <SearchResultBox />
-                </Dropdown>
-            )}
-
+                        </div>
+                    </form>
+                </Dropdown.Toggle>
+                <SearchResultBox/>
+            </Dropdown>
         </div>
     )
 }

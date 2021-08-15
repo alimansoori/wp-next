@@ -14,7 +14,7 @@ import ProductSidebar from "../../components/productSidebar/ProductSidebar";
 
 export default function Shop() {
     const router = useRouter()
-    const {q, orderby, category} = router.query
+    const {q, t, orderby, category} = router.query
     const [sort, setSort] = useState(orderby ? orderby : 1);
     const [search, setSearch] = useState(q);
 
@@ -24,7 +24,7 @@ export default function Shop() {
         data,
         onFetchMore,
         loadingFetchMore
-    } = useQueryShopPage( router, search, sort, category)
+    } = useQueryShopPage( router, sort, category, q, t)
 
     // Fetch Categories
     const {loading: loadingCats, error: errorCats, data: dataCats} = useQuery(GET_CATS, {
