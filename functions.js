@@ -1,5 +1,6 @@
 import {v4} from 'uuid';
 import {parseCookies} from 'nookies';
+import {NotificationManager} from 'react-notifications';
 
 /**
  * Extracts and returns float value from a string.
@@ -510,7 +511,7 @@ export function sortByArray(key = 1, array) {
     return array
 }
 
-export function getTaxonomyFilter(category=undefined, publisher=undefined, writer=undefined, translator=undefined) {
+export function getTaxonomyFilter(category = undefined, publisher = undefined, writer = undefined, translator = undefined) {
     let taxonomyFilter = {}
 
     if (typeof category !== "undefined") {
@@ -564,4 +565,24 @@ export function getTaxonomyFilter(category=undefined, publisher=undefined, write
     }
 
     return taxonomyFilter
+}
+
+export function alertMessage(message, type = 'info') {
+    switch (type) {
+        case 'info':
+            console.log(type)
+            NotificationManager.info(message);
+            break;
+        case 'success':
+            NotificationManager.success(message);
+            break;
+        case 'warning':
+            NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+            break;
+        case 'error':
+            NotificationManager.error('Error message', 'Click me!', 5000, () => {
+                alert('callback');
+            });
+            break;
+    }
 }

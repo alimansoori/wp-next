@@ -6,7 +6,8 @@ const initState = {
         favorites: [],
         favoritesProducts: [],
         loading: false,
-        error: null
+        error: null,
+        message: null
     },
     error: null,
     message: null,
@@ -72,7 +73,8 @@ export default (state = initState, action) => {
                 ...state,
                 favorite: {
                     ...state.favorite,
-                    loading: true
+                    loading: true,
+                    message: null
                 }
             }
             break;
@@ -83,10 +85,20 @@ export default (state = initState, action) => {
                     favorite: {
                         ...state.favorite,
                         loading: false,
+                        message: action.payload.message,
                         favorites: [
                             ...state.favorite.favorites,
-                            action.payload.productId
+                            action.payload.productId,
                         ]
+                    }
+                }
+            } else {
+                state = {
+                    ...state,
+                    favorite: {
+                        ...state.favorite,
+                        loading: false,
+                        message: `این محصول در لیست علاقه‌مندی‌های شما موجود است!`,
                     }
                 }
             }
@@ -160,6 +172,15 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 viewer: action.payload.viewer
+            }
+            break;
+        case viewerConstants.CLEAR_FAVORITE_MESSAGE:
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    message: null
+                }
             }
             break;
 

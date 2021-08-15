@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {v4} from "uuid";
 import {stringToNumber} from "../../functions";
@@ -21,6 +21,7 @@ export default function ProductItemBox({product}) {
         clientMutationId: v4(), // Generate a unique id.
         productId: product.databaseId,
     };
+
 
     const handleAddToFavorites = (e) => {
         e.preventDefault();

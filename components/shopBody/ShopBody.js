@@ -3,15 +3,28 @@ import {Accordion, Dropdown} from "react-bootstrap";
 import ProductSidebar from "../productSidebar/ProductSidebar";
 import FetchMore from "./FetchMore";
 import ShopListLoader from "./ShopListLoader";
-import React, {Fragment} from "react";
-import Link from "next/link";
+import React, {Fragment, useEffect} from "react";
 import ProductItemBox from "../productItemBox/ProductItemBox";
 import ShopFilterDropDown from "./ShopFilterDropDawn";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {alertMessage} from "../../functions";
+import {NotificationContainer} from "react-notifications";
+import {viewerConstants} from "../../redux/actions/constants";
 
 export default function ShopBody({products, page_info, page_info2, loading, loadingfetchmore, onFetchMore, setSort, sort}) {
-
+    const dispatch = useDispatch()
     const {currentCategory} = useSelector(state => state.category)
+    const {message: messageFavorite} = useSelector(state => state.viewer.favorite)
+
+    useEffect(() => {
+        if (messageFavorite) {
+            alertMessage(messageFavorite, 'success')
+            dispatch({
+                type: viewerConstants.CLEAR_FAVORITE_MESSAGE
+            })
+        }
+    }, [messageFavorite])
+
     return (
         <>
             <ScrollToTop smooth/>

@@ -56,7 +56,8 @@ export const addToFavorites = (productId) => {
             dispatch({
                 type: viewerConstants.ADD_TO_FAVORITES_SUCCESS,
                 payload: {
-                    productId
+                    productId,
+                    message: `این محصول با موفقیت به لیست علاقه‌مندی‌های شما افزوده شد!`
                 }
             })
 
