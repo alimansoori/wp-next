@@ -2,6 +2,7 @@ import { checkoutConstants, customerConstants, orderConstants } from "./constant
 import client from "../../components/ApolloClient";
 import CHECKOUT from "../../gql/mutations/checkout";
 import { v4 } from "uuid";
+import {initializeApollo} from "../../components/Apollo";
 
 export const checkout = (input) => {
     return async (dispatch, getState) => {
@@ -9,10 +10,10 @@ export const checkout = (input) => {
             type: checkoutConstants.CHECKOUT_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
             const { customer: myCustomer, cart: myCart } = getState()
 
-            console.log('ddd', myCustomer.customer.billing);
             let fillInput = {
                 ...input,
                 paymentMethod: "WC_ZPal",
@@ -28,7 +29,7 @@ export const checkout = (input) => {
                 fillInput.metaData = metaData
             }
 
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: CHECKOUT,
                 variables: {
                     input: {

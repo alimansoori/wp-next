@@ -57,6 +57,7 @@ export const updateCustomer = (input) => {
             type: customerConstants.CUSTOMER_UPDATE_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
             const {viewer} = (getState()).viewer
             const {loading} = (getState()).customer
@@ -69,7 +70,7 @@ export const updateCustomer = (input) => {
                 }
             }
 
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: UPDATE_CUSTOMER,
                 variables: {
                     input: {
@@ -312,11 +313,12 @@ export const saveAddressesAndFavorites = () => {
             type: customerConstants.SAVE_ADDRESSES_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
             const { customer, viewer } = getState()
             const { addresses, active } = customer.address
 
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: UPDATE_USER,
                 variables: {
                     input: {

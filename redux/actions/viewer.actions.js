@@ -110,12 +110,13 @@ export const initFavoritesProducts = () => {
             type: viewerConstants.INIT_FAVORITES_PRODUCTS_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
 
             const {viewer} = getState()
             const {favorites} = viewer.favorite
 
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: GET_PRODUCTS,
                 variables: {
                     include: favorites,

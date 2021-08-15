@@ -2,6 +2,7 @@ import {categoryConstants} from "./constants";
 import SEARCH_CATEGORIES from '../../gql/queries/search-categories';
 import client from "../../components/ApolloClient";
 import {copy} from "../../functions";
+import {initializeApollo} from "../../components/Apollo";
 
 // function toTree(list, parent = 0) {
 //     var map = {}, node, roots = [], i, newList = {};
@@ -115,9 +116,10 @@ export const searchCategories = (filterQueries = {}) => {
             type: categoryConstants.SEARCH_CATEGORY_REQUEST
         });
 
+        const apolloClient = initializeApollo()
         try {
             const {searchInput} = getState().category;
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: SEARCH_CATEGORIES,
                 variables: {
                     ...searchInput
@@ -155,7 +157,7 @@ export const catFilters = (categorySlug, categories) => {
                 }
             }
         } else {
-            currentCategory = categories.find(cat => {
+            currentCategory = categories?.find(cat => {
                 return cat.node.slug === categorySlug
             })
         }

@@ -3,6 +3,7 @@ import client from "../../components/ApolloClient";
 import REGISTER_USER from "../../gql/mutations/register-user";
 import { v4 } from "uuid";
 import UPDATE_USER from "../../gql/mutations/update-user";
+import {initializeApollo} from "../../components/Apollo";
 
 export const signup = (user) => {
 
@@ -14,7 +15,6 @@ export const signup = (user) => {
             const res = await axios.post(`/wp/v2/users/register`,
                 { ...user },
                 {
-
                     "headers": {
 
                         "content-type": "application/json",
@@ -53,8 +53,9 @@ export const registerUser = (registerForm = {}) => {
             type: userConstants.USER_REGISTER_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: REGISTER_USER,
                 variables: {
                     input: {
@@ -88,11 +89,12 @@ export const updateUser = (updateForm = {}) => {
         dispatch({
             type: userConstants.UPDATE_USER_REQUEST
         })
+        const apolloClient = initializeApollo()
 
         const {viewer} = getState()
 
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: UPDATE_USER,
                 variables: {
                     input: {

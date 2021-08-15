@@ -47,8 +47,10 @@ export const addToCart = (addToCartInput) => {
             type: cartConstants.ADD_TO_CART_REQUEST
         });
 
+        const apolloClient = initializeApollo()
+
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: ADD_TO_CART,
                 variables: {
                     input: addToCartInput
@@ -82,8 +84,10 @@ export const updateCart = (variables) => {
             type: cartConstants.UPDATE_CART_REQUEST
         });
 
+        const apolloClient = initializeApollo()
+
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: UPDATE_CART,
                 variables: variables,
                 fetchPolicy: 'no-cache'
@@ -114,8 +118,10 @@ export const clearCart = (variables) => {
             type: cartConstants.CLEAR_CART_REQUEST
         });
 
+        const apolloClient = initializeApollo()
+
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: CLEAR_CART_MUTATION,
                 variables: variables,
                 fetchPolicy: 'no-cache'
@@ -146,8 +152,10 @@ export const applyCoupon = (code) => {
             type: cartConstants.APPLY_COUPON_REQUEST
         });
 
+        const apolloClient = initializeApollo()
+
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: APPLY_COUPON,
                 variables: {
                     input: {
@@ -189,8 +197,10 @@ export const updateShippingMethod = (input) => {
             });
         }
 
+        const apolloClient = initializeApollo()
+
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: UPDATE_SHIPPING_METHOD,
                 variables: {
                     input: {

@@ -250,10 +250,11 @@ export const getSearch = (value, slugLocation, count) => {
             }
         });
 
+        const apolloClient = initializeApollo()
         try {
             if (!value) value = "fkdfkasllfasdsfh";
 
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: PRODUCTS_FILTER_BY_LOCAL,
                 variables: {
                     slugLocation,

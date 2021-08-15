@@ -2,6 +2,7 @@ import { productConstants } from "./constants";
 import SEARCH_PRODUCTS from "../../gql/queries/search-products";
 import client from "../../components/ApolloClient";
 import GET_PRODUCTS from "../../gql/queries/get-products";
+import {initializeApollo} from "../../components/Apollo";
 
 export const getProducts = (search = "", categoryIn = [], sortby = "1", size = 20, offset = null) => {
     return async dispatch => {
@@ -73,8 +74,9 @@ export const getProducts = (search = "", categoryIn = [], sortby = "1", size = 2
                 break;
         }
 
+        const apolloClient = initializeApollo()
         try {
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: GET_PRODUCTS,
                 variables: {
                     search,
@@ -179,6 +181,8 @@ export const searchProducts = (filterQueries = {}) => {
             type: productConstants.SEARCH_PRODUCTS_REQUEST
         });
 
+        const apolloClient = initializeApollo()
+
         try {
             dispatch({
                 type: productConstants.PRODUCT_SEARCH_BY_TEXT,
@@ -203,8 +207,7 @@ export const searchProducts = (filterQueries = {}) => {
 
             const { searchInput } = getState().product;
 
-            console.log('getState', searchInput);
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: SEARCH_PRODUCTS,
                 variables: {
                     ...searchInput

@@ -1,6 +1,7 @@
 import { orderConstants } from "./constants";
 import client from "../../components/ApolloClient";
 import GET_ORDERS from "../../gql/queries/get-orders";
+import {initializeApollo} from "../../components/Apollo";
 
 export const getOrders = () => {
     return async dispatch => {
@@ -8,8 +9,9 @@ export const getOrders = () => {
             type: orderConstants.GET_ORDERS_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
-            const result = await client.query({
+            const result = await apolloClient.query({
                 query: GET_ORDERS,
                 variables: {
                     where: {

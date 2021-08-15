@@ -51,7 +51,10 @@ export default function HeaderSidebar(props) {
                             <div className="p-side-box__header__list__item__box__short">
                                 ز
                             </div>
-                            <Link href={`/shop/english-language`}>
+                            <Link
+                                href={`/shop/category/[category]`}
+                                as= {`/shop/category/english-language`}
+                            >
                                 <a className="p-side-box__header__list__item__box__long">
                                     {`زبان`}
                                 </a>
@@ -63,7 +66,10 @@ export default function HeaderSidebar(props) {
                             <div className="p-side-box__header__list__item__box__short">
                                 ک
                             </div>
-                            <Link href={`/shop/kids-teenagers`}>
+                            <Link
+                                href={`/shop/category/[category]`}
+                                as={`/shop/category/kids-teenagers`}
+                            >
                                 <a className="p-side-box__header__list__item__box__long p-side-box__header__list__item__box__long--lg-text">
                                     {`کودک و نوجوان`}
                                 </a>
