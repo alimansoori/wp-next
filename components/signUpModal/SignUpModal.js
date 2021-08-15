@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import { registerUser } from '../../redux/actions/user.actions';
 
-export default function SignUpModal(props) {
-  const {setislogin} = props
+export default function SignUpModal({show, onHide, redirectto, setislogin}) {
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -53,7 +52,8 @@ export default function SignUpModal(props) {
     <div>
       <Modal
         className="sign-up-modal"
-        {...props}
+        onHide={onHide}
+        show={show}
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered

@@ -7,7 +7,6 @@ import REFRESH_TOKEN from "../../gql/mutations/refresh-token";
 import { getViewer } from "./viewer.actions";
 import { getCustomer, initAddressesAndFavorites } from "./customer.actions";
 import { getCart } from "./cart.actions";
-import jscookie from 'js-cookie'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import {initializeApollo} from "../../components/Apollo";
 
@@ -17,8 +16,9 @@ export const loginUser = (loginForm = {}) => {
             type: authConstants.LOGIN_REQUEST
         })
 
+        const apolloClient = initializeApollo()
         try {
-            const result = await client.mutate({
+            const result = await apolloClient.mutate({
                 mutation: LOGIN_USER,
                 variables: {
                     input: {
@@ -68,6 +68,7 @@ export const loginUser = (loginForm = {}) => {
 
             dispatch(getCart())
         } catch (error) {
+            console.log(error.message)
             dispatch({
                 type: authConstants.LOGIN_FAILURE,
                 payload: {
@@ -86,10 +87,9 @@ export const isUserLoggedIn = () => {
         const cookies = parseCookies()
         const token = cookies['wp-next-token'];
 
-        if (typeof token === undefined) {
+        if (typeof token === "undefined") {
             destroyCookie(null, 'wp-next-token')
         }
-
 
         try {
             if (token) {
@@ -103,8 +103,6 @@ export const isUserLoggedIn = () => {
                     },
                     fetchPolicy: 'no-cache'
                 })
-
-                
 
                 // const qry = await client.query({
                 //     query: GET_VIEWER,
@@ -135,7 +133,7 @@ export const isUserLoggedIn = () => {
                 throw "User is Guest"
             }
         } catch (error) {
-            localStorage.removeItem('wp-next-token');
+            destroyCookie(null, 'wp-next-token')
             dispatch({
                 type: authConstants.REFRESH_TOKEN_FAILURE,
                 payload: {

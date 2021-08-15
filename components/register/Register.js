@@ -32,8 +32,8 @@ function Register() {
             </div>
 
             {!isLogin ?
-                <SignUpModal show={modalShow} onHide={() => setModalShow(false)} setislogin={setIsLogin}/> :
-                <SignInModal show={modalShow} onHide={handleOnHideSignInModal} redirectto={redirectTo} setislogin={setIsLogin}/>
+                <SignUpModal show={modalShow} onHide={() => setModalShow(false)} setislogin={setIsLogin} /> :
+                <SignInModal show={modalShow} onHide={handleOnHideSignInModal} redirectto={redirectTo} setislogin={setIsLogin} />
             }
         </div>
     );

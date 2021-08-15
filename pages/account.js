@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCustomer, updateCustomer } from '../redux/actions/customer.actions'
 import UserHeader from '../components/userHeader/UserHeader'
 import LandingLoading from '../components/landingLoading/LandingLoading'
+import ProductHeader from "../components/productHeader/ProductHeader";
 
 const Account = ({ router }) => {
     const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const Account = ({ router }) => {
     return (
         <>
             <LandingLoading />
-            <UserHeader />
+            <ProductHeader />
             {authenticate ? (
                 <>
                     <UserNav />

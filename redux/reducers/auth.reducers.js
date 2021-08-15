@@ -81,6 +81,14 @@ const AuthReducers = (state = initState, action) => {
                 authenticating: false
             }
             break;
+        case authConstants.SET_LOGIN:
+            state = {
+                ...state,
+                authenticate: true,
+                authenticating: false,
+                loading: false
+            }
+            break;
     }
 
     return state;

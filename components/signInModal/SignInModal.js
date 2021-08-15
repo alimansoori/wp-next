@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from '../../redux/actions/auth.actions'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 
-export default function SignInModal(props) {
-  const {onHide, redirectto, setislogin} = props
+export default function SignInModal({show, onHide, redirectto, setislogin}) {
   const router = useRouter()
   const dispatch = useDispatch()
   const { authenticate, loading, message, error } = useSelector(state => state.auth);
@@ -46,7 +45,8 @@ export default function SignInModal(props) {
     <div>
       <Modal
         className="sign-in-modal"
-        {...props}
+        onHide={onHide}
+        show={show}
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered

@@ -51,12 +51,10 @@ export const myAfterware = (ctx) => new ApolloLink((operation, forward) => {
         const session = headers.get("woocommerce-session");
 
         if (session) {
-            if (cookies["wp-next-session"] && cookies["wp-next-session"] !== session) {
-                if (ctx) {
-                    nookies.set(ctx, 'wp-next-session', headers.get("woocommerce-session"))
-                } else if (typeof window !== "undefined") {
-                    setCookie(null, "wp-next-session", headers.get("woocommerce-session"));
-                }
+            if (cookies["wp-next-session"] && cookies["wp-next-session"] !== session && ctx) {
+                nookies.set(ctx, 'wp-next-session', headers.get("woocommerce-session"))
+            } else if (typeof window !== undefined) {
+                setCookie(null, "wp-next-session", headers.get("woocommerce-session"));
             }
         }
 

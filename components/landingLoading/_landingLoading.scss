@@ -14,8 +14,9 @@
   align-items: center;
   backdrop-filter: blur(10px);
   animation-name: loading-fade;
-  // animation-duration: 1s;
+  //animation-duration: 1s;
   animation-iteration-count: 1;
+
   .loading__logo {
     width: 200px;
   }
