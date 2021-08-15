@@ -42,6 +42,7 @@ query GET_PRODUCTS($after: String, $before: String, $first: Int, $last: Int, $wh
         ... on SimpleProduct {
           price(format: RAW)
           regularPrice(format: RAW)
+          stockStatus
         }
       }
     }

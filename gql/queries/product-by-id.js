@@ -125,9 +125,10 @@ const PRODUCT_QUERY = gql`
         }
       }
       ...on SimpleProduct {
-            price
-            id
-            regularPrice
+        price
+        id
+        regularPrice
+        stockStatus
       }
       ... on VariableProduct {
         price

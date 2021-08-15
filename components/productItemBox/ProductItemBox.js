@@ -53,7 +53,7 @@ export default function ProductItemBox({product}) {
             let nameRes = split.length ? split[0] : e.name
 
             content.push(
-                <span key={i} onClick={(event) => handleAttrLink(event,e)}>
+                <span key={i} onClick={(event) => handleAttrLink(event, e)}>
                     {nameRes}
                 </span>
             )
@@ -103,24 +103,20 @@ export default function ProductItemBox({product}) {
                                     }
                                 </div>
                             )}
-                            <div onClick={(e) => handleAddToCart(e)}
-                                 className="p-sug-box__container__item__header__icon">
-                                {
-                                    loading ? (
-                                        <BounceLoader
-                                            loading={true}
-                                            size={25}
-                                            color="#ffffff"
-                                        />
-                                    ) : (
+                            {
+                                (product.stockStatus === 'IN_STOCK') ? (
+                                    <div
+                                        onClick={(e) => handleAddToCart(e)}
+                                        className="p-sug-box__container__item__header__icon"
+                                    >
                                         <img
                                             className="p-sug-box__container__item__header__icon__img p-sug-box__container__item__header__icon__img--bas"
                                             src={`/image/icon/Basket.svg`}
                                             alt="basket"
                                         />
-                                    )
-                                }
-                            </div>
+                                    </div>
+                                ) : null
+                            }
                         </div>
                     </div>
                     <div className="p-sug-box__container__item__header">
@@ -136,9 +132,13 @@ export default function ProductItemBox({product}) {
                             <RenderProductAttrs label='publisher' attrs={product?.paPublishers?.nodes}/>
                         </div>
                         <div className="p-sug-box__container__item__details__price">
-                            <strong style={{flexGrow: "5"}}
-                                    className="p-sug-box__container__item__details__price__item">
-                                {PN.convertEnToPe(stringToNumber(product.price))}
+                            <strong
+                                style={{flexGrow: "5"}}
+                                className="p-sug-box__container__item__details__price__item"
+                            >
+                                {product.stockStatus === 'IN_STOCK' ? (
+                                    PN.convertEnToPe(stringToNumber(product.price))
+                                ) : 'ناموجود'}
                             </strong>
                             {product.regularPrice !== product.price && (
                                 <>

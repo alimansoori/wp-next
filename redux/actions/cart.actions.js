@@ -63,13 +63,14 @@ export const addToCart = (addToCartInput) => {
                 type: cartConstants.ADD_TO_CART_SUCCESS,
                 payload: {
                     cart: addToCart.cart,
+                    message: `این محصول با موفقیت به سبد خرید شما افزوده شد!`
                 }
             });
         } catch (error) {
             dispatch({
                 type: cartConstants.ADD_TO_CART_FAILURE,
                 payload: {
-                    error: error.response.data.message
+                    error: error?.message
                 }
             });
         }

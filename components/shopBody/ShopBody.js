@@ -14,16 +14,6 @@ import {viewerConstants} from "../../redux/actions/constants";
 export default function ShopBody({products, page_info, page_info2, loading, loadingfetchmore, onFetchMore, setSort, sort}) {
     const dispatch = useDispatch()
     const {currentCategory} = useSelector(state => state.category)
-    const {message: messageFavorite} = useSelector(state => state.viewer.favorite)
-
-    useEffect(() => {
-        if (messageFavorite) {
-            alertMessage(messageFavorite, 'success')
-            dispatch({
-                type: viewerConstants.CLEAR_FAVORITE_MESSAGE
-            })
-        }
-    }, [messageFavorite])
 
     return (
         <>

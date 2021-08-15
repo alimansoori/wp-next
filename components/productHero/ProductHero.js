@@ -162,12 +162,20 @@ export default function ProductHero({product}) {
                                     {PN.convertEnToPe(stringToNumber(product?.regularPrice))}
                                 </div>
                             )}
-                            <div className="p-hero-box__l-col__purchase__price">
-                                {PN.convertEnToPe(stringToNumber(product?.price))}
-                            </div>
-                            <button onClick={(e) => handleAddToCart(e)} className="p-hero-box__l-col__purchase__buy">
+                            {product.stockStatus === 'IN_STOCK' ? (
+                                <div className="p-hero-box__l-col__purchase__price">
+                                    {PN.convertEnToPe(stringToNumber(product?.price))}
+                                </div>
+                            ) : null}
+
+                            <button disabled={product?.stockStatus !== 'IN_STOCK'} onClick={(e) => handleAddToCart(e)}
+                                    className="p-hero-box__l-col__purchase__buy">
                                 <div className="p-hero-box__l-col__purchase__buy__title">
-                                    افزودن به سبد خرید
+                                    {product.stockStatus === 'IN_STOCK' ? (
+                                        `افزودن به سبد خرید`
+                                    ) : (
+                                        `ناموجود`
+                                    )}
                                 </div>
                                 <img
                                     className="p-hero-box__l-col__purchase__buy__icon"

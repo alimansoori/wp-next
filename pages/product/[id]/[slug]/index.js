@@ -14,11 +14,32 @@ import ProductSuggestion from "../../../../components/productSuggestion/ProductS
 import ProductSidebar from "../../../../components/productSidebar/ProductSidebar";
 import LandingLoading from "../../../../components/landingLoading/LandingLoading";
 import GET_CATS from "../../../../gql/queries/get-categories";
+import {useDispatch, useSelector} from "react-redux";
+import {alertMessage} from "../../../../functions";
+import {cartConstants, viewerConstants} from "../../../../redux/actions/constants";
 
 const Product = (props) => {
 
     const router = useRouter();
+    const dispatch = useDispatch()
     const {id, slug} = router.query
+    const {message: messageCart} = useSelector(state => state.cart)
+    const {message: messageFavorite} = useSelector(state => state.viewer.favorite)
+
+    useEffect(() => {
+        if (messageFavorite) {
+            alertMessage(messageFavorite, 'success')
+            dispatch({
+                type: viewerConstants.CLEAR_FAVORITE_MESSAGE
+            })
+        }
+        if (messageCart) {
+            alertMessage(messageCart, 'success')
+            dispatch({
+                type: cartConstants.CLEAR_MESSAGE
+            })
+        }
+    }, [messageFavorite, messageCart])
 
     let product = {}
 

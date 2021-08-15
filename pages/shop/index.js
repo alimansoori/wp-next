@@ -5,18 +5,37 @@ import {initializeApollo} from "../../components/Apollo";
 import {useRouter} from "next/router";
 import ProductHeader from "../../components/productHeader/ProductHeader";
 import ShopBody from "../../components/shopBody/ShopBody";
-import {getTaxonomyFilter, orderBy} from "../../functions";
+import {alertMessage, getTaxonomyFilter, orderBy} from "../../functions";
 import useQueryShopPage from "../../hooks/useQueryShopPage";
 import GET_PUBLISHER_WRITER_TRANSLATOR_FOR_SEARCH from "../../gql/queries/get-publisher-writer-translator-for-search";
 import GET_CATS from "../../gql/queries/get-categories";
 import ProductSidebar from "../../components/productSidebar/ProductSidebar";
+import {useDispatch, useSelector} from "react-redux";
+import {cartConstants, viewerConstants} from "../../redux/actions/constants";
 
 
 export default function Shop() {
     const router = useRouter()
+    const dispatch = useDispatch()
     const {q, t, orderby, category} = router.query
     const [sort, setSort] = useState(orderby ? orderby : 1);
-    const [search, setSearch] = useState(q);
+    const {message: messageCart} = useSelector(state => state.cart)
+    const {message: messageFavorite} = useSelector(state => state.viewer.favorite)
+
+    useEffect(() => {
+        if (messageFavorite) {
+            alertMessage(messageFavorite, 'success')
+            dispatch({
+                type: viewerConstants.CLEAR_FAVORITE_MESSAGE
+            })
+        }
+        if (messageCart) {
+            alertMessage(messageCart, 'success')
+            dispatch({
+                type: cartConstants.CLEAR_MESSAGE
+            })
+        }
+    }, [messageFavorite, messageCart])
 
     const {
         loading: loadingP,

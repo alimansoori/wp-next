@@ -20,6 +20,7 @@ const initState = {
     loadingUpdateShippingMethods: false,
     loadingUpdateShippingCourierMethod: false,
     error: null,
+    message: null,
     errorCoupon: null,
     clearCartProcessing: false,
     clearCartError: null,
@@ -59,7 +60,8 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 loading: false,
-                cart: action.payload.cart
+                cart: action.payload.cart,
+                message: action.payload.message
             }
             break;
         case cartConstants.ADD_TO_CART_FAILURE:
@@ -169,6 +171,12 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 loadingUpdateShippingMethods: true
+            }
+            break;
+        case cartConstants.CLEAR_MESSAGE:
+            state = {
+                ...state,
+                message: null
             }
             break;
     }
