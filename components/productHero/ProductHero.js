@@ -106,19 +106,21 @@ export default function ProductHero({product}) {
                         <h1 className="p-hero-box__l-col__info_name">{product?.name ? product?.name : 'نام کتاب در حال بارگذاری ....'}</h1>
                         {product?.extraFields?.extraentitle && (
                             <span
-                                className="p-hero-box__l-col__info_name--eng">{product?.extraFields?.extraentitle}</span>
+                                className="p-hero-box__l-col__info_name--eng">{product?.extraFields?.extraentitle}
+                            </span>
                         )}
-
                         <div className="p-hero-box__l-col__info__details">
                             <div className="p-hero-box__l-col__info__details-wrap">
                                 <div className="p-hero-box__l-col__info__author">
                                     <strong>{`نویسنده: `}</strong>
                                     <RenderProductAttrs attrs={product?.paWriters?.nodes}/>
                                 </div>
-                                <div className="p-hero-box__l-col__info__translator">
-                                    <strong>{`مترجم: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
-                                </div>
+                                {product?.paTranslators?.nodes.length ? (
+                                    <div className="p-hero-box__l-col__info__translator">
+                                        <strong>{`مترجم: `}</strong>
+                                        <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
+                                    </div>
+                                ) : null}
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`ناشر: `}</strong>
                                     <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>
@@ -207,10 +209,12 @@ export default function ProductHero({product}) {
                                     <strong>{`نویسنده: `}</strong>
                                     <RenderProductAttrs attrs={product?.paWriters?.nodes}/>
                                 </div>
-                                <div className="p-hero-box__l-col__info__translator">
-                                    <strong>{`مترجم: `}</strong>
-                                    <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
-                                </div>
+                                {product?.paTranslators?.nodes.length ? (
+                                    <div className="p-hero-box__l-col__info__translator">
+                                        <strong>{`مترجم: `}</strong>
+                                        <RenderProductAttrs attrs={product?.paTranslators?.nodes}/>
+                                    </div>
+                                ) : null}
                                 <div className="p-hero-box__l-col__info__publisher">
                                     <strong>{`ناشر: `}</strong>
                                     <RenderProductAttrs attrs={product?.paPublishers?.nodes}/>

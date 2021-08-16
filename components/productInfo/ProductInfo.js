@@ -9,8 +9,15 @@ export default function ProductInfo({ product }) {
       <div className="p-info-box p-info-box--desktop">
         <img className="p-info-box__rect" src={`/image/Rectangle 54.png`} alt="rect" />
         <div className="p-info-box__tab-content">
-          <Tabs defaultActiveKey="پاراگرافی از کتاب" id="uncontrolled-tab-example">
-            <Tab eventKey="خلاصه متن کتاب" title="خلاصه متن کتاب">
+          <Tabs defaultActiveKey="درباره" id="uncontrolled-tab-example">
+            <Tab eventKey="درباره" title="درباره">
+              <div
+                  dangerouslySetInnerHTML={{
+                    __html: product?.extraFields?.extraAbout,
+                  }}
+              />
+            </Tab>
+            <Tab eventKey="بخشی از کتاب" title="بخشی از کتاب">
               <div className="p-info-box__tab-content__box">
                 <h1 className="p-info-box__tab-content__box__title">
                   {`پاراگرافی از کتاب`}
@@ -21,6 +28,78 @@ export default function ProductInfo({ product }) {
                   }}
                   className="p-info-box__tab-content__box__text"
                 />
+              </div>
+            </Tab>
+            <Tab eventKey="ویدئوی محصول" title="ویدئوی">
+              <div className="p-info-box__tab-content__box">
+                <div className="p-info-box__tab-content__box__video-wrap">
+                  <video className="p-info-box__tab-content__box__video" />
+                </div>
+              </div>
+            </Tab>
+            <Tab eventKey="مقایسه ترجمه" title="مقایسه ترجمه">
+              <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
+                <div className="p-info-box__tab-content__box-r">
+                  <img
+                      className="p-info-box__tab-content__box-r__img"
+                      src={`/image/book picture.png`}
+                      alt="book"
+                  />
+                </div>
+                <div className="p-info-box__tab-content__box-l">
+                  <h1 className="p-info-box__tab-content__box-l__title">
+                    نام مترجم
+                  </h1>
+                  <p className="p-info-box__tab-content__box-l__text">
+                    یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                    مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                    تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
+                    کاربردی می باشد.
+                  </p>
+                </div>
+              </div>
+              <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
+                <div className="p-info-box__tab-content__box-r">
+                  <img
+                      className="p-info-box__tab-content__box-r__img"
+                      src={`/image/book picture.png`}
+                      alt="book"
+                  />
+                </div>
+                <div className="p-info-box__tab-content__box-l">
+                  <h1 className="p-info-box__tab-content__box-l__title">
+                    نام مترجم
+                  </h1>
+                  <p className="p-info-box__tab-content__box-l__text">
+                    یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                    مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                    تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
+                    کاربردی می باشد.
+                  </p>
+                </div>
+              </div>
+              <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
+                <div className="p-info-box__tab-content__box-r">
+                  <img
+                      className="p-info-box__tab-content__box-r__img"
+                      src={`/image/book picture.png`}
+                      alt="book"
+                  />
+                </div>
+                <div className="p-info-box__tab-content__box-l">
+                  <h1 className="p-info-box__tab-content__box-l__title">
+                    نام مترجم
+                  </h1>
+                  <p className="p-info-box__tab-content__box-l__text">
+                    یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                    مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                    تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
+                    کاربردی می باشد.
+                  </p>
+                </div>
               </div>
             </Tab>
             <Tab eventKey="نظرات کاربران" title="نظرات کاربران">
@@ -77,85 +156,6 @@ export default function ProductInfo({ product }) {
                 </ul>
               </div>
             </Tab>
-            <Tab eventKey="ویدئوی محصول" title="ویدئوی محصول">
-              <div className="p-info-box__tab-content__box">
-                <div className="p-info-box__tab-content__box__video-wrap">
-                  <video className="p-info-box__tab-content__box__video" />
-                </div>
-              </div>
-            </Tab>
-            <Tab eventKey="مقایسه ترجمه" title="مقایسه ترجمه">
-              <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-                <div className="p-info-box__tab-content__box-r">
-                  <img
-                    className="p-info-box__tab-content__box-r__img"
-                    src={`/image/book picture.png`}
-                    alt="book"
-                  />
-                </div>
-                <div className="p-info-box__tab-content__box-l">
-                  <h1 className="p-info-box__tab-content__box-l__title">
-                    نام مترجم
-                  </h1>
-                  <p className="p-info-box__tab-content__box-l__text">
-                    یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                    مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                    تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                    کاربردی می باشد.
-                  </p>
-                </div>
-              </div>
-              <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-                <div className="p-info-box__tab-content__box-r">
-                  <img
-                    className="p-info-box__tab-content__box-r__img"
-                    src={`/image/book picture.png`}
-                    alt="book"
-                  />
-                </div>
-                <div className="p-info-box__tab-content__box-l">
-                  <h1 className="p-info-box__tab-content__box-l__title">
-                    نام مترجم
-                  </h1>
-                  <p className="p-info-box__tab-content__box-l__text">
-                    یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                    مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                    تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                    کاربردی می باشد.
-                  </p>
-                </div>
-              </div>
-              <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-                <div className="p-info-box__tab-content__box-r">
-                  <img
-                    className="p-info-box__tab-content__box-r__img"
-                    src={`/image/book picture.png`}
-                    alt="book"
-                  />
-                </div>
-                <div className="p-info-box__tab-content__box-l">
-                  <h1 className="p-info-box__tab-content__box-l__title">
-                    نام مترجم
-                  </h1>
-                  <p className="p-info-box__tab-content__box-l__text">
-                    یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                    مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                    تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                    کاربردی می باشد.
-                  </p>
-                </div>
-              </div>
-            </Tab>
-            <Tab eventKey="درباره" title="درباره">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: product?.extraFields?.extraAbout,
-                }}
-              />
-            </Tab>
           </Tabs>
         </div>
       </div>
@@ -169,23 +169,126 @@ export default function ProductInfo({ product }) {
                 alt="rect"
               />
               <h1 className="p-info-box__tab-content__box--res__title__text">
-                خلاصه متن کتاب
+                {`درباره`}
               </h1>
             </div>
             <div className="p-info-box__tab-content__box">
-              <p className="p-info-box__tab-content__box__text">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
-                در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-                نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-                کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان
-                جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
-                برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در
-                زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و
-                دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد
-                وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات
-                پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-              </p>
+              <div
+                  className={`p-info-box__tab-content__box__text`}
+                  dangerouslySetInnerHTML={{
+                    __html: product?.extraFields?.extraAbout,
+                  }}
+              />
+            </div>
+          </div>
+          <div className="p-info-box__tab-content__box--res">
+            <div className="p-info-box__tab-content__box--res__title">
+              <img
+                  className="p-info-box__tab-content__box--res__title__img"
+                  src={`/image/Rectangle 54.png`}
+                  alt="rect"
+              />
+              <h1 className="p-info-box__tab-content__box--res__title__text">
+                بخشی از کتاب
+              </h1>
+            </div>
+            <div
+                dangerouslySetInnerHTML={{
+                  __html: product.shortDescription,
+                }}
+                className="p-info-box__tab-content__box p-info-box__tab-content__box--flex"
+            />
+          </div>
+          <div className="p-info-box__tab-content__box--res">
+            <div className="p-info-box__tab-content__box--res__title">
+              <img
+                  className="p-info-box__tab-content__box--res__title__img"
+                  src={`/image/Rectangle 54.png`}
+                  alt="rect"
+              />
+              <h1 className="p-info-box__tab-content__box--res__title__text">
+                ویدئوی محصول
+              </h1>
+            </div>
+            <div className="p-info-box__tab-content__box">
+              <div className="p-info-box__tab-content__box__video-wrap">
+                <video className="p-info-box__tab-content__box__video" />
+              </div>
+            </div>
+          </div>
+          <div className="p-info-box__tab-content__box--res">
+            <div className="p-info-box__tab-content__box--res__title">
+              <img
+                  className="p-info-box__tab-content__box--res__title__img"
+                  src={`/image/Rectangle 54.png`}
+                  alt="rect"
+              />
+              <h1 className="p-info-box__tab-content__box--res__title__text">
+                مقایسه ترجمه
+              </h1>
+            </div>
+            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
+              <div className="p-info-box__tab-content__box-r">
+                <img
+                    className="p-info-box__tab-content__box-r__img"
+                    src={`/image/book picture.png`}
+                    alt="book"
+                />
+              </div>
+              <div className="p-info-box__tab-content__box-l">
+                <h1 className="p-info-box__tab-content__box-l__title">
+                  نام مترجم
+                </h1>
+                <p className="p-info-box__tab-content__box-l__text">
+                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
+                  کاربردی می باشد.
+                </p>
+              </div>
+            </div>
+            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
+              <div className="p-info-box__tab-content__box-r">
+                <img
+                    className="p-info-box__tab-content__box-r__img"
+                    src={`/image/book picture.png`}
+                    alt="book"
+                />
+              </div>
+              <div className="p-info-box__tab-content__box-l">
+                <h1 className="p-info-box__tab-content__box-l__title">
+                  نام مترجم
+                </h1>
+                <p className="p-info-box__tab-content__box-l__text">
+                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
+                  کاربردی می باشد.
+                </p>
+              </div>
+            </div>
+            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
+              <div className="p-info-box__tab-content__box-r">
+                <img
+                    className="p-info-box__tab-content__box-r__img"
+                    src={`/image/book picture.png`}
+                    alt="book"
+                />
+              </div>
+              <div className="p-info-box__tab-content__box-l">
+                <h1 className="p-info-box__tab-content__box-l__title">
+                  نام مترجم
+                </h1>
+                <p className="p-info-box__tab-content__box-l__text">
+                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
+                  کاربردی می باشد.
+                </p>
+              </div>
             </div>
           </div>
           <div className="p-info-box__tab-content__box--res">
@@ -250,173 +353,6 @@ export default function ProductInfo({ product }) {
                   </div>
                 </li>
               </ul>
-            </div>
-          </div>
-          <div className="p-info-box__tab-content__box--res">
-            <div className="p-info-box__tab-content__box--res__title">
-              <img
-                className="p-info-box__tab-content__box--res__title__img"
-                src={`/image/Rectangle 54.png`}
-                alt="rect"
-              />
-              <h1 className="p-info-box__tab-content__box--res__title__text">
-                ویدئوی محصول
-              </h1>
-            </div>
-            <div className="p-info-box__tab-content__box">
-              <div className="p-info-box__tab-content__box__video-wrap">
-                <video className="p-info-box__tab-content__box__video" />
-              </div>
-            </div>
-          </div>
-          <div className="p-info-box__tab-content__box--res">
-            <div className="p-info-box__tab-content__box--res__title">
-              <img
-                className="p-info-box__tab-content__box--res__title__img"
-                src={`/image/Rectangle 54.png`}
-                alt="rect"
-              />
-              <h1 className="p-info-box__tab-content__box--res__title__text">
-                مقایسه ترجمه
-              </h1>
-            </div>
-            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-              <div className="p-info-box__tab-content__box-r">
-                <img
-                  className="p-info-box__tab-content__box-r__img"
-                  src={`/image/book picture.png`}
-                  alt="book"
-                />
-              </div>
-              <div className="p-info-box__tab-content__box-l">
-                <h1 className="p-info-box__tab-content__box-l__title">
-                  نام مترجم
-                </h1>
-                <p className="p-info-box__tab-content__box-l__text">
-                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
-                </p>
-              </div>
-            </div>
-            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-              <div className="p-info-box__tab-content__box-r">
-                <img
-                  className="p-info-box__tab-content__box-r__img"
-                  src={`/image/book picture.png`}
-                  alt="book"
-                />
-              </div>
-              <div className="p-info-box__tab-content__box-l">
-                <h1 className="p-info-box__tab-content__box-l__title">
-                  نام مترجم
-                </h1>
-                <p className="p-info-box__tab-content__box-l__text">
-                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
-                </p>
-              </div>
-            </div>
-            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-              <div className="p-info-box__tab-content__box-r">
-                <img
-                  className="p-info-box__tab-content__box-r__img"
-                  src={`/image/book picture.png`}
-                  alt="book"
-                />
-              </div>
-              <div className="p-info-box__tab-content__box-l">
-                <h1 className="p-info-box__tab-content__box-l__title">
-                  نام مترجم
-                </h1>
-                <p className="p-info-box__tab-content__box-l__text">
-                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="p-info-box__tab-content__box--res">
-            <div className="p-info-box__tab-content__box--res__title">
-              <img
-                className="p-info-box__tab-content__box--res__title__img"
-                src={`/image/Rectangle 54.png`}
-                alt="rect"
-              />
-              <h1 className="p-info-box__tab-content__box--res__title__text">
-                درباره
-              </h1>
-            </div>
-            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-              <div className="p-info-box__tab-content__box-r">
-                <img
-                  className="p-info-box__tab-content__box-r__img"
-                  src={`/image/book picture.png`}
-                  alt="book"
-                />
-              </div>
-              <div className="p-info-box__tab-content__box-l">
-                <h1 className="p-info-box__tab-content__box-l__title">
-                  عنوان این بخش
-                </h1>
-                <p className="p-info-box__tab-content__box-l__text">
-                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
-                </p>
-              </div>
-            </div>
-            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-              <div className="p-info-box__tab-content__box-r">
-                <img
-                  className="p-info-box__tab-content__box-r__img"
-                  src={`/image/book picture.png`}
-                  alt="book"
-                />
-              </div>
-              <div className="p-info-box__tab-content__box-l">
-                <h1 className="p-info-box__tab-content__box-l__title">
-                  عنوان این بخش
-                </h1>
-                <p className="p-info-box__tab-content__box-l__text">
-                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
-                </p>
-              </div>
-            </div>
-            <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
-              <div className="p-info-box__tab-content__box-r">
-                <img
-                  className="p-info-box__tab-content__box-r__img"
-                  src={`/image/book picture.png`}
-                  alt="book"
-                />
-              </div>
-              <div className="p-info-box__tab-content__box-l">
-                <h1 className="p-info-box__tab-content__box-l__title">
-                  عنوان این بخش
-                </h1>
-                <p className="p-info-box__tab-content__box-l__text">
-                  یپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
-                </p>
-              </div>
             </div>
           </div>
         </div>
