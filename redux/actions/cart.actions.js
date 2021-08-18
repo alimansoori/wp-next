@@ -19,6 +19,7 @@ export const getCart = () => {
         try {
             const result = await apolloClient.query({
                 query: GET_CART,
+                fetchPolicy: 'no-cache'
             });
 
             const { cart } = result.data;
@@ -207,7 +208,7 @@ export const updateShippingMethod = (input) => {
                 },
             });
 
-            const { cart } = result.data.updateShippingMethod;
+            const { cart } = result?.data?.updateShippingMethod;
 
             dispatch({
                 type: cartConstants.UPDATE_SHIPPING_METHOD_SUCCESS,
