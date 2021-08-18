@@ -29,7 +29,7 @@ function App(props) {
     const {Component, pageProps} = props
     const client = useApollo(pageProps?.initialApolloState)
 
-    if (props.viewer) {
+    if (props?.viewer) {
         store.dispatch({
             type: viewerConstants.VIEWER_REGISTER_SUCCESS,
             payload: {
@@ -53,7 +53,7 @@ function App(props) {
 }
 
 App.getInitialProps = async (ctx) => {
-    if (typeof window !== "undefined") return {viewer: {}}
+    if (typeof window !== "undefined") return {viewer: null}
 
     const apolloClient = initializeApollo(null, ctx.ctx)
 

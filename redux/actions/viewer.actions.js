@@ -46,7 +46,7 @@ export const getViewer = () => {
     }
 }
 
-export const addToFavorites = (productId) => {
+export const addToFavorites = (productSlug) => {
     return async (dispatch, getState) => {
         dispatch({
             type: viewerConstants.ADD_TO_FAVORITES_REQUEST
@@ -56,7 +56,7 @@ export const addToFavorites = (productId) => {
             dispatch({
                 type: viewerConstants.ADD_TO_FAVORITES_SUCCESS,
                 payload: {
-                    productId,
+                    productSlug: productSlug,
                     message: `این محصول با موفقیت به لیست علاقه‌مندی‌های شما افزوده شد!`
                 }
             })
@@ -76,7 +76,7 @@ export const addToFavorites = (productId) => {
     }
 }
 
-export const removeFromFavorites = (productId) => {
+export const removeFromFavorites = (productSlug) => {
     return async (dispatch, getState) => {
         dispatch({
             type: viewerConstants.REMOVE_FROM_FAVORITES_REQUEST
@@ -86,7 +86,7 @@ export const removeFromFavorites = (productId) => {
             dispatch({
                 type: viewerConstants.REMOVE_FROM_FAVORITES_SUCCESS,
                 payload: {
-                    productId
+                    productSlug: productSlug
                 }
             })
 
@@ -120,8 +120,10 @@ export const initFavoritesProducts = () => {
             const result = await apolloClient.query({
                 query: GET_PRODUCTS,
                 variables: {
-                    include: favorites,
-                    size: 100
+                    first: 200,
+                    where: {
+                        slugIn: favorites
+                    },
                 }
             })
 

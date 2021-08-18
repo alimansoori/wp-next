@@ -22,6 +22,7 @@ export const getCart = () => {
             });
 
             const { cart } = result.data;
+            console.log(cart)
 
             dispatch({
                 type: cartConstants.CART_SUCCESS,
@@ -33,7 +34,7 @@ export const getCart = () => {
             dispatch({
                 type: cartConstants.CART_FAILURE,
                 payload: {
-                    error: error.message
+                    error: error?.message
                 }
             });
         }
@@ -54,7 +55,6 @@ export const addToCart = (addToCartInput) => {
                 variables: {
                     input: addToCartInput
                 },
-                fetchPolicy: 'no-cache'
             });
 
             const { addToCart } = result.data;
@@ -90,7 +90,6 @@ export const updateCart = (variables) => {
             const result = await apolloClient.mutate({
                 mutation: UPDATE_CART,
                 variables: variables,
-                fetchPolicy: 'no-cache'
             });
 
             const { updateItemQuantities } = result.data;
@@ -105,7 +104,7 @@ export const updateCart = (variables) => {
             dispatch({
                 type: cartConstants.UPDATE_CART_FAILURE,
                 payload: {
-                    error: error.response.data.message
+                    error: error?.message
                 }
             });
         }
@@ -124,7 +123,6 @@ export const clearCart = (variables) => {
             const result = await apolloClient.mutate({
                 mutation: CLEAR_CART_MUTATION,
                 variables: variables,
-                fetchPolicy: 'no-cache'
             });
 
             const { removeItemsFromCart } = result.data;
@@ -163,7 +161,6 @@ export const applyCoupon = (code) => {
                         code
                     }
                 },
-                fetchPolicy: 'no-cache'
             });
 
             const { cart } = result.data.applyCoupon;
@@ -208,7 +205,6 @@ export const updateShippingMethod = (input) => {
                         ...input
                     }
                 },
-                fetchPolicy: 'no-cache'
             });
 
             const { cart } = result.data.updateShippingMethod;
@@ -223,7 +219,7 @@ export const updateShippingMethod = (input) => {
             dispatch({
                 type: cartConstants.UPDATE_SHIPPING_METHOD_FAILURE,
                 payload: {
-                    error: error.response.data.message
+                    error: error?.message
                 }
             });
         }

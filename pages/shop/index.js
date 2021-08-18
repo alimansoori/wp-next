@@ -58,7 +58,7 @@ export default function Shop() {
 
     return (
         <div className="search-wrap">
-            <ProductHeader/>
+            <ProductHeader fixed={true}/>
             <div className="search__body">
                 <ShopBody
                     products={data?.products?.edges ? data?.products?.edges : []}

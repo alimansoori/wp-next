@@ -32,15 +32,15 @@ export default function UserBasket(props) {
 
     const billingAddress = getValueByKey(addresses, active)
 
-    var state = billingAddress.state ? (region.states.find(x => x.value === billingAddress.state)).label : null;
-    var city = billingAddress.city && billingAddress.state ?
+    let state = billingAddress.state ? (region.states.find(x => x.value === billingAddress.state)).label : null;
+    let city = billingAddress.city && billingAddress.state ?
       (region.states.find(x => x.value === billingAddress.state)).cities.find(
         x => x.value === billingAddress.city
       ).label
       : null;
 
-    var address1 = billingAddress ? billingAddress.address1 : '';
-    var address2 = billingAddress ? billingAddress.address2 : '';
+    let address1 = billingAddress ? billingAddress.address1 : '';
+    let address2 = billingAddress ? billingAddress.address2 : '';
 
     setAddress('ایران' + '-' + state + '-' + city + '-' + address1 + '-' + address2)
 

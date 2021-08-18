@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import ProfileHeader from "../profileHeader/ProfileHeader";
 
 
-export default function ProductHeader() {
+export default function ProductHeader({fixed}) {
 
   const { authenticate } = useSelector(state => state.auth);
   const { cart } = useSelector(state => state.cart)
@@ -33,7 +33,7 @@ export default function ProductHeader() {
           </a>
         </Link>
       </div>
-      <div className="product-header--res">
+      <div className="product-header--res" style={{position: `${!fixed ? 'inherit' : 'fixed'}`}}>
         <div className="product-header--res__box">
           <div className="product-header--res__box__top">
             <div className="product-header--res__box__top__logo">

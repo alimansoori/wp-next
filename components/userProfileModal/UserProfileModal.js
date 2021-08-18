@@ -86,7 +86,7 @@ export default function UserProfileModal(props) {
                         <img
                             style={{width: '40px'}}
                             className="p-hero-box__l-col__purchase__buy__icon"
-                            src={`/image/icon/white-pinner.svg`}
+                            src={`/image/icon/white-spinner.svg`}
                             alt="icon"
                         />
                     ) : 'ثبت'}

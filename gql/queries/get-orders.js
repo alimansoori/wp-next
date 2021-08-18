@@ -25,13 +25,6 @@ const GET_ORDERS = gql`
           }
         }
       }
-      pageInfo {
-        offsetPagination {
-          hasMore
-          hasPrevious
-          total
-        }
-      }
     }
   }
 `;

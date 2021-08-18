@@ -31,7 +31,6 @@ export const loginUser = (loginForm = {}) => {
                     ],
                     multiple: true
                 },
-                fetchPolicy: 'no-cache'
             })
 
             const { user, authToken, customer } = result.data.login
@@ -66,7 +65,7 @@ export const loginUser = (loginForm = {}) => {
                 }
             })
 
-            dispatch(getCart())
+            // dispatch(getCart())
         } catch (error) {
             console.log(error.message)
             dispatch({
@@ -101,7 +100,6 @@ export const isUserLoggedIn = () => {
                             jwtRefreshToken: token
                         }
                     },
-                    fetchPolicy: 'no-cache'
                 })
 
                 // const qry = await client.query({
@@ -121,7 +119,7 @@ export const isUserLoggedIn = () => {
                 });
 
                 dispatch(getViewer())
-                dispatch(getCart())
+                // dispatch(getCart())
                 dispatch(getCustomer())
                 // dispatch({
                 //     type: viewerConstants.VIEWER_REGISTER_SUCCESS,

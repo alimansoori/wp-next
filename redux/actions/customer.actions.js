@@ -78,7 +78,6 @@ export const updateCustomer = (input) => {
                         clientMutationId: v4()
                     }
                 },
-                fetchPolicy: "no-cache"
             })
 
             const { customer } = result.data.updateCustomer
@@ -93,14 +92,11 @@ export const updateCustomer = (input) => {
             
             dispatch(getCart())
 
-            if (!getState().customer.loading) {
-                
-            }
         } catch (error) {
             dispatch({
                 type: customerConstants.CUSTOMER_UPDATE_FAILURE,
                 payload: {
-                    error: error.message
+                    error: error?.message
                 }
             })
         }
@@ -333,7 +329,6 @@ export const saveAddressesAndFavorites = () => {
                         clientMutationId: v4()
                     }
                 },
-                fetchPolicy: "no-cache"
             })
 
             const { user } = result.data.updateUser
@@ -353,6 +348,7 @@ export const saveAddressesAndFavorites = () => {
             dispatch({ type: customerConstants.SAVE_ADDRESSES_SUCCESS })
 
         } catch (error) {
+            console.log(error.message)
             dispatch({
                 type: customerConstants.SAVE_ADDRESSES_FAILURE,
                 payload: {

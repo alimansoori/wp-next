@@ -39,7 +39,7 @@ export default function ProductHero({product}) {
     }
     const handleAddToFavorites = () => {
         dispatch(
-            addToFavorites(product?.databaseId)
+            addToFavorites(product?.slug)
         )
     }
 
@@ -181,7 +181,7 @@ export default function ProductHero({product}) {
                                 </div>
                                 <img
                                     className="p-hero-box__l-col__purchase__buy__icon"
-                                    src={`/image/icon/${loading ? 'white-pinner.svg' : 'Group 119.svg'}`}
+                                    src={`/image/icon/${loading ? 'white-spinner.svg' : 'Group 119.svg'}`}
                                     alt="icon"
                                 />
                             </button>
@@ -261,7 +261,7 @@ export default function ProductHero({product}) {
                                 </div>
                                 <img
                                     className="p-hero-box__l-col__purchase__buy__icon"
-                                    src={`/image/icon/${loading ? 'white-pinner.svg' : 'Group 119.svg'}`}
+                                    src={`/image/icon/${loading ? 'white-spinner.svg' : 'Group 119.svg'}`}
                                     alt="icon"
                                 />
                             </button>

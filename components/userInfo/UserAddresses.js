@@ -149,7 +149,7 @@ export default function UserAddresses() {
                             />
                         </div>
                         <div className="user-info-box__top__row__box__body">
-                            {customer ? customer.email : null}
+                            {viewer ? viewer.email : null}
                         </div>
                     </div>
                 </div>

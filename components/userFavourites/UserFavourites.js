@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux"
 import ClipLoader from "react-spinners/ClipLoader";
 import {v4} from "uuid";
@@ -9,6 +9,7 @@ export default function UserFavourites() {
     const {favorite} = useSelector(state => state.viewer)
     const {favorites, favoritesProducts, loading} = favorite
     const dispatch = useDispatch()
+    const [deleteFavoriteSlug, setDeleteFavoriteSlug] = useState(null)
 
     useEffect(() => {
         if (favorites.length) {
@@ -16,21 +17,24 @@ export default function UserFavourites() {
         }
     }, [favorites])
 
-    const handleDeleteFavorite = (dbId) => {
+    const handleDeleteFavorite = (slug) => {
+        setDeleteFavoriteSlug(slug)
         dispatch(
-            removeFromFavorites(dbId)
+            removeFromFavorites(slug)
         )
     }
-    const handleAddToCart = (dbId) => {
+    const handleAddToCart = (dbId, slug, stockStatus) => {
         dispatch(
             addToCart({
                 clientMutationId: v4(),
                 productId: dbId,
             })
         )
-        dispatch(
-            removeFromFavorites(dbId)
-        )
+        if (stockStatus === 'IN_STOCK') {
+            dispatch(
+                removeFromFavorites(slug)
+            )
+        }
     }
 
     const RenderProductAttrs = ({attrs}) => {
@@ -115,13 +119,13 @@ export default function UserFavourites() {
                                             </div>
                                             <div className="user-fav-box__list__item__box__icon">
                                                 <img
-                                                    onClick={() => handleDeleteFavorite(favorite.node.databaseId)}
+                                                    onClick={() => handleDeleteFavorite(favorite.node.slug)}
                                                     className="user-fav-box__list__item__box__icon__img"
-                                                    src={`/image/icon/Path 82.png`}
+                                                    src={`/image/icon/${(loading && favorite.node.slug === deleteFavoriteSlug) ? 'white-spinner.svg' : 'Path 82.png'}`}
                                                     alt="dlt"
                                                 />
                                                 <img
-                                                    onClick={() => handleAddToCart(favorite.node.databaseId)}
+                                                    onClick={() => handleAddToCart(favorite.node.databaseId, favorite.node.slug, favorite.node.stockStatus)}
                                                     className="user-fav-box__list__item__box__icon__img"
                                                     src={`/image/icon/Send.png`}
                                                     alt="send"

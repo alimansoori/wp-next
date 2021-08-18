@@ -79,7 +79,7 @@ export default (state = initState, action) => {
             }
             break;
         case viewerConstants.ADD_TO_FAVORITES_SUCCESS:
-            if (!state.favorite.favorites.includes(action.payload.productId)) {
+            if (!state.favorite.favorites.includes(action.payload.productSlug)) {
                 state = {
                     ...state,
                     favorite: {
@@ -88,7 +88,7 @@ export default (state = initState, action) => {
                         message: action.payload.message,
                         favorites: [
                             ...state.favorite.favorites,
-                            action.payload.productId,
+                            action.payload.productSlug,
                         ]
                     }
                 }
@@ -123,9 +123,16 @@ export default (state = initState, action) => {
             }
             break;
         case viewerConstants.REMOVE_FROM_FAVORITES_SUCCESS:
-            const index = state.favorite.favorites.indexOf(action.payload.productId);
+            const index = state.favorite.favorites.indexOf(action.payload.productSlug);
             if (index > -1) {
                 state.favorite.favorites.splice(index, 1);
+            }
+            state = {
+                ...state,
+                favorite: {
+                    ...state.favorite,
+                    loading: false
+                }
             }
             break;
         case viewerConstants.REMOVE_FROM_FAVORITES_FAILURE:

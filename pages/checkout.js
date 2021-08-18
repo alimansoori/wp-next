@@ -44,7 +44,6 @@ export const getServerSideProps = async (ctx) => {
           jwtRefreshToken: cookies['wp-next-token']
         }
       },
-      fetchPolicy: 'no-cache'
     })
 
     refreshJwtAuthToken = res?.data?.refreshJwtAuthToken

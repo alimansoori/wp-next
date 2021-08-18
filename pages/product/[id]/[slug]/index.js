@@ -70,7 +70,7 @@ const Product = (props) => {
         >
             <div className="product-wrap">
                 <LandingLoading/>
-                <ProductHeader/>
+                <ProductHeader fixed={true}/>
                 <div className="product__body">
                     <div className="product__body__main">
                         <ProductHero product={product}/>

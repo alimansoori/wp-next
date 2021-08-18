@@ -176,7 +176,8 @@ export default (state = initState, action) => {
         case cartConstants.CLEAR_MESSAGE:
             state = {
                 ...state,
-                message: null
+                message: null,
+                error: null
             }
             break;
     }

@@ -34,7 +34,7 @@ function Page(props) {
                     seo={pageData.seo}
                 >
                     <div className="product-wrap">
-                        <ProductHeader/>
+                        <ProductHeader fixed={true}/>
                         <div className="product__body">
                             <div className="product__body__main">
                                 <PageHero page={page}/>

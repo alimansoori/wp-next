@@ -577,12 +577,10 @@ export function alertMessage(message, type = 'info') {
             NotificationManager.success(message);
             break;
         case 'warning':
-            NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+            NotificationManager.warning(message);
             break;
         case 'error':
-            NotificationManager.error('Error message', 'Click me!', 5000, () => {
-                alert('callback');
-            });
+            NotificationManager.error(message);
             break;
     }
 }

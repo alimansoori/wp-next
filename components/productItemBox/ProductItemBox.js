@@ -25,7 +25,7 @@ export default function ProductItemBox({product}) {
 
     const handleAddToFavorites = (e) => {
         e.preventDefault();
-        dispatch(addToFavorites(product.databaseId));
+        dispatch(addToFavorites(product.slug));
     }
 
     const handleAddToCart = (e) => {

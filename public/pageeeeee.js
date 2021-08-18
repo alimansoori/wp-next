@@ -124,7 +124,7 @@ const Shop = ({productsData, catsData, catsData2}) => {
 
     return (
         <div className="search-wrap">
-            <ProductHeader/>
+            <ProductHeader fixed={true}/>
             <div className="search__body">
                 <ScrollToTop smooth />
                 <div className="search__body__main">

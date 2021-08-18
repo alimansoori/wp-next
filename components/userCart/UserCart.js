@@ -12,7 +12,6 @@ export default function UserCartourites() {
     const {cart, loading, error} = useSelector(state => state.cart)
 
     const handleRemoveProductClick = (event, cartKey, products) => {
-
         event.stopPropagation();
 
         if (products.length) {
