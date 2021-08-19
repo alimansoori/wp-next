@@ -2,6 +2,7 @@ import {gql} from '@apollo/client';
 
 const CLEAR_CART_MUTATION = gql`
 fragment cart on Cart {
+  chosenShippingMethods
   contents {
     nodes {
       key
@@ -33,7 +34,7 @@ fragment cart on Cart {
             }
           }
           ... on SimpleProduct {
-            price
+            price(format: RAW)
             regularPrice
           }
         }
@@ -44,23 +45,15 @@ fragment cart on Cart {
       subtotalTax
     }
   }
-  appliedCoupons {
-    nodes {
+  availableShippingMethods {
+    packageDetails
+    supportsShippingCalculator
+    rates {
+      cost
       id
-      databaseId
-      discountType
-      amount
-      dateExpiry
-      products {
-        nodes {
-          id
-        }
-      }
-      productCategories {
-        nodes {
-          id
-        }
-      }
+      instanceId
+      label
+      methodId
     }
   }
   subtotal
@@ -71,6 +64,7 @@ fragment cart on Cart {
   totalTax
   feeTax
   feeTotal
+  isEmpty
   discountTax
   discountTotal
 }

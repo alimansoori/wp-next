@@ -1,5 +1,4 @@
 import {gql} from '@apollo/client';
-import UserFragment from "../fragments/user-fragment";
 
 const UPDATE_USER = gql`
 
@@ -7,11 +6,24 @@ mutation ($input: UpdateUserInput!) {
   updateUser(input: $input) {
     clientMutationId
     user {
-      ...UserThatLogin
+      id
+      databaseId
+      name
+      firstName
+      lastName
+      description
+      username
+      email
+      locale
+      jwtAuthExpiration
+      jwtAuthToken
+      jwtRefreshToken
+      jwtUserSecret
+      isJwtAuthSecretRevoked
+      isRestricted
     }
   }
 }
-${UserFragment.fragments.UserThatLogin}
 `;
 
 export default UPDATE_USER;
