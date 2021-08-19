@@ -36,6 +36,5 @@ export async function getViewerQuery(apolloClient, context) {
 
 
     const {viewer} = query.data
-    console.log(viewer)
     return viewer
 }

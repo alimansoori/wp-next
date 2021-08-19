@@ -201,7 +201,6 @@ export const removeItemFromCart = (productId) => {
  * @param {String} data Cart data
  */
 export const getFormattedCart = (data) => {
-    console.log(data);
 
     let formattedCart = null;
 

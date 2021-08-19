@@ -3,6 +3,7 @@ import client from "../../components/ApolloClient";
 import CHECKOUT from "../../gql/mutations/checkout";
 import { v4 } from "uuid";
 import {initializeApollo} from "../../components/Apollo";
+import {getCart} from "./cart.actions";
 
 export const checkout = (input) => {
     return async (dispatch, getState) => {
@@ -90,7 +91,7 @@ export const setBillingInput = () => {
                 }
             })
 
-            // dispatch(getCart())
+            dispatch(getCart())
         } catch (error) {
             dispatch({
                 type: checkoutConstants.CHANGE_BILLING_INPUT_FAILURE,

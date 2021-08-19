@@ -81,7 +81,8 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 loading: false,
-                cart: action.payload.cart
+                cart: action.payload.cart,
+                message: action.payload.message
             }
             break;
         case cartConstants.UPDATE_CART_FAILURE:

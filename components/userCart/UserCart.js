@@ -6,6 +6,7 @@ import {getUpdatedItems, stringToNumber} from "../../functions";
 import {v4} from "uuid";
 import {updateCart} from '../../redux/actions/cart.actions'
 import PN from 'persian-number'
+import {cartConstants} from "../../redux/actions/constants";
 
 export default function UserCartourites() {
     const dispatch = useDispatch()
@@ -26,6 +27,9 @@ export default function UserCartourites() {
                     items: updatedItems
                 }
             }));
+            dispatch({
+                type: cartConstants.CLEAR_MESSAGE
+            })
         }
     };
 

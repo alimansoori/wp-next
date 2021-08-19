@@ -8,6 +8,7 @@ import LandingLoading from '../components/landingLoading/LandingLoading'
 import ProductHeader from "../components/productHeader/ProductHeader";
 import {alertMessage} from "../functions";
 import {cartConstants, viewerConstants} from "../redux/actions/constants";
+import AccessDenied from "../components/accessDenied/AccessDenied";
 
 const Account = ({ router }) => {
     const dispatch = useDispatch()
@@ -59,7 +60,7 @@ const Account = ({ router }) => {
                 <>
                     <UserNav />
                 </>
-            ) : <div>Access Denied! ... Please Log in</div>}
+            ) : <AccessDenied/>}
         </>
     )
 }

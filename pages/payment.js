@@ -17,6 +17,8 @@ import CHECKOUT from '../gql/mutations/checkout';
 import GET_ORDER from '../gql/queries/get-order';
 import clientConfig from '../client-config';
 import EMPTY_CART from '../gql/mutations/empty-cart';
+import AccessDenied from "../components/accessDenied/AccessDenied";
+import ProductHeader from "../components/productHeader/ProductHeader";
 
 function Payment(props) {
   const dispatch = useDispatch()
@@ -75,12 +77,12 @@ function Payment(props) {
   return (
     <>
       <LandingLoading />
-      <UserHeader />
+      <ProductHeader />
       {authenticate ? (
         <>
           <PayNav {...props} />
         </>
-      ) : <div>Access Denied! ... Please Log in</div>}
+      ) : <AccessDenied/>}
     </>
   )
 }

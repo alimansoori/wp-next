@@ -13,7 +13,6 @@ function ApplyCoupon({ notifs, setNotifs }) {
     }
 
     useEffect(() => {
-        console.log(errorCoupon)
         if (errorCoupon) {
             setNotifs(notifs.concat([
                 {

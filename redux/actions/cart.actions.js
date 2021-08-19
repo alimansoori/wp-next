@@ -23,7 +23,6 @@ export const getCart = () => {
             });
 
             const { cart } = result.data;
-            console.log(cart)
 
             dispatch({
                 type: cartConstants.CART_SUCCESS,
@@ -99,6 +98,7 @@ export const updateCart = (variables) => {
                 type: cartConstants.UPDATE_CART_SUCCESS,
                 payload: {
                     cart: updateItemQuantities.cart,
+                    message: 'عملیات با موفقیت انجام شد!'
                 }
             });
         } catch (error) {
