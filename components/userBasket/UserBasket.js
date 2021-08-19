@@ -73,12 +73,8 @@ export default function UserBasket(props) {
         )
         return false
       }
-
-      router.push('/checkout')
-      // console.log(shippingDate)
-      // console.log(customer?.metaData)
-      // console.log(errors)
     }
+    router.push('/checkout')
   }
 
   return (

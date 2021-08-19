@@ -1,5 +1,4 @@
 import {gql} from '@apollo/client';
-import CustomerFragment from "../fragments/customer-fragment";
 
 const UPDATE_CUSTOMER = gql`
 
@@ -7,11 +6,56 @@ mutation ($input: UpdateCustomerInput!) {
   updateCustomer(input: $input) {
     clientMutationId
     customer {
-      ...MyCustomer
+      billing {
+        country
+        state
+        city
+        address1
+        address2
+        company
+        email
+        firstName
+        lastName
+        phone
+        postcode
+      }
+      calculatedShipping
+      databaseId
+      date
+      displayName
+      email
+      firstName
+      hasCalculatedShipping
+      id
+      isPayingCustomer
+      isVatExempt
+      lastName
+      orderCount
+      metaData {
+        key
+        value
+      }
+      role
+      sessionToken
+      shipping {
+        country
+        state
+        city
+        address1
+        address2
+        company
+        email
+        firstName
+        lastName
+        phone
+        postcode
+      }
+      totalSpent
+      username
+      modified
     }
   }
 }
-${CustomerFragment.fragments.MyCustomer}
 `;
 
 export default UPDATE_CUSTOMER;

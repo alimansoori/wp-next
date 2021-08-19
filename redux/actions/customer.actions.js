@@ -63,10 +63,11 @@ export const updateCustomer = (input) => {
             const {loading} = (getState()).customer
             let newInput = input
 
+
             if (viewer) {
                 newInput = {
                     ...input,
-                    id: viewer.id
+                    id: viewer?.id
                 }
             }
 
