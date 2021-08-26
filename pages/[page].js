@@ -65,7 +65,7 @@ export async function getStaticProps(context) {
             pageData,
             initialApolloState: apolloClient.cache.extract(),
         },
-        revalidate: 1000,
+        revalidate: 1,
     };
 }
 
