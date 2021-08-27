@@ -13,6 +13,7 @@ export default function BasePage(props) {
             <Head>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 <title>{seo?.title}</title>
+                {homePage && (<meta name="enamad" content="193700"/>)}
                 
                 {seo?.canonical && <link rel="canonical" href={canonical} />}
                 {seo?.metaDesc && <meta name="description" content={seo.metaDesc} />}

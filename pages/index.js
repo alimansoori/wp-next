@@ -149,7 +149,7 @@ export const getStaticProps = async (context) => {
             homePageData,
             initialApolloState: client.cache.extract(),
         },
-        revalidate: 1000
+        revalidate: 100
     }
 }
 
