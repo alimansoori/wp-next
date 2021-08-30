@@ -12,13 +12,14 @@ export default function BasePage(props) {
         <>
             <Head>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <title>{seo?.title}</title>
+                {/*<title>{seo?.title}</title>*/}
                 <title>870251</title>
 
                 {seo?.canonical && <link rel="canonical" href={canonical} />}
                 {seo?.metaDesc && <meta name="description" content={seo.metaDesc} />}
                 {seo?.metaKeywords && <meta name="keywords" content={seo.metaKeywords} />}
-                {seo?.title && <meta name="title" content={seo.title} />}
+                {/*{seo?.title && <meta name="title" content={seo.title} />}*/}
+                {seo?.title && <meta name="title" content={`870251`} />}
                 {seo?.opengraphTitle && <meta property="og:title" key="og:title" content={seo.opengraphTitle} />}
                 {seo?.opengraphUrl && <meta property="og:url" key="og:url" content={opengraphUrl} />}
                 {seo?.opengraphType && <meta property="og:type" key="og:type" content={seo.opengraphType} />}
