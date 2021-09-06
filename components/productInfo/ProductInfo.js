@@ -30,15 +30,15 @@ export default function ProductInfo({ product }) {
                 />
               </div>
             </Tab>
-            <Tab eventKey="ویدئوی محصول" title="ویدئوی">
+            {/*<Tab eventKey="ویدئوی محصول" title="ویدئوی">
               <div className="p-info-box__tab-content__box">
                 <div className="p-info-box__tab-content__box__video-wrap">
                   <video className="p-info-box__tab-content__box__video" />
                 </div>
               </div>
-            </Tab>
+            </Tab>*/}
             <Tab eventKey="مقایسه ترجمه" title="مقایسه ترجمه">
-              <div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
+              {/*<div className="p-info-box__tab-content__box p-info-box__tab-content__box--flex">
                 <div className="p-info-box__tab-content__box-r">
                   <img
                       className="p-info-box__tab-content__box-r__img"
@@ -100,7 +100,7 @@ export default function ProductInfo({ product }) {
                     کاربردی می باشد.
                   </p>
                 </div>
-              </div>
+              </div>*/}
             </Tab>
             <Tab eventKey="نظرات کاربران" title="نظرات کاربران">
               <div className="p-info-box__tab-content__box">
@@ -199,7 +199,7 @@ export default function ProductInfo({ product }) {
                 className="p-info-box__tab-content__box p-info-box__tab-content__box--flex"
             />
           </div>
-          <div className="p-info-box__tab-content__box--res">
+          {/*<div className="p-info-box__tab-content__box--res">
             <div className="p-info-box__tab-content__box--res__title">
               <img
                   className="p-info-box__tab-content__box--res__title__img"
@@ -215,7 +215,7 @@ export default function ProductInfo({ product }) {
                 <video className="p-info-box__tab-content__box__video" />
               </div>
             </div>
-          </div>
+          </div>*/}
           <div className="p-info-box__tab-content__box--res">
             <div className="p-info-box__tab-content__box--res__title">
               <img

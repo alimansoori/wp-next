@@ -1,9 +1,6 @@
 import React, {useEffect} from 'react'
-import {ApolloProvider} from '@apollo/client'
-// import client from '../ApolloClient'
 import {getCart, isUserLoggedIn} from "../../redux/actions";
 import {useDispatch} from 'react-redux';
-import {getViewer} from '../../redux/actions/viewer.actions';
 import {getCustomer} from '../../redux/actions/customer.actions';
 
 export default function BaseLayout(props) {
@@ -16,11 +13,8 @@ export default function BaseLayout(props) {
     }, []);
 
     return (
-        // <ApolloProvider client={client}>
-
         <div className='base-layout'>
             {props.children}
         </div>
-        // </ApolloProvider>
     )
 }

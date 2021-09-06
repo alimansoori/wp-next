@@ -30,7 +30,7 @@ export default function ProductHero({product}) {
             return nameRes
         }).join(',')
 
-        return joinString
+        return PN.convertEnToPe(joinString)
     }
 
     const handleAddToCart = (e) => {

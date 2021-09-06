@@ -19,17 +19,17 @@ export default function Footer() {
                         <ul>
                             <li className="list-unstyled">
                                 <Link href={`/faq`}>
-                                    <a>{`پاسخ به پرسش‌های متداول`}</a>
+                                    <a style={{color: "#0072bb"}}>{`پاسخ به پرسش‌های متداول`}</a>
                                 </Link>
                             </li>
                             <li className="list-unstyled">
                                 <Link href={`/buy-shipping`}>
-                                    <a>{`راهنمای خرید و ارسال`}</a>
+                                    <a style={{color: "#0072bb"}}>{`راهنمای خرید و ارسال`}</a>
                                 </Link>
                             </li>
                             <li className="list-unstyled">
                                 <Link href={`/privacy-policy`}>
-                                    <a>{`حریم خصوصی`}</a>
+                                    <a style={{color: "#0072bb"}}>{`حریم خصوصی`}</a>
                                 </Link>
                             </li>
                         </ul>
@@ -39,17 +39,17 @@ export default function Footer() {
                         <ul>
                             <li className="list-unstyled">
                                 <Link href={`/about-us`}>
-                                    <a>{`درباره داستانا`}</a>
+                                    <a style={{color: "#0072bb"}}>{`درباره داستانا`}</a>
                                 </Link>
                             </li>
                             <li className="list-unstyled">
                                 <Link href={`/contact-us`}>
-                                    <a>{`تماس با داستانا`}</a>
+                                    <a style={{color: "#0072bb"}}>{`تماس با داستانا`}</a>
                                 </Link>
                             </li>
                             <li className="list-unstyled">
                                 <Link href={`/terms-conditions`}>
-                                    <a>{`قوانین و مقررات`}</a>
+                                    <a style={{color: "#0072bb"}}>{`قوانین و مقررات`}</a>
                                 </Link>
                             </li>
                         </ul>
@@ -58,7 +58,7 @@ export default function Footer() {
             </MDBContainer>
             <div style={{backgroundColor: "#c5c5c5"}} className="footer-copyright text-center py-3">
                 <MDBContainer fluid>
-                    &copy; {new Date().getFullYear()} Copyright: <a href="https://dastanaa.com"> Dastanaa.com </a>
+                    &copy; {new Date().getFullYear()} Copyright: <a style={{color: "#0072bb"}} href="https://dastanaa.com"> Dastanaa.com </a>
                 </MDBContainer>
             </div>
         </MDBFooter>

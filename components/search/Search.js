@@ -131,7 +131,7 @@ export default function Search() {
                         </h2>
                         <div className="search-bar__suggestion__tab-content__box-wrap__info">
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
-                                <SearchResultItemAttrs attrs={product?.paWriters?.nodes}/>
+                                <SearchResultItemAttrs attrs={product.paPublishers.nodes}/>
                             </div>
                             {product?.paTranslators?.nodes.length ? (
                                 <div className="search-bar__suggestion__tab-content__box-wrap__info__separator">
@@ -147,7 +147,7 @@ export default function Search() {
                                 </div>
                             ) : null}
                             <div className="search-bar__suggestion__tab-content__box-wrap__info__text">
-                                <SearchResultItemAttrs attrs={product.paPublishers.nodes}/>
+                                <SearchResultItemAttrs attrs={product?.paWriters?.nodes}/>
                             </div>
                         </div>
                         <div className="search-bar__suggestion__tab-content__box-wrap__price">
@@ -227,7 +227,7 @@ export default function Search() {
                                         searchInput = input
                                     }}
                                     className={`search-bar__box__input`}
-                                    placeholder="جست و جو"
+                                    placeholder="جست‌وجو"
                                     value={value}
                                     onChange={(e) => setValue(e.target.value)}
                                 />

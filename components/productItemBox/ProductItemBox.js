@@ -121,7 +121,7 @@ export default function ProductItemBox({product}) {
                     </div>
                     <div className="p-sug-box__container__item__header">
                         <strong className="p-sug-box__container__item__header__title">
-                            {product.name}
+                            {product.name.length > 70 ? product.name.substring(0,70) + ' ... ' : product.name}
                         </strong>
                     </div>
                     <div className="p-sug-box__container__item__details">

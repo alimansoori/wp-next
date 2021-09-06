@@ -7,13 +7,15 @@ import Landingheader from '../components/landingHeader/LandingHeader';
 import {initializeApollo} from "../components/Apollo";
 import Footer from "../components/footer/Footer";
 import LandingLoading from "../components/landingLoading/LandingLoading";
+import {useQuery} from "@apollo/client";
+import GET_POST from "../gql/queries/get-post";
 
 const client = initializeApollo()
 
-const Home = (props) => {
+const Home = (props: any) => {
 
     const {homePageData} = props
-    const divRef = useRef(null);
+    const divRef: any = useRef(null);
 
     const functionToBotHandler = () => {
         divRef.current.scrollIntoView({behavior: "smooth"});
@@ -29,6 +31,22 @@ const Home = (props) => {
         functionToBotHandler();
         functionToTopHandler();
     }, []);
+
+    const {loading, error, data} = useQuery(GET_POST, {
+        variables: {
+            id: 'gggggg',
+            idType: 'SLUG'
+        }
+    })
+
+    useEffect(() => {
+        if (data) {
+            // console.log(data?.post?.content.replace(/<pre>(.*?)<\/pre>/g, '$1'))
+            console.log(JSON.parse(
+                data?.post?.content.replace("<pre>","").replace("<\/pre>","")
+            ))
+        }
+    }, [data])
 
     return (
         <BasePage
@@ -132,7 +150,7 @@ const Home = (props) => {
     )
 }
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: any) => {
     let homePageData = null;
 
     try {
