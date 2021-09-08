@@ -35,5 +35,4 @@ yarn-error.log*
 
 .env
 client-config.js
-tsconfig.json
 .idea/
