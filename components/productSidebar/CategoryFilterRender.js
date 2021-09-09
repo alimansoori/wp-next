@@ -1,13 +1,14 @@
 import React, {Fragment, useEffect} from 'react'
-import { randomString, uriToUse } from '../../functions'
+import {randomString, uriToUse} from '../../functions'
 import Link from 'next/link'
 import {useDispatch, useSelector} from 'react-redux'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import {catFilters} from "../../redux/actions/category.actions";
+import fetch from "node-fetch";
 
 const CategoryFilterRender = ({cats, cat}) => {
     const dispatch = useDispatch()
-    const { categoriesFilter } = useSelector(state => state.category);
+    const {categoriesFilter} = useSelector(state => state.category);
 
     // console.log('categoriesFilter', categoriesFilter)
     useEffect(() => {
@@ -38,18 +39,22 @@ const CategoryFilterRender = ({cats, cat}) => {
         <>
             {
                 categoriesFilter.node.map((cat, index) => {
-                    if (categoriesFilter.node.length-1 !== index) return null
+                    if (categoriesFilter.node.length - 1 !== index) return null
 
                     return (
                         <React.Fragment key={cat.node.databaseId + randomString()}>
                             <h2 className="p-side-box__list__title">
+                                <img
+                                    className={`p-side-box__list__title__icon`}
+                                    src={`/image/cat-icon/${cat?.node?.slug}.svg`}
+                                />
                                 <Link
                                     as={`/shop/category/${cat?.node?.slug}`}
                                     href={{
                                         pathname: `/shop/category/[category]`,
                                     }}
                                     shallow={true}
-                                    scroll= {false}
+                                    scroll={false}
                                 >
                                     <a className="p-side-box__list__title__link">
                                         {cat.node.name}
@@ -61,7 +66,7 @@ const CategoryFilterRender = ({cats, cat}) => {
                                     pathname: `/shop`,
                                 }}
                                 shallow={true}
-                                scroll= {false}
+                                scroll={false}
                             >
                                 <a className="p-side-box__list__return">
                                     <div className="p-side-box__list__return__text">
@@ -104,16 +109,21 @@ const CategoryFilterRender = ({cats, cat}) => {
         </>
     )
 
-    const RenderMenuLinkItem = ({ cat, index = 0, active = false }) => (
+    const RenderMenuLinkItem = ({cat, index = 0, active = false}) => (
         <li
             key={cat.node.databaseId + randomString()}
             className={`p-side-box__list__item`}
         >
+            <img
+                onError={(e)=>{e.target.onerror = null; e.target.src=null}}
+                className={`p-side-box__list__item__icon`}
+                src={`/image/cat-icon/${cat?.node?.slug}.svg`}
+            />
             <Link
                 as={`/shop/category/${cat?.node?.slug}`}
                 href={`/shop/category/[category]`}
                 shallow={true}
-                scroll= {false}
+                scroll={false}
             >
                 <a className={`p-side-box__list__item__link ${active ? 'active' : ''}`}>
                     {cat.node.name}
@@ -124,7 +134,7 @@ const CategoryFilterRender = ({cats, cat}) => {
 
     return (
         <>
-            {categoriesFilter.isRoot ? <RenderCatIsRoot /> : <RenderCatNotRoot />}
+            {categoriesFilter.isRoot ? <RenderCatIsRoot/> : <RenderCatNotRoot/>}
         </>
     )
 }
