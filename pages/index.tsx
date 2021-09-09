@@ -65,6 +65,7 @@ const Home = (props: any) => {
                             src={`/image/logo-type2.svg`}
                             alt="landing"
                         />
+                        <h2 className={`landing-hero__logo__title`}>{`فروشگاه اینترنتی کتاب`}</h2>
                     </div>
                     <div className={`landing-hero__search`}>
                         <Search/>

@@ -1,5 +1,4 @@
 import {gql} from '@apollo/client';
-import ProductFragment from '../fragments/product-fragment'
 
 const PRODUCT_QUERY = gql` 
   query PRODUCT_QUERY($id: ID!, $idType: ProductIdTypeEnum) {
@@ -51,6 +50,7 @@ const PRODUCT_QUERY = gql`
             ...on SimpleProduct {
                 price
                 regularPrice
+                stockStatus
             }
             image {
                 id

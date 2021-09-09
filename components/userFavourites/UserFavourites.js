@@ -90,23 +90,30 @@ export default function UserFavourites() {
                                                     <h2 className="user-fav-box__list__item__box__desc__title">
                                                         {favorite.node.name}
                                                     </h2>
-                                                    <div className="p-hero-box__l-col__info__details">
-                                                        <div className="p-hero-box__l-col__info__details-wrap">
-                                                            <div className="p-hero-box__l-col__info__publisher">
-                                                                <strong>{`ناشر: `}</strong>
-                                                                <RenderProductAttrs attrs={favorite.node.paPublishers.nodes}/>
-                                                            </div>
-                                                        </div>
-                                                        <div className="p-hero-box__l-col__info__details-wrap">
-                                                            <div className="p-hero-box__l-col__info__author">
-                                                                <strong>{`نویسنده: `}</strong>
-                                                                <RenderProductAttrs attrs={favorite.node.paWriters.nodes}/>
-                                                            </div>
-                                                            <div className="p-hero-box__l-col__info__translator">
-                                                                <strong>{`مترجم: `}</strong>
-                                                                <RenderProductAttrs
-                                                                    attrs={favorite.node.paTranslators.nodes}/>
-                                                            </div>
+                                                    <div className="user-fav-box__list__item__box__details">
+
+                                                        <div className="user-fav-box__list__item__box__details-wrap">
+                                                            {favorite?.node?.paPublishers?.nodes.length ? (
+                                                                <div className="p-hero-box__l-col__info__publisher">
+                                                                    <strong>{`ناشر: `}</strong>
+                                                                    <RenderProductAttrs
+                                                                        attrs={favorite.node.paPublishers.nodes}/>
+                                                                </div>
+                                                            ) : null}
+                                                            {favorite?.node?.paWriters?.nodes.length ? (
+                                                                <div className="p-hero-box__l-col__info__publisher">
+                                                                    <strong>{`نویسنده: `}</strong>
+                                                                    <RenderProductAttrs
+                                                                        attrs={favorite.node.paPublishers.nodes}/>
+                                                                </div>
+                                                            ) : null}
+                                                            {favorite?.node?.paTranslators?.nodes.length ? (
+                                                                <div className="p-hero-box__l-col__info__publisher">
+                                                                    <strong>{`مترجم: `}</strong>
+                                                                    <RenderProductAttrs
+                                                                        attrs={favorite.node.paTranslators.nodes}/>
+                                                                </div>
+                                                            ) : null}
                                                         </div>
                                                     </div>
                                                     {/*<div*/}

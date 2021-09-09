@@ -25,6 +25,7 @@
         .user-fav-box__list__item__box {
           text-align: right;
           @include flex-bet-r;
+          justify-content: end;
           align-items: flex-start;
           .user-fav-box__list__item__box__items {
             .user-fav-box__list__item__box__items__pics {
@@ -38,7 +39,18 @@
           .user-fav-box__list__item__box__desc {
             margin: 0 20px;
             .user-fav-box__list__item__box__desc__title {
+              color: $mainBlue;
               font-size: 20px;
+              font-weight: bold;
+            }
+            .user-fav-box__list__item__box__details {
+              display: flex;
+              justify-content: flex-end;
+              flex-direction: column;
+              font-size: small;
+              .user-fav-box__list__item__box__details-wrap {
+                text-align: right;
+              }
             }
 
             .user-fav-box__list__item__box__desc__text {

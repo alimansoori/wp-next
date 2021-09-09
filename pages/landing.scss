@@ -10,7 +10,18 @@
     .landing-hero__logo {
       display: flex;
       justify-content: center;
-      margin: 100px 0 50px 0;
+      flex-direction: column;
+      align-items: center;
+      margin: 100px 0 30px 0;
+      .landing-hero__logo__img {
+        width: 350px;
+      }
+      .landing-hero__logo__title {
+        font-size: large;
+        font-weight: bold;
+        font-family: yalda;
+        color: $mainBlue;
+      }
     }
 
     .landing-hero__search {

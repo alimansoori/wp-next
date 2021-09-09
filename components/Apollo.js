@@ -3,7 +3,6 @@ import {ApolloClient, InMemoryCache, HttpLink, createHttpLink, ApolloLink} from 
 import clientConfig from "../client-config";
 import nookies, {parseCookies, setCookie} from "nookies";
 import fetch from "node-fetch";
-import {ssrAfterware, ssrAuthLink, ssrMiddleware} from "./ApolloClient";
 import {setContext} from "@apollo/client/link/context";
 
 let apolloClient;
@@ -101,16 +100,6 @@ function createApolloClient(ctx = null) {
         cache: new InMemoryCache()
     })
 }
-
-/*function createApolloClient(ctx = null) {
-    return new ApolloClient({
-        ssrMode: typeof window === "undefined", // set to true for SSR
-        link: new HttpLink({
-            uri: clientConfig.graphqlUrl,
-        }),
-        cache: new InMemoryCache(),
-    });
-}*/
 
 export function initializeApollo(initialState = null, ctx = null) {
     const _apolloClient = apolloClient ?? createApolloClient(ctx);

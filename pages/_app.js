@@ -1,5 +1,5 @@
-import React, {memo, useEffect, useRef} from 'react'
-import Router, {useRouter} from 'next/router'
+import React from 'react'
+import Router from 'next/router'
 import BaseLayout from '../components/layouts/BaseLayout'
 import ProgressBar from "@badrap/bar-of-progress"
 import 'bootstrap/dist/css/bootstrap.min.css'

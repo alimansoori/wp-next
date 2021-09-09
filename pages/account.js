@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { withRouter } from 'next/router'
+import React, { useEffect, useRef } from 'react'
 import UserNav from '../components/userNav/UserNav'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCustomer, updateCustomer } from '../redux/actions/customer.actions'
-import UserHeader from '../components/userHeader/UserHeader'
 import LandingLoading from '../components/landingLoading/LandingLoading'
 import ProductHeader from "../components/productHeader/ProductHeader";
 import {alertMessage} from "../functions";
 import {cartConstants, viewerConstants} from "../redux/actions/constants";
 import AccessDenied from "../components/accessDenied/AccessDenied";
 
-const Account = ({ router }) => {
+function Account(props) {
     const dispatch = useDispatch()
     const { authenticate, authenticating } = useSelector(state => state.auth)
     const { cart } = useSelector(state => state.cart)
@@ -55,7 +52,6 @@ const Account = ({ router }) => {
         <>
             <LandingLoading />
             <ProductHeader fixed={false} />
-            {/*<UserHeader/>*/}
             {authenticate ? (
                 <>
                     <UserNav />
@@ -65,4 +61,4 @@ const Account = ({ router }) => {
     )
 }
 
-export default withRouter(Account)
+export default Account

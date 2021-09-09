@@ -36,3 +36,4 @@ yarn-error.log*
 .env
 client-config.js
 .idea/
+package-lock.json

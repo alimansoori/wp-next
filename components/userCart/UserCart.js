@@ -87,7 +87,6 @@ export default function UserCartourites() {
         return (
             <>
                 <li className="user-cart-box__list__item">
-                    <h2 style={{fontSize:"1rem"}}>{item.product.node.name}</h2>
                     <div className="user-cart-box__list__item__box">
                         <div className="user-cart-box__list__item__box__items">
                             <div className="user-cart-box__list__item__box__items__pics">
@@ -106,60 +105,67 @@ export default function UserCartourites() {
                                 )}
                             </div>
                         </div>
-                        <div className="user-cart-box__list__item__box__options">
-                            <div className="user-cart-box__list__item__box__options__title">
-                                :تعداد
+                        <div className="user-cart-box__list__item__box__content">
+                            <div className="user-cart-box__list__item__box__title">
+                                {item.product.node.name}
                             </div>
-                            <div className="user-cart-box__list__item__box__options__input-wrap">
-                                <div className="user-basket-box__header__content__wallet__credit__input-wrap">
-                                    <button
-                                        onClick={() => setValue(value + 1)}
-                                        className="user-basket-box__header__content__wallet__credit__plus"
-                                    >
-                                        <img
-                                            className="user-basket-box__header__content__wallet__credit__plus__icon"
-                                            src={`/image/icon/PLUS.png`}
-                                            alt="plus"
-                                        />
-                                    </button>
-                                    <input
-                                        className="user-basket-box__header__content__wallet__credit__input"
-                                        type="text"
-                                        placeholder=""
-                                        value={value}
-                                        onChange={(e) => console.log(value)}
+                            <div className="user-cart-box__list__item__box__attrs">
+                                <div className="user-cart-box__list__item__box__options">
+                                    <div className="user-cart-box__list__item__box__options__title">
+                                        :تعداد
+                                    </div>
+                                    <div className="user-cart-box__list__item__box__options__input-wrap">
+                                        <div className="user-basket-box__header__content__wallet__credit__input-wrap">
+                                            <button
+                                                onClick={() => setValue(value + 1)}
+                                                className="user-basket-box__header__content__wallet__credit__plus"
+                                            >
+                                                <img
+                                                    className="user-basket-box__header__content__wallet__credit__plus__icon"
+                                                    src={`/image/icon/PLUS.png`}
+                                                    alt="plus"
+                                                />
+                                            </button>
+                                            <input
+                                                className="user-basket-box__header__content__wallet__credit__input"
+                                                type="text"
+                                                placeholder=""
+                                                value={value}
+                                                onChange={(e) => console.log(value)}
+                                            />
+                                            <button
+                                                onClick={() => setValue(value - 1)}
+                                                className="user-basket-box__header__content__wallet__credit__minus"
+                                            >
+                                                <img
+                                                    className="user-basket-box__header__content__wallet__credit__minus__icon"
+                                                    src={`/image/icon/Rectangle 132.png`}
+                                                    alt="minus"
+                                                />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <img
+                                        className="user-cart-box__list__item__box__items__pics__img"
+                                        onClick={(event) => handleRemoveProductClick(event, item.key, cart.contents.nodes)}
+                                        style={{cursor: "pointer"}}
+                                        src={`/image/icon/Path 82.png`}
+                                        alt="dlt"
                                     />
-                                    <button
-                                        onClick={() => setValue(value - 1)}
-                                        className="user-basket-box__header__content__wallet__credit__minus"
-                                    >
-                                        <img
-                                            className="user-basket-box__header__content__wallet__credit__minus__icon"
-                                            src={`/image/icon/Rectangle 132.png`}
-                                            alt="minus"
-                                        />
-                                    </button>
+                                    <img
+                                        className="user-cart-box__list__item__box__items__pics__img"
+                                        style={{cursor: "pointer"}}
+                                        src={`/image/icon/Send.png`}
+                                        alt="send"
+                                    />
+                                </div>
+                                <div className="user-cart-box__list__item__box__price">
+                                    <strong className="user-cart-box__list__item__box__price__text">
+                                        {PN.convertEnToPe(stringToNumber(item.total))}
+                                    </strong>
                                 </div>
                             </div>
-
-                            <img
-                                className="user-cart-box__list__item__box__items__pics__img"
-                                onClick={(event) => handleRemoveProductClick(event, item.key, cart.contents.nodes)}
-                                style={{cursor: "pointer"}}
-                                src={`/image/icon/Path 82.png`}
-                                alt="dlt"
-                            />
-                            <img
-                                className="user-cart-box__list__item__box__items__pics__img"
-                                style={{cursor: "pointer"}}
-                                src={`/image/icon/Send.png`}
-                                alt="send"
-                            />
-                        </div>
-                        <div className="user-cart-box__list__item__box__price">
-                            <strong className="user-cart-box__list__item__box__price__text">
-                                {PN.convertEnToPe(stringToNumber(item.total))}
-                            </strong>
                         </div>
                     </div>
                 </li>
