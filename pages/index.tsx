@@ -8,7 +8,6 @@ import {initializeApollo} from "../components/Apollo";
 import Footer from "../components/footer/Footer";
 import LandingLoading from "../components/landingLoading/LandingLoading";
 import Slider from "../components/slider/Slider"
-import 'react-slidy/lib/styles.css'
 
 const client = initializeApollo()
 

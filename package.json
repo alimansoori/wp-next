@@ -47,6 +47,7 @@
     "react-placeholder-loading": "^0.5.25",
     "react-radio-buttons": "^1.2.2",
     "react-redux": "^7.2.4",
+    "react-responsive-carousel": "^3.2.21",
     "react-scroll-to-top": "^1.0.5",
     "react-select": "^4.3.0",
     "react-simple-show-more": "^1.0.2",
