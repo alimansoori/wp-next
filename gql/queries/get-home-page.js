@@ -17,6 +17,12 @@ const GET_HOME_PAGE = gql`
           srcSet
         }
       }
+      slider {
+          gallery {
+            altText
+            sourceUrl
+          }
+        }
       isPreview
       isFrontPage
       isPostsPage

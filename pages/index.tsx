@@ -7,8 +7,8 @@ import Landingheader from '../components/landingHeader/LandingHeader';
 import {initializeApollo} from "../components/Apollo";
 import Footer from "../components/footer/Footer";
 import LandingLoading from "../components/landingLoading/LandingLoading";
-import {useQuery} from "@apollo/client";
-import GET_POST from "../gql/queries/get-post";
+import Slider from "../components/slider/Slider"
+import 'react-slidy/lib/styles.css'
 
 const client = initializeApollo()
 
@@ -28,11 +28,12 @@ const Home = (props: any) => {
     };
 
     useEffect(() => {
+        console.log(homePageData)
         functionToBotHandler();
         functionToTopHandler();
     }, []);
 
-    const {loading, error, data} = useQuery(GET_POST, {
+    /*const {loading, error, data} = useQuery(GET_POST, {
         variables: {
             id: 'gggggg',
             idType: 'SLUG'
@@ -46,7 +47,7 @@ const Home = (props: any) => {
                 data?.post?.content.replace("<pre>","").replace("<\/pre>","")
             ))
         }
-    }, [data])
+    }, [data])*/
 
     return (
         <BasePage
@@ -57,7 +58,10 @@ const Home = (props: any) => {
 
             <div className={`landing`}>
                 <LandingLoading/>
-                <div className={`landing-hero`}>
+                <div
+                    style={{backgroundImage: homePageData?.featuredImage?.node ? `url("${homePageData.featuredImage.node.sourceUrl}")` : "url(\"/image/Image-2.png\")"}}
+                    className={`landing-hero`}
+                >
                     <Landingheader/>
                     <div className={`landing-hero__logo`}>
                         <img
@@ -65,7 +69,7 @@ const Home = (props: any) => {
                             src={`/image/logo-type2.svg`}
                             alt="landing"
                         />
-                        <h2 className={`landing-hero__logo__title`}>{`فروشگاه اینترنتی کتاب`}</h2>
+                        <h2 className={`landing-hero__logo__title`}>{`کتاب‌فروشی آنلاین`}</h2>
                     </div>
                     <div className={`landing-hero__search`}>
                         <Search/>
@@ -136,7 +140,9 @@ const Home = (props: any) => {
                         </div>
                     </div>
                     <div className={`landing-bottom__right`}>
-                        <div className={`landing-bottom__right__box`}></div>
+                        <div className={`landing-bottom__right__box`}>
+                            <Slider gallery={homePageData?.slider?.gallery} />
+                        </div>
                     </div>
                 </div>
                 <div ref={divRef} className={`return-to-top-wrap`}>
