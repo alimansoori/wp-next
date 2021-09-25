@@ -10,6 +10,10 @@
       width: 100%;
       text-align: center;
     }
+    .sign-in-modal__return {
+      background-color: transparent;
+      border: none;
+    }
   }
 
   .modal-body {
@@ -38,13 +42,51 @@
     }
   }
 
+  .sign-in-modal__label {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    .sign-in-modal__input {
+      display: flex;
+      width: 100%;
+      padding: 8px 30px 8px 115px;
+    }
+    .sign-in-modal__send-again-code {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      padding: 18px;
+      color: rgb(191, 115, 0);
+      background-color: transparent;
+      border: none;
+    }
+    .sign-in-modal__send-again-code:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      transform: translateY(-50%);
+      height: 70%;
+      width: 1px;
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+    .sign-in-modal__send-again-code:disabled {
+      cursor: no-drop;
+    }
+  }
+
   .sign-in-modal__footer {
+    direction: rtl;
     display: flex;
     justify-content: center;
     .sign-in-modal__link {
       font-size: 14px;
-      color: $mainBlue;
+      color: #fff;
       border: none;
+      background-color: $mainCyan;
+      padding: 8px 10px;
+      border-radius: 3px;
     }
   }
 }

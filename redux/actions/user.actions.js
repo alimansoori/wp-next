@@ -1,19 +1,20 @@
-import {userConstants, viewerConstants} from "./constants";
+import {authConstants, userConstants, viewerConstants} from "./constants";
 import client from "../../components/ApolloClient";
 import REGISTER_USER from "../../gql/mutations/register-user";
-import { v4 } from "uuid";
+import {v4} from "uuid";
 import UPDATE_USER from "../../gql/mutations/update-user";
 import {initializeApollo} from "../../components/Apollo";
+import {setCookie} from "nookies";
 
 export const signup = (user) => {
 
     return async (dispatch) => {
 
-        dispatch({ type: userConstants.USER_REGISTER_REQUEST });
+        dispatch({type: userConstants.USER_REGISTER_REQUEST});
 
         try {
             const res = await axios.post(`/wp/v2/users/register`,
-                { ...user },
+                {...user},
                 {
                     "headers": {
 
@@ -23,8 +24,8 @@ export const signup = (user) => {
                 }
             );
 
-            if (res.status === 200){
-                const { message } = res.data;
+            if (res.status === 200) {
+                const {message} = res.data;
 
                 dispatch({
                     type: userConstants.USER_REGISTER_SUCCESS,
@@ -50,7 +51,7 @@ export const signup = (user) => {
 export const registerUser = (registerForm = {}) => {
     return async dispatch => {
         dispatch({
-            type: userConstants.USER_REGISTER_REQUEST
+            type: authConstants.LOGIN_REQUEST
         })
 
         const apolloClient = initializeApollo()
@@ -65,17 +66,39 @@ export const registerUser = (registerForm = {}) => {
                 }
             })
 
-            const {user} = result.data
+            const {
+                user,
+                authToken,
+                refreshToken,
+                secondSendAgain,
+                message
+            } = result.data.register;
 
-            dispatch({
-                type: userConstants.USER_REGISTER_SUCCESS,
-                payload: {
-                    message: 'ثبت نام با موفقیت انجام شد!'
-                }
-            })
+            if (authToken) {
+                setCookie(null, 'wp-next-token', authToken);
+                setCookie(null, 'user', JSON.stringify(user));
+                dispatch({
+                    type: authConstants.LOGIN_SUCCESS,
+                    payload: {
+                        token: authToken,
+                        user: user,
+                        secondSendAgain,
+                        message
+                    }
+                })
+            } else {
+                dispatch({
+                    type: authConstants.CHANGE_STATE,
+                    payload: {
+                        message,
+                        secondSendAgain
+                    }
+                })
+            }
+
         } catch (error) {
             dispatch({
-                type: userConstants.USER_REGISTER_FAILURE,
+                type: authConstants.LOGIN_FAILURE,
                 payload: {
                     error: error.message
                 }

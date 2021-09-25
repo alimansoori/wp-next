@@ -6,15 +6,17 @@ import PropagateLoader from 'react-spinners/PropagateLoader'
 import {registerUser} from '../../redux/actions/user.actions';
 import {authConstants, userConstants} from "../../redux/actions/constants";
 import Countdown from "react-countdown";
+import {forgetPassword, loginUser} from "../../redux/actions";
 
-export default function SignUpModal({show, onHide, redirectto, setislogin}) {
+export default function ForgetPasswordModal({show, onHide, redirectto, setislogin}) {
 
     const [mobile, setMobile] = useState('')
     const [password, setPassword] = useState('')
+    const [code, setCode] = useState('')
     const [confirmError, setConfirmError] = useState(false)
     const [step, setStep] = useState(1)
 
-    const {authenticate, loading, message, error, secondSendAgain} = useSelector(state => state.auth);
+    const {loading, message, error, secondSendAgain} = useSelector(state => state.auth);
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -24,24 +26,21 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
         setStep(step + 1);
 
         dispatch({type: userConstants.INIT});
-        dispatch(registerUser({
+        dispatch(forgetPassword({
             mobile,
-            password
+            password,
+            code
         }));
     }
-
-    useEffect(() => {
-        if (authenticate && redirectto) {
-            onHide()
-            router.push(redirectto)
-        }
-    }, [authenticate])
 
     useEffect(() => {
         if (step === 1) {
             setPassword(null);
         }
     }, [step])
+    useEffect(() => {
+        console.log(secondSendAgain)
+    }, [secondSendAgain])
 
     useEffect(() => {
         if (error && step > 1) setStep(step - 1);
@@ -49,6 +48,10 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
 
     const handleBack = () => {
         setStep(step - 1);
+        if (step === 1) {
+            setCode(null);
+            setPassword(null)
+        }
         dispatch({type: authConstants.INIT});
     }
     const changeToLogin = () => {
@@ -57,10 +60,12 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
     }
     const handleSendAgainCode = () => {
         setPassword(null);
+        setCode(null);
         dispatch({ type: authConstants.INIT })
-        dispatch(registerUser({
+        dispatch(forgetPassword({
             mobile,
-            password: null
+            password: null,
+            code: null
         }));
     }
 
@@ -76,7 +81,7 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
     }
 
     // Random component
-    const SendAgainEnable = () => <button onClick={handleSendAgainCode} className="sign-up-modal__send-again-code">{`ارسال مجدد`}</button>;
+    const SendAgainEnable = () => <button onClick={handleSendAgainCode} className="forget-password-modal__send-again-code">{`ارسال مجدد`}</button>;
 
 // Renderer callback with condition
     const SendAgainDisable = ({hours, minutes, seconds, completed}) => {
@@ -86,8 +91,8 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
         } else {
             // Render a countdown
             return (
-                <button disabled className="sign-up-modal__send-again-code">
-                    {`ارسال مجدد (`}{seconds}{`)`}
+                <button disabled className="forget-password-modal__send-again-code">
+                    {`ارسال مجدد (`}{minutes}{`:`}{seconds}{`)`}
                 </button>
             );
         }
@@ -96,7 +101,7 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
     return (
         <div>
             <Modal
-                className="sign-up-modal"
+                className="forget-password-modal"
                 onHide={onHide}
                 show={show}
                 size="md"
@@ -105,13 +110,13 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title
-                        className="sign-up-modal__title"
+                        className="forget-password-modal__title"
                         id="contained-modal-title-vcenter"
                     >
-                        {`ثبت نام`}
+                        {`رمز عبور خود را فراموش کرده اید؟`}
                     </Modal.Title>
                     {step > 1 && (
-                        <button onClick={handleBack} className="sign-up-modal__return">
+                        <button onClick={handleBack} className="forget-password-modal__return">
                             <img src={`/image/icon/Return icon.svg`}/>
                         </button>
                     )}
@@ -135,18 +140,18 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
                 <Modal.Body>
                     {step === 1 && (
                         <input
-                            className="sign-up-modal__input"
+                            className="forget-password-modal__input"
                             type="text"
                             onChange={(e) => setMobile(e.target.value)}
                             placeholder="موبایل"
                         />
                     )}
-                    {step > 1 && (
-                        <label className="sign-up-modal__label">
+                    {step === 2 && (
+                        <label className="forget-password-modal__label">
                             <input
-                                className="sign-up-modal__input"
+                                className="forget-password-modal__input"
                                 type="text"
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => setCode(e.target.value)}
                                 placeholder="کد یک بار مصرف"
                             />
                             {secondSendAgain && (
@@ -154,13 +159,29 @@ export default function SignUpModal({show, onHide, redirectto, setislogin}) {
                             )}
                         </label>
                     )}
-                    <button onClick={userSignup} className="sign-up-modal__btn" type="submit">
-                        ثبت نام
-                    </button>
+                    {step === 3 && (
+                        <label className="forget-password-modal__label">
+                            <input
+                                className="forget-password-modal__input"
+                                type="text"
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="رمز عبور جدید"
+                            />
+                            {secondSendAgain && (
+                                <Countdown date={Date.now() + (secondSendAgain*1000)} renderer={SendAgainDisable} />
+                            )}
+                        </label>
+                    )}
+                    {step < 4 && (
+                        <button onClick={userSignup} className="forget-password-modal__btn" type="submit">
+                            {`بازیابی رمز عبور`}
+                        </button>
+                    )}
+
                 </Modal.Body>
-                <Modal.Footer className="sign-up-modal__footer">
+                <Modal.Footer className="forget-password-modal__footer">
                     <span>اگر در داستانا حساب کاربری دارید:</span>
-                    <button onClick={() => changeToLogin()} className="sign-up-modal__link">
+                    <button onClick={() => changeToLogin()} className="forget-password-modal__link">
                         ورود
                     </button>
                 </Modal.Footer>

@@ -4,8 +4,11 @@ const LOGIN_USER = gql`
   mutation ($input: LoginInput!) {
     login(input: $input) {
         authToken
+        clientMutationId
+        message
         refreshToken
-        sessionToken
+        secondSendAgain
+        type
         user {
           id
           databaseId
@@ -22,55 +25,6 @@ const LOGIN_USER = gql`
           jwtUserSecret
           isJwtAuthSecretRevoked
           isRestricted
-        }
-        customer {
-          billing {
-            country
-            state
-            city
-            address1
-            address2
-            company
-            email
-            firstName
-            lastName
-            phone
-            postcode
-          }
-          calculatedShipping
-          databaseId
-          date
-          displayName
-          email
-          firstName
-          hasCalculatedShipping
-          id
-          isPayingCustomer
-          isVatExempt
-          lastName
-          orderCount
-          metaData {
-            key
-            value
-          }
-          role
-          sessionToken
-          shipping {
-            country
-            state
-            city
-            address1
-            address2
-            company
-            email
-            firstName
-            lastName
-            phone
-            postcode
-          }
-          totalSpent
-          username
-          modified
         }
     }
   }

@@ -1,13 +1,19 @@
 import {gql} from "@apollo/client";
 
 const REGISTER_USER = gql`
-  mutation ($input: RegisterUserInput!) {
-    registerUser(input: $input) {
-      user {
+  mutation ($input: RegisterInput!) {
+    register(input: $input) {
+        authToken
+        clientMutationId
+        message
+        refreshToken
+        secondSendAgain
+        type
+        user {
         id
         email
         username
-      }
+        }
     }
   }
 `;

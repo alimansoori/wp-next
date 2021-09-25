@@ -7,6 +7,7 @@ const initState = {
     authenticating: false,
     loading: false,
     error: "",
+    secondSendAgain: 0,
     message: ""
 }
 
@@ -25,9 +26,19 @@ const AuthReducers = (state = initState, action) => {
                 ...state,
                 user: action.payload.user,
                 token: action.payload.token,
+                message: action.payload.message,
+                secondSendAgain: action.payload.secondSendAgain,
                 authenticate: true,
                 authenticating: false,
-                loading: false
+                loading: false,
+            }
+            break;
+        case authConstants.LOGIN_ALERT:
+            state = {
+                ...state,
+                message: action.payload.message,
+                authenticating: false,
+                loading: false,
             }
             break;
         case authConstants.LOGIN_FAILURE:
@@ -86,6 +97,44 @@ const AuthReducers = (state = initState, action) => {
                 ...state,
                 authenticate: true,
                 authenticating: false,
+                loading: false
+            }
+            break;
+        case authConstants.INIT:
+            state = {
+                ...initState
+            }
+            break;
+        case authConstants.CHANGE_STATE:
+            state = {
+                ...state,
+                secondSendAgain: action?.payload?.secondSendAgain,
+                message: action?.payload?.message,
+                loading: false,
+                authenticating: false
+            }
+            break;
+        case authConstants.FORGET_PASSWORD_REQUEST:
+            state = {
+                ...state,
+                authenticating: true,
+                loading: true
+            }
+            break;
+        case authConstants.FORGET_PASSWORD_SUCCESS:
+            state = {
+                ...state,
+                message: action.payload.message,
+                authenticating: false,
+                loading: false,
+            }
+            break;
+        case authConstants.FORGET_PASSWORD_FAILURE:
+            state = {
+                ...state,
+                authenticate: false,
+                authenticating: false,
+                error: action.payload.error,
                 loading: false
             }
             break;

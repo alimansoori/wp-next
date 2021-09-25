@@ -12,8 +12,8 @@ function Slider({gallery}) {
             interval={5000}
         >
             {
-                gallery?.map((img) => (
-                    <div>
+                gallery?.map((img, index) => (
+                    <div key={index}>
                         <img style={{maxHeight: "400px", maxWidth: "400px"}} src={img.sourceUrl} alt={img.altText}/>
                         {/*<p className="legend">Legend 1</p>*/}
                     </div>

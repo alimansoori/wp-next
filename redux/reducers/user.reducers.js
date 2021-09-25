@@ -52,6 +52,17 @@ export default (state = initState, action) => {
                 message: null
             }
             break;
+        case userConstants.INIT:
+            state = {
+                ...initState
+            }
+            break;
+        case userConstants.MESSAGE:
+            state = {
+                ...state,
+                message: action.payload.message,
+            }
+            break;
     }
 
     return state;

@@ -2,12 +2,14 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from 'react'
 import SignInModal from '../signInModal/SignInModal';
 import SignUpModal from '../signUpModal/SignUpModal';
+import ForgetPasswordModal from "../forgetPasswordModal/ForgetPasswordModal";
 
 function Register() {
     const router = useRouter()
     const [modalShow, setModalShow] = useState(false);
     const [redirectTo, setRedirectTo] = useState(null);
     const [isLogin, setIsLogin] = useState(true);
+    const [register, setRegister] = useState('L');
 
     useEffect(() => {
         if (modalShow) setRedirectTo(router.asPath)
@@ -31,10 +33,15 @@ function Register() {
                 </button>
             </div>
 
-            {!isLogin ?
-                <SignUpModal show={modalShow} onHide={() => setModalShow(false)} setislogin={setIsLogin} /> :
-                <SignInModal show={modalShow} onHide={handleOnHideSignInModal} redirectto={redirectTo} setislogin={setIsLogin} />
-            }
+            {register === 'L' && (
+                <SignInModal show={modalShow} onHide={handleOnHideSignInModal} redirectto={redirectTo} setislogin={setRegister} />
+            )}
+            {register === 'R' && (
+                <SignUpModal show={modalShow} onHide={() => setModalShow(false)} setislogin={setRegister} />
+            )}
+            {register === 'F' && (
+                <ForgetPasswordModal show={modalShow} onHide={() => setModalShow(false)} setislogin={setRegister} />
+            )}
         </div>
     );
 }

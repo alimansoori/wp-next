@@ -41,6 +41,7 @@
     "react-bootstrap": "^1.5.2",
     "react-bootstrap-select": "^0.14.0",
     "react-content-loader": "^6.0.3",
+    "react-countdown": "^2.3.2",
     "react-delay-input": "^4.1.0",
     "react-dom": "17.0.1",
     "react-icons": "^4.2.0",
