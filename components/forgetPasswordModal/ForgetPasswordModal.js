@@ -163,7 +163,7 @@ export default function ForgetPasswordModal({show, onHide, redirectto, setislogi
                         <label className="forget-password-modal__label">
                             <input
                                 className="forget-password-modal__input"
-                                type="text"
+                                type="password"
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="رمز عبور جدید"
                             />
