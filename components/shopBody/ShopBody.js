@@ -1,15 +1,10 @@
 import ScrollToTop from "react-scroll-to-top";
-import {Accordion, Dropdown} from "react-bootstrap";
-import ProductSidebar from "../productSidebar/ProductSidebar";
 import FetchMore from "./FetchMore";
 import ShopListLoader from "./ShopListLoader";
-import React, {Fragment, useEffect} from "react";
+import React from "react";
 import ProductItemBox from "../productItemBox/ProductItemBox";
 import ShopFilterDropDown from "./ShopFilterDropDawn";
 import {useDispatch, useSelector} from "react-redux";
-import {alertMessage} from "../../functions";
-import {NotificationContainer} from "react-notifications";
-import {viewerConstants} from "../../redux/actions/constants";
 
 export default function ShopBody({products, page_info, page_info2, loading, loadingfetchmore, onFetchMore, setSort, sort}) {
     const dispatch = useDispatch()
@@ -17,7 +12,7 @@ export default function ShopBody({products, page_info, page_info2, loading, load
 
     return (
         <>
-            <ScrollToTop smooth/>
+            <ScrollToTop style={{left: "20px"}} smooth/>
             <div className="search__body__main">
                 <div className="p-hero-box-wrap-fade"></div>
 
