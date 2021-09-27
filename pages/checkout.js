@@ -78,7 +78,7 @@ export const getServerSideProps = async (ctx) => {
   try {
     const result = await axios({
       method: 'post',
-      url: "https://api.zarinpal.com/pg/v4/payment/request.json",
+      url: clientConfig.apiZarinPal,
       data: {
         merchant_id: clientConfig.merchantId,
         amount: stringToNumber2(cart?.total + 0),
