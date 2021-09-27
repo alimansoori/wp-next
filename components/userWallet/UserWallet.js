@@ -43,7 +43,7 @@ export default function UserWallet() {
           </div>
         </div>
         <div className="user-wallet-box__body__credit">
-          <div className="user-wallet-box__body__credit-wrap">
+          {/*<div className="user-wallet-box__body__credit-wrap">
             <RadioGroup horizontal>
               <RadioButton pointColor="#26c7bf" rootColor="#000" value="h1">
                 تایم
@@ -58,7 +58,7 @@ export default function UserWallet() {
                 تایم
               </RadioButton>
             </RadioGroup>
-          </div>
+          </div>*/}
         </div>
       </div>
       <div className="user-wallet-box__footer">
