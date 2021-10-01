@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react'
+import React, {useRef, useEffect} from 'react'
 import Link from 'next/link'
 import BasePage from '../components/BasePage'
 import GET_HOME_PAGE from '../gql/queries/get-home-page';
@@ -8,12 +8,36 @@ import {initializeApollo} from "../components/Apollo";
 import Footer from "../components/footer/Footer";
 import LandingLoading from "../components/landingLoading/LandingLoading";
 import Slider from "../components/slider/Slider"
+import type {InferGetStaticPropsType} from "next"
+import getAllProducts from "../framework/wp-graphql/product/get-all-products";
 
 const client = initializeApollo()
 
-const Home = (props: any) => {
+export const getStaticProps = async (context: any) => {
+    let homePageData = null;
+    const products = await getAllProducts()
 
-    const {homePageData} = props
+    try {
+        const result = await client.query({
+            query: GET_HOME_PAGE,
+        });
+        homePageData = result.data.homepage
+    } catch (e) {
+        console.error('HomePage Error', e)
+    }
+
+    return {
+        props: {
+            homePageData,
+            products,
+            initialApolloState: client.cache.extract(),
+        },
+        revalidate: 100
+    }
+}
+
+export default function Home({homePageData, products}: InferGetStaticPropsType<typeof getStaticProps>) {
+
     const divRef: any = useRef(null);
 
     const functionToBotHandler = () => {
@@ -31,6 +55,10 @@ const Home = (props: any) => {
         functionToBotHandler();
         functionToTopHandler();
     }, []);
+
+    useEffect(() => {
+        console.log('products', products)
+    });
 
     /*const {loading, error, data} = useQuery(GET_POST, {
         variables: {
@@ -140,7 +168,7 @@ const Home = (props: any) => {
                     </div>
                     <div className={`landing-bottom__right`}>
                         <div className={`landing-bottom__right__box`}>
-                            <Slider gallery={homePageData?.slider?.gallery} />
+                            <Slider gallery={homePageData?.slider?.gallery}/>
                         </div>
                     </div>
                 </div>
@@ -155,26 +183,3 @@ const Home = (props: any) => {
         </BasePage>
     )
 }
-
-export const getStaticProps = async (context: any) => {
-    let homePageData = null;
-
-    try {
-        const result = await client.query({
-            query: GET_HOME_PAGE,
-        });
-        homePageData = result.data.homepage
-    } catch (e) {
-        console.error('HomePage Error', e)
-    }
-
-    return {
-        props: {
-            homePageData,
-            initialApolloState: client.cache.extract(),
-        },
-        revalidate: 100
-    }
-}
-
-export default Home
