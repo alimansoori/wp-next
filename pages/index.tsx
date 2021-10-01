@@ -15,7 +15,6 @@ const client = initializeApollo()
 
 export const getStaticProps = async (context: any) => {
     let homePageData = null;
-    const products = await getAllProducts()
 
     try {
         const result = await client.query({
@@ -29,7 +28,6 @@ export const getStaticProps = async (context: any) => {
     return {
         props: {
             homePageData,
-            products,
             initialApolloState: client.cache.extract(),
         },
         revalidate: 100
