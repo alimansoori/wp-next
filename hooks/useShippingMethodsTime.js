@@ -3,7 +3,7 @@ import useShippingHours from "./useShippingHours"
 
 function useShippingMethodsTime(shippingMethod = 'WC_Courier_Method') {
     const addDayToCurrent = useAddDayToCurrent()
-    const { getHours } = useShippingHours()
+    const {getHours} = useShippingHours()
 
     const getShippingMethodsTime = (shippingMethod) => {
         if (shippingMethod !== 'WC_Courier_Method') return [];

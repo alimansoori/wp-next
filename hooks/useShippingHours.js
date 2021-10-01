@@ -2,9 +2,8 @@
 function useShippingHours() {
     const currentDate = new Date()
     let defaultHours = {
-        1: '۱۲:۰۰ تا ۱۵:۰۰',
-        2: '۱۵:۰۰ تا ۱۸:۰۰',
-        3: '۱۸:۰۰ تا ۲۱:۰۰'
+        1: '۱۵:۰۰ تا ۱۸:۰۰',
+        2: '۱۸:۰۰ تا ۲۱:۰۰'
     }
 
     const getHours = (date) => {

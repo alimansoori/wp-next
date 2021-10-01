@@ -14,6 +14,7 @@ export default function BasePage(props) {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 <title>{seo?.title}</title>
                 {/*<title>870251</title>*/}
+                <link rel="icon" type="image/png" href="/image/favicon.png"/>
 
                 {seo?.canonical && <link rel="canonical" href={canonical} />}
                 {seo?.metaDesc && <meta name="description" content={seo.metaDesc} />}
