@@ -34,7 +34,7 @@ export const getStaticProps = async (context: any) => {
     }
 }
 
-export default function Home({homePageData, products}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({homePageData}: InferGetStaticPropsType<typeof getStaticProps>) {
 
     const divRef: any = useRef(null);
 
@@ -54,9 +54,6 @@ export default function Home({homePageData, products}: InferGetStaticPropsType<t
         functionToTopHandler();
     }, []);
 
-    useEffect(() => {
-        console.log('products', products)
-    });
 
     /*const {loading, error, data} = useQuery(GET_POST, {
         variables: {
