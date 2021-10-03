@@ -19,7 +19,9 @@
       "@common": ["framework/common"],
       "@common/*": ["framework/common/*"],
       "@framework": ["framework/wp-graphql"],
-      "@framework/*": ["framework/wp-graphql/*"]
+      "@framework/*": ["framework/wp-graphql/*"],
+      "@components/*": ["components/*"],
+      "@assets/*": ["assets/*"]
     }
   },
   "exclude": ["node_modules"],

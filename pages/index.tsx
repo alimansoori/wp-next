@@ -11,6 +11,7 @@ import Slider from "../components/slider/Slider"
 import type {InferGetStaticPropsType} from "next"
 import getAllProducts from "@framework/product/get-all-products";
 import {getConfig} from "@framework/api/config";
+import {Layout} from "@components/common";
 
 const client = initializeApollo()
 
@@ -184,3 +185,5 @@ export default function Home({homePageData, products}: InferGetStaticPropsType<t
         </BasePage>
     )
 }
+
+Home.Layout = Layout
