@@ -7,6 +7,7 @@ const productsConnection = `
         averageRating
         date
         name
+        description
         type
         slug
         image {

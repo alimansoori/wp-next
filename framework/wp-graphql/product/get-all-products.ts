@@ -1,10 +1,18 @@
-import getAllProductsQueries from "../utils/queries/get-all-products";
-import fetchApi from "../utils/fetch-api";
+import {fetchApi, normalizeProduct, getAllProductsQueries} from "../utils"
+import {RootQueryToProductConnection} from '../schema'
+import { Product } from "@common/types/product"
 
-const getAllProducts = async (): Promise<any> => {
-    // const products = await fetchApi({query: getAllProductsQueries})
+type ReturnType = {
+    products: RootQueryToProductConnection
+}
 
-    return {}
+const getAllProducts = async (): Promise<Product[]> => {
+    const {data} = await fetchApi<ReturnType>({query: getAllProductsQueries})
+
+    return data.products.edges?.map((edge) => {
+        // @ts-ignore
+        return normalizeProduct(edge?.node)
+    }) ?? [];
 }
 
 export default getAllProducts

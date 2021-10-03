@@ -9,13 +9,14 @@ import Footer from "../components/footer/Footer";
 import LandingLoading from "../components/landingLoading/LandingLoading";
 import Slider from "../components/slider/Slider"
 import type {InferGetStaticPropsType} from "next"
-import getAllProducts from "../framework/wp-graphql/product/get-all-products";
+import getAllProducts from "@framework/product/get-all-products";
 
 const client = initializeApollo()
 
 export const getStaticProps = async (context: any) => {
     let homePageData = null;
 
+    const products = await getAllProducts()
     try {
         const result = await client.query({
             query: GET_HOME_PAGE,
@@ -28,13 +29,14 @@ export const getStaticProps = async (context: any) => {
     return {
         props: {
             homePageData,
+            products,
             initialApolloState: client.cache.extract(),
         },
         revalidate: 100
     }
 }
 
-export default function Home({homePageData}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({homePageData, products}: InferGetStaticPropsType<typeof getStaticProps>) {
 
     const divRef: any = useRef(null);
 
@@ -50,9 +52,11 @@ export default function Home({homePageData}: InferGetStaticPropsType<typeof getS
 
     useEffect(() => {
         console.log(homePageData)
+        console.log(products)
         functionToBotHandler();
         functionToTopHandler();
     }, []);
+
 
 
     /*const {loading, error, data} = useQuery(GET_POST, {
