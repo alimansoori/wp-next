@@ -10,13 +10,15 @@ import LandingLoading from "../components/landingLoading/LandingLoading";
 import Slider from "../components/slider/Slider"
 import type {InferGetStaticPropsType} from "next"
 import getAllProducts from "@framework/product/get-all-products";
+import {getConfig} from "@framework/api/config";
 
 const client = initializeApollo()
 
 export const getStaticProps = async (context: any) => {
     let homePageData = null;
+    const config = getConfig()
 
-    const products = await getAllProducts()
+    const products = await getAllProducts(config)
     try {
         const result = await client.query({
             query: GET_HOME_PAGE,

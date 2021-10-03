@@ -1,13 +1,7 @@
 import clientConfig from "../../../client-config";
+import {ApiFetcherOptions, ApiFetcherResults} from "@common/types/api";
 
-type FetcherParams = {
-    query: string
-}
-
-type FetcherResult<T> = { data: T }
-
-const fetchApi = async <T>({query}: FetcherParams): Promise<FetcherResult<T>> => {
-    const url = clientConfig.graphqlUrl
+const fetchApi = async <T>({url, query}: ApiFetcherOptions): Promise<ApiFetcherResults<T>> => {
     const res = await fetch(url, {
         method: "POST",
         headers: {

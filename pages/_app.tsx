@@ -12,7 +12,9 @@ import {ApolloProvider} from "@apollo/client";
 import {ApolloProvider as ApolloHooksProvider} from '@apollo/react-hooks'
 import {initializeApollo, useApollo} from "../components/Apollo";
 import GET_VIEWER from "../gql/queries/get-viewer";
+// @ts-ignore
 import {NotificationContainer} from "react-notifications";
+import { AppProps } from "next/app"
 
 const progress = new ProgressBar({
     size: 4,
@@ -20,27 +22,27 @@ const progress = new ProgressBar({
     className: "bar-of-progress",
     delay: 100,
 });
-
 Router.events.on("routeChangeStart", progress.start);
 Router.events.on("routeChangeComplete", progress.finish);
 Router.events.on("routeChangeError", progress.finish);
 
+// Goftino
 if (typeof window !== "undefined") {
+    // @ts-ignore
     !function(){var i="WYuF9k",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
 }
 
-function App(props) {
-    const {Component, pageProps} = props
+function MyApp({Component, pageProps}: AppProps) {
     const client = useApollo(pageProps?.initialApolloState)
 
-    if (props?.viewer) {
+    /*if (props?.viewer) {
         store.dispatch({
             type: viewerConstants.VIEWER_REGISTER_SUCCESS,
             payload: {
                 viewer: props.viewer
             }
         })
-    }
+    }*/
 
     return (
         <ApolloProvider client={client}>
@@ -56,7 +58,7 @@ function App(props) {
     )
 }
 
-App.getInitialProps = async (ctx) => {
+/*MyApp.getInitialProps = async (ctx: any) => {
     if (typeof window !== "undefined") return {viewer: null}
 
     const apolloClient = initializeApollo(null, ctx.ctx)
@@ -74,6 +76,6 @@ App.getInitialProps = async (ctx) => {
     }
 
     return {viewer: null}
-}
+}*/
 
-export default App
+export default MyApp
