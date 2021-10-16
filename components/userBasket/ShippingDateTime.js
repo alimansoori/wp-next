@@ -1,27 +1,27 @@
 import useShippingMethodsTime from "../../hooks/useShippingMethodsTime"
-import { RadioGroup, RadioButton } from "react-radio-buttons";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateCustomer } from "../../redux/actions/customer.actions";
+import {RadioGroup, RadioButton} from "react-radio-buttons";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {updateCustomer} from "../../redux/actions/customer.actions";
 
 export default function ShippingDateTime() {
     const dispatch = useDispatch()
-    const { customer } = useSelector(state => state.customer)
-    const { getShippingMethodsTime } = useShippingMethodsTime()
+    const {customer} = useSelector(state => state.customer)
+    const {getShippingMethodsTime} = useShippingMethodsTime()
     const [shippingTimes, setShippingTimes] = useState({})
 
     useEffect(() => {
         dispatch(updateCustomer({
             metaData: [
-              {
-                key: 'shippingDate',
-                value: ''
-              }, {
-                key: 'shippingHour',
-                value: ''
-              }
+                {
+                    key: 'shippingDate',
+                    value: ''
+                }, {
+                    key: 'shippingHour',
+                    value: ''
+                }
             ]
-          }))
+        }))
     }, [])
 
     const handleChangeShippingDay = (value) => {
@@ -121,7 +121,8 @@ export default function ShippingDateTime() {
                         {
                             Object.keys(shippingTimes).map(function (keyName, keyIndex) {
                                 return (
-                                    <RadioButton key={keyIndex} pointColor="red" rootColor="#000" value={shippingTimes[keyName]}>
+                                    <RadioButton key={keyIndex} pointColor="red" rootColor="#000"
+                                                 value={shippingTimes[keyName]}>
                                         {shippingTimes[keyName]}
                                     </RadioButton>
                                 )
