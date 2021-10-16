@@ -6,7 +6,7 @@ function useAddDayToCurrent() {
         return 2
     }
 
-    if (currentDate.getDay() == 5) {
+    if (currentDate.getHours() > 10 || currentDate.getDay() == 5) {
         return 1
     }
 
