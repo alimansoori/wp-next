@@ -44,10 +44,10 @@ const CategoryFilterRender = ({cats, cat}) => {
                     return (
                         <React.Fragment key={cat.node.databaseId + randomString()}>
                             <h2 className="p-side-box__list__title">
-                                <img
+                                {/*<img
                                     className={`p-side-box__list__title__icon`}
                                     src={`/image/cat-icon/${cat?.node?.slug}.svg`}
-                                />
+                                />*/}
                                 <Link
                                     as={`/shop/category/${cat?.node?.slug}`}
                                     href={{
@@ -114,11 +114,11 @@ const CategoryFilterRender = ({cats, cat}) => {
             key={cat.node.databaseId + randomString()}
             className={`p-side-box__list__item`}
         >
-            <img
+            {/*<img
                 onError={(e)=>{e.target.onerror = null; e.target.src=null}}
                 className={`p-side-box__list__item__icon`}
                 src={`/image/cat-icon/${cat?.node?.slug}.svg`}
-            />
+            />*/}
             <Link
                 as={`/shop/category/${cat?.node?.slug}`}
                 href={`/shop/category/[category]`}

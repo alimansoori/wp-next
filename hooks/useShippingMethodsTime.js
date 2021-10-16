@@ -30,7 +30,6 @@ function useShippingMethodsTime(shippingMethod = 'WC_Courier_Method') {
             })
         }
 
-        console.log(shippingDate)
         return shippingDate
     }
 
