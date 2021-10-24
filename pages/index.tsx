@@ -139,9 +139,9 @@ export default function Home({homePageData, products}: InferGetStaticPropsType<t
                             <a target='_blank' href="http://dastanablog.ir/" className={`landing-bottom__left__box`}>
                                 {`بلاگ`}
                             </a>
-                            <div className={`landing-bottom__left__box landing-bottom__left__box--disable`}>
-                                {`هدیه`}
-                            </div>
+                            <a target='_blank' href="https://dastanabooks.com/" className={`landing-bottom__left__box landing-bottom__left__box--pink`}>
+                                {`بوک‌پارتی`}
+                            </a>
                         </div>
                         <div className={`landing-bottom__left__second`}>
                             <Link
