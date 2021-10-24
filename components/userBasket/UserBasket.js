@@ -12,23 +12,29 @@ import BeatLoader from 'react-spinners/BeatLoader'
 import { AlertNotifs } from "../alertNotifs/AlertNotifs";
 import { useRouter } from "next/router";
 import PN from 'persian-number'
+import {getCart} from "../../redux/actions";
 
 export default function UserBasket(props) {
   const dispatch = useDispatch()
   const router = useRouter()
   const { cart, loadingUpdateShippingCourierMethod } = useSelector(state => state.cart)
   const [modalShow, setModalShow] = React.useState(false);
-  const [errors, setErrors] = React.useState([]);
   const [notifs, setNotifs] = React.useState([]);
   const [address, setAddress] = React.useState('');
   const { addresses, active } = useSelector(state => state.customer.address)
   const { region } = useSelector(state => state.local)
   const { customer, loading: loadingCustomer } = useSelector(state => state.customer)
   const { loading: loadingCart, loadingUpdateShippingMethod } = useSelector(state => state.cart)
-  const { input, loadingCheckout } = useSelector(state => state.checkout)
 
   useEffect(() => {
-    if (!active) return false
+    dispatch(getCart())
+  }, [])
+
+  useEffect(() => {
+    if (!active) {
+      setAddress(null)
+      return false
+    }
 
     const billingAddress = getValueByKey(addresses, active)
 
@@ -73,6 +79,15 @@ export default function UserBasket(props) {
         )
         return false
       }
+      if (!active) {
+        setNotifs(
+            notifs.concat([{
+              variant: 'danger',
+              title: 'لطفا آدرس خود را از طریق بخش مشخصات وارد کرده و با کلیک بر روی آن، آن را فعال کنید.'
+            }])
+        )
+        return false
+      }
     }
     router.push('/checkout')
   }
@@ -102,7 +117,7 @@ export default function UserBasket(props) {
       <div className="user-basket-box__address">
         <h1 className="user-basket-box__title">آدرس</h1>
         <p className="user-basket-box__address__text">
-          {address}
+          {address ? address : 'لطفا از بخش مشخصات آدرس های خود را ثبت کنید و سپس با کلیک روی هر کدام آن را فعال کنید.'}
         </p>
       </div>
       <UserAddressAddModal show={modalShow} onHide={() => setModalShow(false)} />

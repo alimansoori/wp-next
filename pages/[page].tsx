@@ -50,7 +50,7 @@ export default function Page({pageData}: InferGetStaticPropsType<typeof getStati
     const router = useRouter()
 
     useEffect(() => {
-        console.log(pageData)
+        // console.log(pageData)
     }, [])
 
     return (

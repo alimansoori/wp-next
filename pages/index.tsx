@@ -54,8 +54,8 @@ export default function Home({homePageData, products}: InferGetStaticPropsType<t
     };
 
     useEffect(() => {
-        console.log(homePageData)
-        console.log(products)
+        // console.log(homePageData)
+        // console.log(products)
         functionToBotHandler();
         functionToTopHandler();
     }, []);

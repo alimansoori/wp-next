@@ -8,15 +8,24 @@ import {updateUser} from "../../redux/actions/user.actions";
 
 export default function UserProfileModal(props) {
     const dispatch = useDispatch()
-    const {customer} = useSelector(state => state.customer)
     const {viewer} = useSelector(state => state.viewer)
     const {loading, message} = useSelector(state => state.user)
 
     const [form, setForm] = useState({
-        firstName: viewer ? viewer.firstName : '',
-        lastName: viewer ? viewer.lastName : '',
-        email: viewer ? viewer.email : ''
+        firstName: null,
+        lastName: null,
+        email: null
     })
+
+    useEffect(() => {
+        if (viewer) {
+            setForm({
+                firstName: viewer.firstName,
+                lastName: viewer.lastName,
+                email: viewer.email
+            })
+        }
+    }, [viewer])
 
     const handleChangeInput = (e) => {
         e.preventDefault()

@@ -1,13 +1,9 @@
 const next = require('next');
 const express = require('express');
-// const cors = require('cors');
-// const routes = require("../routes")
 
-const dev = process.env.NODE_ENV === 'production';
+const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handler = app.getRequestHandler();
-// const handler = routes.getRequestHandler(app);
-// app.use(cors);
 
 app.prepare()
     .then(() => {

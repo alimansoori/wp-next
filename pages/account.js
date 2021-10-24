@@ -6,6 +6,7 @@ import ProductHeader from "../components/productHeader/ProductHeader";
 import {alertMessage} from "../functions";
 import {cartConstants, viewerConstants} from "../redux/actions/constants";
 import AccessDenied from "../components/accessDenied/AccessDenied";
+import {getCart} from "../redux/actions";
 
 function Account(props) {
     const dispatch = useDispatch()
@@ -42,11 +43,6 @@ function Account(props) {
             // dispatch(checkout(input))
         } else didMount.current = true;
     }, [input, cart])
-
-    useEffect(() => {
-        // !authenticate ? router.push('/404') : null
-        // dispatch(getCustomer())
-    }, [])
 
     return (
         <>

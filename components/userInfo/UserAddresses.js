@@ -133,7 +133,7 @@ export default function UserAddresses() {
                             />
                         </div>
                         <div className="user-info-box__top__row__box__body">
-                            {viewer ? (viewer.firstName + ' ' + viewer.lastName) : null}
+                            {viewer ? (viewer.firstName + ' ' + viewer.lastName) : ''}
                         </div>
                     </div>
                     <div className="user-info-box__top__row__box">
@@ -149,7 +149,7 @@ export default function UserAddresses() {
                             />
                         </div>
                         <div className="user-info-box__top__row__box__body">
-                            {viewer ? viewer.email : null}
+                            {viewer ? viewer.email : ''}
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,7 @@ export default function UserAddresses() {
                             }
                         </div>
                         <div className="user-info-box__top__row__box__body">
-                            {customer ? customer.billing.phone : null}
+                            {customer ? customer.billing.phone : ''}
                         </div>
                     </div>
                     <div className="user-info-box__top__row__box">
@@ -191,7 +191,7 @@ export default function UserAddresses() {
                             }
                         </div>
                         <div className="user-info-box__top__row__box__body">
-                            {customer ? customer.billing.postcode : null}
+                            {customer ? customer.billing.postcode : ''}
                         </div>
                     </div>
                 </div>

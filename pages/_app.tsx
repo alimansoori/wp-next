@@ -5,14 +5,13 @@ import ProgressBar from "@badrap/bar-of-progress"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-notifications/lib/notifications.css';
 import '../styles/main.scss'
-import "@assets/main.css"
-import {Provider, useDispatch} from 'react-redux'
+// import "@assets/main.css"
+import {Provider} from 'react-redux'
 import store from '../redux/store'
 import {viewerConstants} from '../redux/actions/constants'
 import {ApolloProvider} from "@apollo/client";
 import {ApolloProvider as ApolloHooksProvider} from '@apollo/react-hooks'
-import {initializeApollo, useApollo} from "../components/Apollo";
-import GET_VIEWER from "../gql/queries/get-viewer";
+import {useApollo} from "../components/Apollo";
 // @ts-ignore
 import {NotificationContainer} from "react-notifications";
 import {AppProps} from "next/app"

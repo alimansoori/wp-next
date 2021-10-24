@@ -11,7 +11,7 @@ import {useRouter} from "next/router";
 
 export default function ProductItemBox({product}) {
 
-    console.log(product)
+    // console.log(product)
     const router = useRouter()
     const dispatch = useDispatch();
     const {loading} = useSelector(state => state.cart)
