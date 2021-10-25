@@ -12,6 +12,7 @@ export default function BasePage(props) {
         <>
             <Head>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta name="google-site-verification" content="ll5yM3TeRCoEOkCKEF3Uh8-tckNU4xcTHouFLFuliuc" />
                 <title>{seo?.title}</title>
                 {/*<title>870251</title>*/}
                 <link rel="icon" type="image/png" href="/image/favicon.png"/>
