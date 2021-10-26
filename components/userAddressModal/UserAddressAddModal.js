@@ -89,6 +89,10 @@ export default function UserAddressAddModal(props) {
   const submitAddress = () => {
     if (!selectedState) { setError('فیلد استان را پر کنید'); return false }
     if (!selectedCity) { setError('فیلد شهر را پر کنید'); return false }
+    if (!newAddressForm.phone) { setError('فیلد شماره موبایل را پر کنید'); return false }
+    if (!newAddressForm.postcode) { setError('فیلد کد پستی را پر کنید'); return false }
+    if (!newAddressForm.address1) { setError('فیلد حیابان و محله را پر کنید'); return false }
+    if (!newAddressForm.address2) { setError('فیلد کوچه و پلاک را پر کنید'); return false }
 
     if (isEdit) {
       dispatch(

@@ -24,6 +24,7 @@ export default function UserBasket(props) {
   const { addresses, active } = useSelector(state => state.customer.address)
   const { region } = useSelector(state => state.local)
   const { customer, loading: loadingCustomer } = useSelector(state => state.customer)
+  const { viewer } = useSelector(state => state.viewer)
   const { loading: loadingCart, loadingUpdateShippingMethod } = useSelector(state => state.cart)
 
   useEffect(() => {
@@ -70,6 +71,15 @@ export default function UserBasket(props) {
           return true
         }
       })
+      if (!viewer.firstName || !viewer.lastName) {
+        setNotifs(
+            notifs.concat([{
+              variant: 'danger',
+              title: "لطفا نام و نام خانوادگی و شماره موبایل و ایمیل خود را در بخش مشخصات وارد کنید"
+            }])
+        )
+        return false
+      }
       if (!shippingDate || !shippingHour) {
         setNotifs(
           notifs.concat([{

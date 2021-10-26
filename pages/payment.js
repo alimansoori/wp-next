@@ -185,7 +185,7 @@ export const getServerSideProps = async (ctx) => {
     }
 
     // CheckOut
-    if (data?.data && data?.data?.code == 100) {
+    if (data?.data && data?.data?.code === 100) {
       try {
         let fillInput = {
           isPaid: true,
@@ -196,9 +196,9 @@ export const getServerSideProps = async (ctx) => {
             city: customer.billing.city,
             company: customer.billing.company,
             country: customer.billing.country,
-            email: customer.billing.email,
-            firstName: customer.billing.firstName,
-            lastName: customer.billing.lastName,
+            email: viewer.email,
+            firstName: viewer.firstName,
+            lastName: viewer.lastName,
             phone: customer.billing.phone,
             postcode: customer.billing.postcode,
             state: customer.billing.state
@@ -209,9 +209,9 @@ export const getServerSideProps = async (ctx) => {
             city: customer.shipping.city,
             company: customer.shipping.company,
             country: customer.shipping.country,
-            email: customer.shipping.email,
-            firstName: customer.shipping.firstName,
-            lastName: customer.shipping.lastName,
+            email: viewer.email,
+            firstName: viewer.firstName,
+            lastName: viewer.lastName,
             phone: customer.shipping.phone,
             postcode: customer.shipping.postcode,
             state: customer.shipping.state
