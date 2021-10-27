@@ -15,6 +15,8 @@ export default function UserAddressAddModal(props) {
   const { region } = useSelector(state => state.local)
 
   const [newAddressForm, setNewAddressForm] = useState({
+    firstName: "",
+    lastName: "",
     country: "IR",
     state: "",
     city: "",
@@ -78,6 +80,8 @@ export default function UserAddressAddModal(props) {
     if (customer) {
       setNewAddressForm({
         ...newAddressForm,
+        firstName: isEdit && addresses[editId] ? addresses[editId].firstName : null,
+        lastName: isEdit && addresses[editId] ? addresses[editId].lastName : null,
         address1: isEdit && addresses[editId] ? addresses[editId].address1 : null,
         address2: isEdit && addresses[editId] ? addresses[editId].address2 : null,
         postcode: isEdit && addresses[editId] ? addresses[editId].postcode : null,
@@ -93,6 +97,8 @@ export default function UserAddressAddModal(props) {
     if (!newAddressForm.postcode) { setError('فیلد کد پستی را پر کنید'); return false }
     if (!newAddressForm.address1) { setError('فیلد حیابان و محله را پر کنید'); return false }
     if (!newAddressForm.address2) { setError('فیلد کوچه و پلاک را پر کنید'); return false }
+    if (!newAddressForm.firstName) { setError('فیلد نام را پر کنید'); return false }
+    if (!newAddressForm.lastName) { setError('فیلد نام خانوادگی را پر کنید'); return false }
 
     if (isEdit) {
       dispatch(
@@ -113,13 +119,6 @@ export default function UserAddressAddModal(props) {
     }
 
     props.onHide()
-    // dispatch(checkout({
-    //   billing: {
-    //     ...newAddressForm,
-    //     state: selectedState.value,
-    //     city: selectedCity.value
-    //   }
-    // }))
   }
 
   const handleChangeState = selectedOption => {
@@ -182,6 +181,20 @@ export default function UserAddressAddModal(props) {
             />
           ) : null
         }
+        <input
+          className="sign-in-modal__input"
+          type="text"
+          value={newAddressForm.firstName ? newAddressForm.firstName : ''}
+          onChange={(e) => setNewAddressForm({ ...newAddressForm, "firstName": e.target.value })}
+          placeholder="نام"
+        />
+        <input
+          className="sign-in-modal__input"
+          type="text"
+          value={newAddressForm.lastName ? newAddressForm.lastName : ''}
+          onChange={(e) => setNewAddressForm({ ...newAddressForm, "lastName": e.target.value })}
+          placeholder="نام خانوادگی"
+        />
         <input
           className="sign-in-modal__input"
           type="text"

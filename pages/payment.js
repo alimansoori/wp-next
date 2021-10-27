@@ -209,9 +209,9 @@ export const getServerSideProps = async (ctx) => {
             city: customer.shipping.city,
             company: customer.shipping.company,
             country: customer.shipping.country,
-            email: viewer.email,
-            firstName: viewer.firstName,
-            lastName: viewer.lastName,
+            email: customer.shipping.email,
+            firstName: customer.shipping.firstName,
+            lastName: customer.shipping.lastName,
             phone: customer.shipping.phone,
             postcode: customer.shipping.postcode,
             state: customer.shipping.state
